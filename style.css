@@ -234,4 +234,35 @@ h1 span {
   h1 span {
     margin-block: 24px;
   }
+
+
+
+  /* ATLAS INPUT BOX PATCH — lets the pretty background breathe */
+.transmission-panel {
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  transform: translateX(-50%);
+  z-index: 4;
+  width: min(78%, 470px);
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(58, 34, 8, 0.48);
+  border: 1px solid rgba(255, 218, 110, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.transmission-panel textarea,
+textarea {
+  width: 100%;
+  min-height: 88px;
+  resize: vertical;
+  background: rgba(255, 238, 170, 0.22);
+  color: #fff7d2;
+  border: 1px solid rgba(255, 248, 210, 0.25);
+  border-radius: 12px;
+  padding: 14px;
+  font: 600 1rem Georgia, serif;
+}
 }
