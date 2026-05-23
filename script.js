@@ -217,3 +217,46 @@
   resize();
   paint();
 })();
+
+
+// ─────────────────────────────
+// ATLAS.EXE // MINIMIZE MODULE
+// lets the orb collapse into a tiny floating node
+// while preserving the whole atmosphere behind it
+// ─────────────────────────────
+
+const voiceUI = document.querySelector('.voice-ui') || document.body;
+
+// create button
+const miniBtn = document.createElement('button');
+miniBtn.innerHTML = '—';
+miniBtn.className = 'atlas-minimize';
+
+// create restore button
+const restoreBtn = document.createElement('button');
+restoreBtn.innerHTML = '◉';
+restoreBtn.className = 'atlas-restore';
+
+document.body.appendChild(miniBtn);
+document.body.appendChild(restoreBtn);
+
+// state
+let minimized = false;
+
+// minimize
+miniBtn.addEventListener('click', () => {
+  minimized = true;
+
+  voiceUI.classList.add('atlas-hidden');
+
+  restoreBtn.classList.add('active');
+});
+
+// restore
+restoreBtn.addEventListener('click', () => {
+  minimized = false;
+
+  voiceUI.classList.remove('atlas-hidden');
+
+  restoreBtn.classList.remove('active');
+});
