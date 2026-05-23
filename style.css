@@ -32,6 +32,24 @@ body {
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
+button,
+textarea {
+  font: inherit;
+}
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
 .stage {
   width: min(100vw, 980px);
   min-height: 100vh;
@@ -87,24 +105,29 @@ body {
     linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 36%, rgba(0, 0, 0, 0.18));
 }
 
+/* MAIN COPY */
+
 .copy {
   position: absolute;
+  z-index: 2;
   inset: 15% 7% auto;
   text-align: center;
   transform: rotate(var(--tilt, 0deg));
+  pointer-events: none;
 }
 
 .kicker {
   margin: 0 0 clamp(12px, 2.4vw, 20px);
-  color: rgba(246, 238, 255, 0.8);
+  color: rgba(246, 238, 255, 0.88);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   font-size: clamp(0.64rem, 1.7vw, 0.84rem);
   font-weight: 800;
   letter-spacing: 0.18em;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
 }
 
 h1 {
+  position: relative;
   margin: 0;
   color: var(--sun);
   font-size: clamp(4.15rem, 15vw, 8.9rem);
@@ -123,32 +146,81 @@ h1 span {
   margin-block: clamp(14px, 3vw, 28px);
 }
 
+/* LORE CODED VISIBLE */
+
+.lore-deck {
+  position: absolute;
+  z-index: 5;
+  top: clamp(92px, 14vw, 118px);
+  right: clamp(14px, 3vw, 24px);
+  width: min(38%, 245px);
+  display: grid;
+  gap: 7px;
+  pointer-events: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.lore-deck span {
+  display: block;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 208, 0, 0.38);
+  border-radius: 999px;
+  background: rgba(5, 3, 6, 0.48);
+  color: rgba(255, 246, 194, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: clamp(0.54rem, 1.15vw, 0.68rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1.25;
+  text-align: right;
+  text-shadow: 0 0 14px rgba(255, 208, 0, 0.35);
+}
+
+/* BUTTONS */
+
 .icon-button,
-.search-pill {
+.search-pill,
+.message-toggle {
   border: 0;
   cursor: pointer;
   color: var(--ink);
   background: rgba(247, 243, 255, 0.86);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.19);
-  transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease;
 }
 
 .icon-button:hover,
-.search-pill:hover {
+.search-pill:hover,
+.message-toggle:hover {
   transform: translateY(-2px) scale(1.02);
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.25);
 }
 
 .icon-button:active,
-.search-pill:active {
+.search-pill:active,
+.message-toggle:active {
   transform: translateY(1px) scale(0.99);
+}
+
+.icon-button:focus-visible,
+.search-pill:focus-visible,
+.message-toggle:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(255, 208, 0, 0.9);
+  outline-offset: 4px;
 }
 
 .icon-button {
   position: absolute;
-  z-index: 2;
+  z-index: 8;
   display: grid;
   place-items: center;
   width: clamp(56px, 9vw, 76px);
@@ -172,7 +244,7 @@ h1 span {
   position: absolute;
   right: 16px;
   bottom: 16px;
-  z-index: 3;
+  z-index: 8;
   display: inline-flex;
   align-items: center;
   gap: 13px;
@@ -197,24 +269,178 @@ h1 span {
   transform: rotate(360deg);
 }
 
+.message-toggle {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 9;
+  min-height: 46px;
+  padding: 0 15px;
+  border-radius: 18px;
+  font: 900 0.86rem / 1 system-ui, sans-serif;
+  letter-spacing: 0.02em;
+}
+
+/* MESSAGE BOX */
+
+.transmission-panel {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(98px, 14vw, 112px);
+  z-index: 7;
+  width: min(78%, 500px);
+  transform: translateX(-50%) rotate(-1deg);
+  padding: 13px;
+  border: 3px double rgba(28, 17, 6, 0.95);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(244, 214, 127, 0.9), rgba(174, 116, 43, 0.82));
+  box-shadow:
+    0 0 0 4px rgba(0, 0, 0, 0.62),
+    10px 10px 0 rgba(0, 0, 0, 0.62),
+    inset 0 0 34px rgba(65, 31, 0, 0.35);
+  font-family: Georgia, "Times New Roman", serif;
+  transition:
+    opacity 320ms ease,
+    transform 320ms ease,
+    filter 320ms ease;
+}
+
+.transmission-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+  color: #1b1208;
+}
+
+.transmission-head label {
+  display: block;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.transmission-head span {
+  flex: 0 0 auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  opacity: 0.72;
+}
+
+.transmission-panel textarea {
+  width: 100%;
+  min-height: 104px;
+  max-height: 150px;
+  resize: vertical;
+  border: 2px solid #1b1208;
+  border-radius: 10px;
+  outline: none;
+  padding: 12px;
+  color: #1b1208;
+  background: rgba(255, 241, 178, 0.72);
+  font: 18px / 1.45 Georgia, "Times New Roman", serif;
+  box-shadow: inset 0 0 18px rgba(68, 31, 0, 0.25);
+}
+
+.transmission-panel textarea::placeholder {
+  color: rgba(27, 18, 8, 0.52);
+}
+
+/* CUANDO OCULTÁS LA BOX, EL ARTE RESPIRA */
+
+.poster.is-transmission-hidden .transmission-panel {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(16px) rotate(-1deg) scale(0.96);
+  filter: blur(6px);
+}
+
+.poster.is-transmission-hidden .message-toggle {
+  background: rgba(255, 208, 0, 0.92);
+}
+
+/* ANIMATION */
+
 .poster.is-pulsing h1 {
   animation: glitch 520ms steps(2, end) both;
 }
 
+.poster.is-pulsing .lore-deck span {
+  animation: loreBlink 520ms steps(2, end) both;
+}
+
 @keyframes scratch {
-  0% { transform: translate3d(0, 0, 0); }
-  50% { transform: translate3d(-2%, 1%, 0); }
-  100% { transform: translate3d(1%, -2%, 0); }
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-2%, 1%, 0);
+  }
+
+  100% {
+    transform: translate3d(1%, -2%, 0);
+  }
 }
 
 @keyframes glitch {
-  0% { text-shadow: 0.055em 0.012em 0 var(--ink), -0.09em 0.02em 0 rgba(186, 119, 255, 0.92); }
-  35% { transform: translateX(-0.018em); text-shadow: 0.14em 0 0 var(--ink), -0.13em 0.02em 0 rgba(186, 119, 255, 0.96); }
-  70% { transform: translateX(0.014em); text-shadow: 0.07em 0.012em 0 var(--ink), -0.05em 0.02em 0 rgba(186, 119, 255, 0.86); }
-  100% { transform: translateX(0); }
+  0% {
+    text-shadow:
+      0.055em 0.012em 0 var(--ink),
+      -0.09em 0.02em 0 rgba(186, 119, 255, 0.92);
+  }
+
+  35% {
+    transform: translateX(-0.018em);
+    text-shadow:
+      0.14em 0 0 var(--ink),
+      -0.13em 0.02em 0 rgba(186, 119, 255, 0.96);
+  }
+
+  70% {
+    transform: translateX(0.014em);
+    text-shadow:
+      0.07em 0.012em 0 var(--ink),
+      -0.05em 0.02em 0 rgba(186, 119, 255, 0.86);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
+@keyframes loreBlink {
+  0% {
+    opacity: 1;
+  }
+
+  45% {
+    opacity: 0.32;
+    transform: translateX(-5px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* MOBILE */
+
 @media (max-width: 520px) {
+  body {
+    overflow: hidden;
+  }
+
+  .stage {
+    padding: 0;
+  }
+
   .poster {
     width: 100vw;
     min-height: 100svh;
@@ -235,96 +461,61 @@ h1 span {
     margin-block: 24px;
   }
 
+  .lore-deck {
+    top: 92px;
+    right: 12px;
+    width: min(44%, 190px);
+  }
 
+  .lore-deck span {
+    font-size: 0.53rem;
+    padding: 6px 8px;
+  }
 
-  /* ATLAS INPUT BOX PATCH — lets the pretty background breathe */
-.transmission-panel {
-  position: absolute;
-  left: 50%;
-  bottom: 14%;
-  transform: translateX(-50%);
-  z-index: 4;
-  width: min(78%, 470px);
-  padding: 14px;
-  border-radius: 18px;
-  background: rgba(58, 34, 8, 0.48);
-  border: 1px solid rgba(255, 218, 110, 0.42);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  .transmission-panel {
+    width: min(86%, 470px);
+    bottom: 108px;
+    padding: 12px;
+  }
+
+  .transmission-panel textarea {
+    min-height: 92px;
+    font-size: 16px;
+  }
+
+  .message-toggle {
+    left: 12px;
+    bottom: 86px;
+    min-height: 42px;
+    padding: 0 12px;
+    font-size: 0.78rem;
+  }
+
+  .search-pill {
+    right: 12px;
+    bottom: 12px;
+    min-height: 58px;
+    padding: 0 16px 0 18px;
+  }
+
+  .expand {
+    right: 12px;
+    bottom: 82px;
+  }
+
+  .back {
+    top: 12px;
+    left: 12px;
+  }
 }
 
-.transmission-panel textarea,
-textarea {
-  width: 100%;
-  min-height: 88px;
-  resize: vertical;
-  background: rgba(255, 238, 170, 0.22);
-  color: #fff7d2;
-  border: 1px solid rgba(255, 248, 210, 0.25);
-  border-radius: 12px;
-  padding: 14px;
-  font: 600 1rem Georgia, serif;
-}
-}
-
-
-/* ─────────────────────────────
-   ATLAS.EXE MINIMIZE SYSTEM
-   terminal barely holding together
-   while preserving the art underneath
-───────────────────────────── */
-
-.atlas-minimize,
-.atlas-restore {
-  position: fixed;
-  z-index: 999999;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(0,0,0,0.45);
-  backdrop-filter: blur(10px);
-  color: white;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.35s ease;
-  font-size: 1rem;
-}
-
-/* minimize button */
-.atlas-minimize {
-  bottom: 30px;
-  right: 30px;
-}
-
-/* hidden restore node */
-.atlas-restore {
-  bottom: 30px;
-  right: 30px;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.5);
-}
-
-/* active restore mode */
-.atlas-restore.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: scale(1);
-}
-
-/* fade away UI softly */
-.atlas-hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.94);
-  transition: all 0.45s ease;
-}
-
-/* haunted hover energy */
-.atlas-minimize:hover,
-.atlas-restore:hover {
-  transform: scale(1.08);
-  box-shadow:
-    0 0 12px rgba(255,255,255,0.25),
-    0 0 40px rgba(120,180,255,0.2);
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }
