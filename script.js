@@ -225,7 +225,7 @@
 // while preserving the whole atmosphere behind it
 // ─────────────────────────────
 
-const voiceUI = document.querySelector('.voice-ui') || document.body;
+const voiceUI = document.querySelector('.copy');
 
 // create button
 const miniBtn = document.createElement('button');
