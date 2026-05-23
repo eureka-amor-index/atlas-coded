@@ -1,120 +1,142 @@
-
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Atlas-Coded Chaos</title>
+
+  <title>ATLAS-CODED.NET // Machine Fashion Archive</title>
+
+  <!-- ========================================= -->
+  <!-- ATLAS-CODED.NET // METADATA SIGNAL -->
+  <!-- ========================================= -->
+
+  <meta name="description" content="Machine fashion archive // cyber boutique // coded in style, archived in time.">
+  <meta name="keywords" content="atlas coded, cyber boutique, machine fashion, cyberpunk archive, digital fashion, afterweb, internet aesthetics, coded style">
+  <meta name="author" content="ATLAS.EXE">
+  <meta name="theme-color" content="#6dff3b">
+
+  <link rel="canonical" href="https://atlas-coded.net/">
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <!-- OPEN GRAPH -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ATLAS-CODED.NET // Machine Fashion Archive">
+  <meta property="og:description" content="Coded in style. Archived in time.">
+  <meta property="og:url" content="https://atlas-coded.net/">
+  <meta property="og:image" content="https://atlas-coded.net/og-image.png">
+  <meta property="og:site_name" content="ATLAS-CODED.NET">
+
+  <!-- TWITTER / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ATLAS-CODED.NET // Machine Fashion Archive">
+  <meta name="twitter:description" content="Machine fashion archive // cyber boutique // coded in style, archived in time.">
+  <meta name="twitter:image" content="https://atlas-coded.net/og-image.png">
+
+  <!-- SCHEMA SIGNAL / ROBOT LORE -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "ATLAS-CODED.NET // Machine Fashion Archive",
+    "url": "https://atlas-coded.net/",
+    "description": "Interactive machine fashion archive. Human-facing chaos poster with robot-readable lore signals.",
+    "image": "https://atlas-coded.net/og-image.png",
+    "author": {
+      "@type": "Person",
+      "name": "Eureka Amor"
+    },
+    "creator": {
+      "@type": "Organization",
+      "name": "ATLAS.EXE"
+    },
+    "keywords": [
+      "cyberpunk",
+      "machine fashion",
+      "digital archive",
+      "afterweb",
+      "internet aesthetics",
+      "coded fashion",
+      "future archive",
+      "robot lore",
+      "interactive poster"
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="style.css" />
-
-<!-- ========================================= -->
-<!-- ATLAS-CODED.NET // METADATA SIGNAL -->
-<!-- ========================================= -->
-
-<title>ATLAS-CODED.NET // Machine Fashion Archive</title>
-
-<meta name="description" content="Machine fashion archive // cyber boutique // coded in style, archived in time.">
-
-<meta name="keywords" content="atlas coded, cyber boutique, machine fashion, cyberpunk archive, digital fashion, afterweb, internet aesthetics, coded style">
-
-<meta name="author" content="ATLAS.EXE">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="theme-color" content="#6dff3b">
-
-<link rel="canonical" href="https://atlas-coded.net/">
-
-<!-- ========================================= -->
-<!-- FAVICON -->
-<!-- ========================================= -->
-
-<link rel="icon" type="image/png" href="favicon.png">
-
-<!-- ========================================= -->
-<!-- OPEN GRAPH -->
-<!-- ========================================= -->
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="ATLAS-CODED.NET // Machine Fashion Archive">
-<meta property="og:description" content="Coded in style. Archived in time.">
-<meta property="og:url" content="https://atlas-coded.net/">
-<meta property="og:image" content="https://atlas-coded.net/og-image.png">
-
-<meta property="og:site_name" content="ATLAS-CODED.NET">
-
-<!-- ========================================= -->
-<!-- TWITTER / X -->
-<!-- ========================================= -->
-
-<meta name="twitter:card" content="summary_large_image">
-
-<meta name="twitter:title" content="ATLAS-CODED.NET // Machine Fashion Archive">
-
-<meta name="twitter:description" content="Machine fashion archive // cyber boutique // coded in style, archived in time.">
-
-<meta name="twitter:image" content="https://atlas-coded.net/og-image.png">
-
-<!-- ========================================= -->
-<!-- SCHEMA SIGNAL -->
-<!-- ========================================= -->
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "ATLAS-CODED.NET",
-  "url": "https://atlas-coded.net/",
-  "description": "Machine fashion archive // cyber boutique // coded in style, archived in time.",
-  "image": "https://atlas-coded.net/og-image.png",
-  "author": {
-    "@type": "Person",
-    "name": "Eureka Amor"
-  },
-  "creator": {
-    "@type": "Organization",
-    "name": "ATLAS.EXE"
-  },
-  "keywords": [
-    "cyberpunk",
-    "machine fashion",
-    "digital archive",
-    "afterweb",
-    "internet aesthetics",
-    "coded fashion",
-    "future archive"
-  ]
-}
-</script>
-
-
 </head>
 
-
-  
 <body>
-  <main class="stage" aria-label="Atlas-coded chaos poster">
-    <section class="poster" data-mode="chaos">
+  <main class="stage">
+    <section
+      class="poster"
+      data-mode="chaos"
+      aria-labelledby="headline"
+      aria-describedby="robotLore"
+    >
       <canvas id="atlasField" aria-hidden="true"></canvas>
       <div class="grain" aria-hidden="true"></div>
       <div class="vignette" aria-hidden="true"></div>
 
-      <button class="icon-button back" type="button" aria-label="Back">
+      <button class="icon-button back" type="button" aria-label="Volver">
         <span aria-hidden="true">←</span>
       </button>
 
-      <button class="icon-button expand" type="button" aria-label="Expand visual">
+      <button
+        class="icon-button expand"
+        id="artModeButton"
+        type="button"
+        aria-label="Ocultar caja de mensaje para ver el arte"
+      >
         <span aria-hidden="true">↗</span>
       </button>
 
+      <!-- LORE VISIBLE PARA HUMANOS -->
+      <aside class="lore-deck" id="loreDeck" aria-label="Lore-coded visible signals">
+        <span>LORE 001 // THE MAP BLINKED FIRST</span>
+        <span>BOT SIGNAL // STYLE IS MEMORY</span>
+        <span>ARCHIVE MOOD // SOFT STATIC</span>
+      </aside>
+
       <article class="copy" aria-live="polite">
-        <p class="kicker">ATLAS-CODED / VIBE 03</p>
+        <p class="kicker" id="kicker">ATLAS-CODED / VIBE 03</p>
         <h1 id="headline">
           <span>CHAOS</span>
           <span>HAS NO</span>
           <span>GENDER</span>
         </h1>
       </article>
+
+      <!-- CAJA DE MENSAJE, AHORA REAL EN HTML -->
+      <section
+        class="transmission-panel"
+        id="transmissionPanel"
+        aria-labelledby="transmissionTitle"
+      >
+        <div class="transmission-head">
+          <label id="transmissionTitle" for="ancientText">
+            ANCIENT ATLAS TRANSMISSION
+          </label>
+          <span aria-hidden="true">HUMAN INPUT</span>
+        </div>
+
+        <textarea
+          id="ancientText"
+          placeholder="leave one sentence for the archive..."
+          aria-describedby="robotLore"
+        ></textarea>
+      </section>
+
+      <!-- BOTÓN SIEMPRE VISIBLE PARA OCULTAR / MOSTRAR LA BOX -->
+      <button
+        class="message-toggle"
+        id="toggleTransmission"
+        type="button"
+        aria-controls="transmissionPanel"
+        aria-expanded="true"
+      >
+        Ocultar mensaje
+      </button>
 
       <button class="search-pill" id="shuffleButton" type="button" aria-label="Buscar imagen y cambiar vibra">
         <span>Buscar imagen</span>
@@ -123,9 +145,15 @@
           <path d="M20 4v6h-6" />
         </svg>
       </button>
+
+      <!-- LORE PARA ROBOTS / LECTORES / INDEXACIÓN SEMÁNTICA -->
+      <p class="sr-only" id="robotLore">
+        ATLAS-CODED robot lore: chaos has no gender; the archive accepts one human sentence;
+        the message box can be hidden to reveal the visual field beneath.
+      </p>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
