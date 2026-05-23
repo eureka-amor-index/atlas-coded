@@ -1,0 +1,46 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atlas-Coded Chaos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="stage" aria-label="Atlas-coded chaos poster">
+    <section class="poster" data-mode="chaos">
+      <canvas id="atlasField" aria-hidden="true"></canvas>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="vignette" aria-hidden="true"></div>
+
+      <button class="icon-button back" type="button" aria-label="Back">
+        <span aria-hidden="true">←</span>
+      </button>
+
+      <button class="icon-button expand" type="button" aria-label="Expand visual">
+        <span aria-hidden="true">↗</span>
+      </button>
+
+      <article class="copy" aria-live="polite">
+        <p class="kicker">ATLAS-CODED / VIBE 03</p>
+        <h1 id="headline">
+          <span>CHAOS</span>
+          <span>HAS NO</span>
+          <span>GENDER</span>
+        </h1>
+      </article>
+
+      <button class="search-pill" id="shuffleButton" type="button" aria-label="Buscar imagen y cambiar vibra">
+        <span>Buscar imagen</span>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 12a8 8 0 1 1-2.34-5.66" />
+          <path d="M20 4v6h-6" />
+        </svg>
+      </button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
