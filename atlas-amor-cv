@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atlas Amor CV</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;700;900&amp;family=DM+Sans:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+        body { font-family: 'DM Sans', sans-serif; }
+        h1, h2, h3 { font-family: 'Fraunces', serif; }
+        
+        @keyframes float-haunted {
+            0%, 100% { transform: translateY(0px); opacity: 0.7; }
+            50% { transform: translateY(-20px); opacity: 0.9; }
+        }
+        
+        @keyframes glitch-title {
+            0%, 100% { text-shadow: none; }
+            20% { text-shadow: -2px 0 #7c3aed, 2px 0 #06b6d4; transform: translateX(-1px); }
+            40% { text-shadow: 2px 0 #f472b6, -2px 0 #facc15; transform: translateX(1px); }
+            60% { text-shadow: -2px 0 #06b6d4, 2px 0 #7c3aed; transform: translateX(-1px); }
+            80% { text-shadow: 2px 0 #facc15, -2px 0 #f472b6; transform: translateX(1px); }
+        }
+        
+        @keyframes breathe-shadow {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.4)); }
+            50% { filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.6)); }
+        }
+        
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            animation: float-haunted 6s ease-in-out infinite;
+        }
+        
+        .planet:nth-child(1) { animation-delay: 0s; }
+        .planet:nth-child(2) { animation-delay: 1s; }
+        .planet:nth-child(3) { animation-delay: 2s; }
+        
+        .triangle {
+            width: 0; height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 100px solid;
+            animation: float-haunted 7s ease-in-out infinite reverse;
+        }
+        
+        h1 {
+            animation: glitch-title 8s ease-in-out infinite;
+        }
+        
+        .cosmic-orb {
+            animation: breathe-shadow 4s ease-in-out infinite;
+        }
+    </style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/resizing_sdk.js" type="text/javascript"></script>
+ <script src="/_sdk/telemetry_sdk.js"></script></head>
+ <body data-template-id="__page-root" class="min-h-screen text-white overflow-x-hidden">
+  <header class="relative flex flex-col items-center justify-center text-center px-6" style="min-height: calc(100 * min(var(--vh, 1vh), 1vh));"><!-- Decorative elements inspired by user's artwork -->
+   <div class="planet w-20 h-20 bg-white opacity-80" style="top:12%;left:15%"></div>
+   <div class="planet w-10 h-10 bg-white opacity-60" style="top:25%;left:25%"></div>
+   <div class="planet w-6 h-6 bg-white opacity-40" style="top:18%;left:35%"></div>
+   <div class="absolute top-[10%] right-[10%] w-28 h-28 rounded-full overflow-hidden cosmic-orb" style="background: linear-gradient(180deg, #facc15 0%, #7c3aed 50%, #06b6d4 100%)"></div>
+   <div class="absolute bottom-[15%] right-[20%] triangle" style="border-bottom-color: #f472b6;"></div>
+   <div class="absolute bottom-[12%] right-[15%] triangle" style="border-bottom-color: #06b6d4; transform: rotate(15deg);"></div>
+   <h1 data-template-id="hero-name" class="canva-text text-6xl md:text-8xl font-black tracking-tight z-10"></h1>
+   <p data-template-id="hero-subtitle" class="canva-text mt-4 text-xl md:text-2xl opacity-80 z-10"></p>
+  </header>
+  <main class="max-w-3xl mx-auto px-6 py-16 space-y-16">
+   <section class="flex flex-col items-center"><img data-template-id="profile-img" class="canva-image w-48 h-48 rounded-full object-cover border-4 border-fuchsia-500" loading="lazy">
+   </section>
+   <section>
+    <h2 data-template-id="about-title" class="canva-text text-3xl font-bold mb-4"></h2>
+    <p data-template-id="about-text" class="canva-text leading-relaxed opacity-90"></p>
+   </section>
+   <section>
+    <h2 data-template-id="skills-title" class="canva-text text-3xl font-bold mb-4"></h2>
+    <div class="flex flex-wrap gap-3"><span data-template-id="skill-1" class="canva-tag px-4 py-2 rounded-full text-sm font-medium"></span> <span data-template-id="skill-2" class="canva-tag px-4 py-2 rounded-full text-sm font-medium"></span> <span data-template-id="skill-3" class="canva-tag px-4 py-2 rounded-full text-sm font-medium"></span> <span data-template-id="skill-4" class="canva-tag px-4 py-2 rounded-full text-sm font-medium"></span> <span data-template-id="skill-5" class="canva-tag px-4 py-2 rounded-full text-sm font-medium"></span>
+    </div>
+   </section>
+   <section>
+    <h2 data-template-id="contact-title" class="canva-text text-3xl font-bold mb-4"></h2>
+    <p data-template-id="contact-text" class="canva-text opacity-90"></p>
+   </section>
+  </main>
+  <script src="/_sdk/editing_sdk.js"></script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0614728b956785e',t:'MTc4MDUxNjc2Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
