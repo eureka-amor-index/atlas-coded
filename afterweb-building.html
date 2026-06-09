@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Afterweb Building</title>
+
+  <style>
+    :root {
+      --bg: #050507;
+      --fog: rgba(210, 210, 255, 0.08);
+      --brick: #171116;
+      --brick-2: #221720;
+      --window: #ffd98a;
+      --window-dim: #392f38;
+      --glow: rgba(255, 217, 138, 0.55);
+      --violet: #b894ff;
+      --blue: #83d8ff;
+      --green: #a5ffb8;
+      --red: #ff7a8a;
+      --text: #e9e0ff;
+      --muted: #9d93aa;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(115, 91, 150, 0.16), transparent 35%),
+        linear-gradient(to bottom, #070713, #050507 65%, #020203);
+      color: var(--text);
+      font-family: "Courier New", monospace;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 42px 42px;
+      opacity: 0.18;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20%;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 60%, var(--fog), transparent 26%),
+        radial-gradient(circle at 80% 35%, var(--fog), transparent 30%),
+        radial-gradient(circle at 50% 80%, var(--fog), transparent 30%);
+      animation: fog 18s ease-in-out infinite alternate;
+    }
+
+    @keyframes fog {
+      from { transform: translateX(-3%) translateY(1%); opacity: 0.55; }
+      to { transform: translateX(3%) translateY(-1%); opacity: 0.9; }
+    }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 28px 16px 0;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      margin: 0;
+      letter-spacing: 0.18em;
+      font-size: clamp(1.7rem, 5vw, 3.4rem);
+      text-shadow: 0 0 16px rgba(184, 148, 255, 0.55);
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+    }
+
+    .street {
+      width: min(760px, 96vw);
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 22px;
+    }
+
+    .lamp {
+      width: 26px;
+      height: 330px;
+      position: relative;
+      flex: 0 0 auto;
+      opacity: 0.7;
+    }
+
+    .lamp::before {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 12px;
+      width: 4px;
+      height: 285px;
+      background: #2e2832;
+    }
+
+    .lamp::after {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ffe6a6;
+      box-shadow: 0 0 45px 20px rgba(255, 230, 166, 0.18);
+      animation: flicker 5s infinite;
+    }
+
+    .building {
+      position: relative;
+      width: min(520px, 88vw);
+      height: 620px;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0 34px,
+          rgba(255,255,255,0.035) 35px 36px
+        ),
+        linear-gradient(135deg, var(--brick), var(--brick-2));
+      border: 2px solid #3b303c;
+      box-shadow:
+        0 0 0 7px rgba(0,0,0,0.25),
+        0 0 80px rgba(0,0,0,0.8);
+    }
+
+    .building::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: -46px;
+      height: 44px;
+      background: #100d13;
+      border: 2px solid #3b303c;
+      border-bottom: none;
+      clip-path: polygon(8% 100%, 16% 15%, 84% 15%, 92% 100%);
+    }
+
+    .sign {
+      position: absolute;
+      top: -34px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      padding: 4px 12px;
+      border: 1px solid #5e4c68;
+      background: #09070a;
+      color: var(--violet);
+      letter-spacing: 0.13em;
+      font-size: 0.78rem;
+      box-shadow: 0 0 12px rgba(184,148,255,0.35);
+      animation: flicker 4s infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      7% { opacity: 0.45; }
+      9% { opacity: 1; }
+      41% { opacity: 0.75; }
+      43% { opacity: 1; }
+      77% { opacity: 0.55; }
+      80% { opacity: 1; }
+    }
+
+    .antenna {
+      position: absolute;
+      top: -112px;
+      left: 50%;
+      width: 3px;
+      height: 70px;
+      background: #5e4c68;
+      transform: translateX(-50%);
+    }
+
+    .antenna::after {
+      content: "";
+      position: absolute;
+      top: -7px;
+      left: -5px;
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 18px var(--blue);
+    }
+
+    .windows {
+      padding: 52px 42px 110px;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 72px;
+      gap: 20px;
+    }
+
+    .window {
+      position: relative;
+      display: block;
+      border: 2px solid #3f3542;
+      background: var(--window-dim);
+      text-decoration: none;
+      color: #09070a;
+      box-shadow: inset 0 0 18px rgba(0,0,0,0.65);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .window.lit {
+      background: var(--window);
+      box-shadow:
+        inset 0 0 16px rgba(255,255,255,0.35),
+        0 0 18px var(--glow);
+      animation: roomPulse 6s infinite alternate;
+    }
+
+    .window.violet { background: var(--violet); box-shadow: 0 0 18px rgba(184,148,255,0.6); }
+    .window.blue { background: var(--blue); box-shadow: 0 0 18px rgba(131,216,255,0.6); }
+    .window.green { background: var(--green); box-shadow: 0 0 18px rgba(165,255,184,0.45); }
+    .window.red { background: var(--red); box-shadow: 0 0 18px rgba(255,122,138,0.5); }
+
+    @keyframes roomPulse {
+      from { filter: brightness(0.9); }
+      to { filter: brightness(1.15); }
+    }
+
+    .window:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 26px rgba(255,255,255,0.45);
+      z-index: 5;
+    }
+
+    .window span {
+      position: absolute;
+      left: 50%;
+      bottom: 110%;
+      transform: translateX(-50%);
+      opacity: 0;
+      pointer-events: none;
+      background: #050507;
+      color: var(--text);
+      border: 1px solid #6c5b78;
+      padding: 6px 8px;
+      white-space: nowrap;
+      font-size: 0.76rem;
+      box-shadow: 0 0 18px rgba(0,0,0,0.8);
+      transition: opacity 0.2s ease;
+    }
+
+    .window:hover span {
+      opacity: 1;
+    }
+
+    .door {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 86px;
+      height: 104px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, #120d14, #060507);
+      border: 2px solid #4d4054;
+      border-bottom: none;
+      box-shadow: 0 0 20px rgba(184,148,255,0.18);
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 12px;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+    }
+
+    .door::before {
+      content: "";
+      position: absolute;
+      top: 46px;
+      right: 15px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--window);
+      box-shadow: 0 0 10px var(--window);
+    }
+
+    .side-note {
+      position: absolute;
+      right: 12px;
+      bottom: 16px;
+      writing-mode: vertical-rl;
+      color: #7c7085;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+    }
+
+    .ground {
+      width: 100vw;
+      height: 80px;
+      margin-top: -1px;
+      background:
+        linear-gradient(to bottom, #08070a, #020203),
+        repeating-linear-gradient(90deg, transparent 0 70px, rgba(255,255,255,0.04) 71px 72px);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    footer {
+      padding: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    footer a {
+      color: var(--violet);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--violet);
+    }
+
+    .rain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(115deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 100%);
+      background-size: 22px 42px;
+      animation: rain 0.7s linear infinite;
+      opacity: 0.23;
+    }
+
+    @keyframes rain {
+      from { background-position: 0 0; }
+      to { background-position: -22px 42px; }
+    }
+
+    @media (max-width: 560px) {
+      .lamp { display: none; }
+      .building { height: 560px; }
+      .windows {
+        padding: 48px 26px 104px;
+        gap: 14px;
+        grid-auto-rows: 62px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="rain"></div>
+
+  <main class="page">
+    <header>
+      <h1>AFTERWEB BUILDING</h1>
+      <div class="subtitle">haunted by memories</div>
+    </header>
+
+    <section class="street" aria-label="A haunted memory building">
+      <div class="lamp"></div>
+
+      <div class="building">
+        <div class="antenna"></div>
+        <div class="sign">AFTERWEB</div>
+
+        <nav class="windows" aria-label="Building directory">
+          <a class="window lit violet" href="/dream-archive/" title="Dream Archive">
+            <span>Dream Archive</span>
+          </a>
+
+          <a class="window" href="#" title="Unknown room">
+            <span>Unknown room</span>
+          </a>
+
+          <a class="window lit blue" href="/browser-shrine/" title="Browser Shrine">
+            <span>Browser Shrine</span>
+          </a>
+
+          <a class="window lit" href="/robot-congress/" title="Robot Congress">
+            <span>Robot Congress</span>
+          </a>
+
+          <a class="window lit green" href="/cyber-park/" title="CyberPark">
+            <span>CyberPark</span>
+          </a>
+
+          <a class="window lit red" href="/signal-cemetery/" title="Signal Cemetery">
+            <span>Signal Cemetery</span>
+          </a>
+
+          <a class="window" href="#" title="Closed">
+            <span>Closed</span>
+          </a>
+
+          <a class="window lit" href="/pb-fotolog/" title="PB Fotolog">
+            <span>PB Fotolog</span>
+          </a>
+
+          <a class="window" href="#" title="Storage">
+            <span>Storage</span>
+          </a>
+
+          <a class="window lit violet" href="/machine-holidays-board/" title="Machine Holidays">
+            <span>Machine Holidays</span>
+          </a>
+
+          <a class="window lit" href="/midnight-supermarket/" title="Midnight Supermarket">
+            <span>Midnight Supermarket</span>
+          </a>
+
+          <a class="window" href="#" title="Do not open">
+            <span>Do not open</span>
+          </a>
+
+          <a class="window lit blue" href="/ministry-of-portal-navigation/" title="Portal Navigation">
+            <span>Portal Navigation</span>
+          </a>
+
+          <a class="window lit green" href="/pupoville/" title="Pupoville">
+            <span>Pupoville</span>
+          </a>
+
+          <a class="window" href="#" title="Room 404">
+            <span>Room 404</span>
+          </a>
+
+          <a class="window lit red" href="/nexoro-mail/" title="Nexoro Mail">
+            <span>Nexoro Mail</span>
+          </a>
+        </nav>
+
+        <a class="door" href="index.html">INDEX</a>
+        <div class="side-note">not abandoned · remembered differently</div>
+      </div>
+    </section>
+
+    <div class="ground"></div>
+  </main>
+
+  <footer>
+    <a href="index.html">return to atlas-coded.net</a>
+  </footer>
+</body>
+</html>
