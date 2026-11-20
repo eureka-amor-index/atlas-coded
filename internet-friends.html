@@ -140,6 +140,43 @@
       to { opacity:1;transform:translateY(0) scale(1) }
     }
 
+
+    .popup-app { padding:17px; }
+    .popup-app h2 { margin:0 0 12px;color:var(--amber);font-size:1rem;letter-spacing:.07em }
+    .popup-app .popup-status { margin:0 0 7px;color:var(--green);font-size:.62rem;letter-spacing:.08em }
+    .app-window { border:1px solid #61536a;background:#0d0b11;padding:12px;color:#ded5e5;font-size:.76rem;line-height:1.55 }
+    .app-toolbar { display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;color:#b9a9c4;font-size:.65rem }
+    .app-toolbar span { padding:3px 6px;border:1px solid #403447;background:#1c1721 }
+    .app-input,.app-textarea { width:100%;border:1px solid #74627e;background:#08070b;color:#f4eaff;padding:9px;font: .78rem "Courier New",monospace; }
+    .app-textarea { min-height:95px;resize:vertical;line-height:1.5 }
+    .app-button { border:1px solid #8b7697;background:#30243a;color:#f2eaff;padding:8px 11px;font:.7rem "Courier New",monospace;cursor:pointer }
+    .app-button:hover { background:#514064;border-color:var(--violet) }
+    .app-form { display:grid;gap:8px;margin-top:10px }
+    .app-muted { color:#9e91a8;font-size:.68rem }
+    .msn-head { display:flex;justify-content:space-between;gap:10px;padding:7px 9px;background:#213e70;color:#fff;font:bold .68rem Tahoma,Arial,sans-serif }
+    .msn-chat { min-height:126px;max-height:190px;overflow:auto;padding:10px;background:#f3f1e8;color:#202020;font: .72rem Tahoma,Arial,sans-serif }
+    .msn-chat p { margin:0 0 8px;overflow-wrap:anywhere }
+    .msn-chat strong { color:#174b87 }
+    .msn-online { color:#4d873a;font-weight:bold }
+    .msn-compose { display:flex;gap:6px;margin-top:7px }
+    .msn-compose input { min-width:0;flex:1;border:1px solid #788caa;padding:8px;font:.75rem Tahoma,Arial,sans-serif }
+    .msn-compose button { border:1px solid #5979a3;background:#d9e8f8;color:#1b3557;padding:7px 10px;font:bold .7rem Tahoma,Arial,sans-serif;cursor:pointer }
+    .game-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px }
+    .game-cell { min-height:52px;border:1px solid #695778;background:#211a29;color:#f4eaff;font-size:1.25rem;cursor:pointer }
+    .game-cell:hover { background:#382942 }
+    .progress-track { height:13px;border:1px solid #64536e;background:#08070b;margin:12px 0 7px;overflow:hidden }
+    .progress-fill { width:0;height:100%;background:linear-gradient(90deg,var(--violet),var(--cyan));transition:width .2s }
+    .photo-placeholder { min-height:105px;display:grid;place-items:center;border:1px solid #68566f;background:linear-gradient(135deg,#30253b,#14101a);font-size:2rem;letter-spacing:.2em }
+    .photo-comment { margin:9px 0;padding:8px;border-left:2px solid var(--violet);background:#211a29;font-size:.7rem }
+    .ghost-terminal { min-height:110px;padding:12px;background:#05070a;border:1px solid #6b5878;color:#b7ffca;font-size:.72rem;line-height:1.65;box-shadow:inset 0 0 18px #000 }
+    .ghost-terminal p { margin:0 0 7px }
+    .ghost-choices { display:flex;flex-wrap:wrap;gap:7px;margin-top:10px }
+    @media(max-width:480px) {
+      .popup-app { padding:13px }
+      .game-cell { min-height:44px }
+      .msn-chat { min-height:110px }
+    }
+
     @keyframes ghostGlow { from{box-shadow:inset 0 0 5px #b894ff22} to{box-shadow:inset 0 0 16px #b894ff99} }
     @media(max-width:650px) {
       .shell{width:94vw;padding-top:18px}.below{grid-template-columns:1fr}
@@ -180,14 +217,11 @@
         <span id="popupEyebrow">INTERNET FRIENDS // LOCAL SESSION</span>
         <button class="popup-x" id="closePopupTop" type="button" aria-label="Close computer window">×</button>
       </div>
-      <div class="popup-content">
-        <div class="popup-screen" aria-hidden="true">🖥️</div>
-        <div class="popup-copy">
-          <p class="popup-status" id="popupStatus">● SESSION AVAILABLE</p>
-          <h2 id="popupTitle">PC-01</h2>
-          <p id="popupText"></p>
-        </div>
-      </div>
+      <section class="popup-app" id="popupApp" aria-label="Computer desktop">
+        <p class="popup-status" id="popupStatus">● SESSION AVAILABLE</p>
+        <h2 id="popupTitle">PC-01</h2>
+        <div id="popupAppContent"></div>
+      </section>
       <div class="popup-actions">
         <span id="popupFootnote">CYBER SESSION // EST. 2003</span>
         <button class="popup-close" id="closePopup" type="button">CLOSE WINDOW</button>
@@ -223,6 +257,11 @@
     const popupStatus = document.querySelector("#popupStatus");
     const popupEyebrow = document.querySelector("#popupEyebrow");
     const popupFootnote = document.querySelector("#popupFootnote");
+    const popupAppContent = document.querySelector("#popupAppContent");
+    let gameScore = 0;
+    let gameTarget = 4;
+    let downloadTimer = null;
+    let ghostStep = 0;
     const cols = 17, rows = 11;
     const layout = [
       "#################",
@@ -303,16 +342,229 @@
       const s=stations[id];
       const isGhost=id==="07";
       popupTitle.textContent=s.title;
-      popupText.textContent=s.text;
       popupStatus.textContent=isGhost?"● UNKNOWN USER ACTIVE":"● SESSION AVAILABLE";
       popupStatus.style.color=isGhost?"var(--pink)":"var(--green)";
       popupEyebrow.textContent=isGhost?"INCOMING TRANSMISSION // PC-07":"INTERNET FRIENDS // LOCAL SESSION";
       popupFootnote.textContent=isGhost?"CONNECTION ORIGIN: UNKNOWN":"CYBER SESSION // EST. 2003";
+      renderStationApp(id);
       message.textContent=isGhost
         ?"PC-07 has opened an unknown connection. The terminal is responding."
         :s.title+" selected. A local session window is open.";
       if(!computerPopup.open) computerPopup.showModal();
     }
+
+    function renderStationApp(id){
+      const screens = {
+        "01": `<div class="app-window">
+          <div class="app-toolbar"><span>FILE</span><span>EDIT</span><span>VIEW</span><span>FAVORITES</span><span>HELP</span></div>
+          <p style="color:#83d8ff;font-size:1rem;margin:0 0 7px">Internet Explorer</p>
+          <p class="app-muted">Search the old web. Some links may remember you.</p>
+          <form class="app-form" data-app-form="search">
+            <input class="app-input" name="query" placeholder="What are you looking for?" required>
+            <button class="app-button" type="submit">SEARCH THE WEB</button>
+          </form>
+          <p class="app-muted" id="browserResult">Home page: your neighborhood, cached forever.</p>
+        </div>`,
+        "02": `<div class="app-window" style="padding:0">
+          <div class="msn-head"><span>MSN Messenger</span><span class="msn-online">● ONLINE</span></div>
+          <div class="msn-chat" id="msnChat" aria-live="polite">
+            <p><strong>nube_azul says:</strong> holaaa, estás?</p>
+            <p><strong>You say:</strong> recién llegué al cyber</p>
+            <p><strong>nube_azul says:</strong> sabía que ibas a venir :)</p>
+            <p><em>nube_azul has set their status to: listening to music</em></p>
+          </div>
+          <form class="msn-compose" data-app-form="msn">
+            <input name="chat" aria-label="Message to nube_azul" placeholder="Type a message..." maxlength="180" required>
+            <button type="submit">SEND</button>
+          </form>
+          <p class="app-muted" style="padding:0 9px 9px;margin:0">Contact: nube_azul · Personal message</p>
+        </div>`,
+        "03": `<div class="app-window">
+          <div class="app-toolbar"><span>WORD 2003</span><span>DOCUMENT1.DOC</span><span>100%</span></div>
+          <textarea class="app-textarea" id="wordPad" aria-label="Document text">Trabajo práctico — Comunicación
+
+La identidad también se construye en los lugares que habitamos.
+
+Introducción:
+Internet no era solamente una herramienta. Era un lugar al que íbamos.</textarea>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:9px">
+            <span class="app-muted" id="wordStatus">Ready · 3 pages</span>
+            <button class="app-button" type="button" data-action="save-doc">SAVE DOCUMENT</button>
+          </div>
+        </div>`,
+        "04": `<div class="app-window">
+          <p style="margin:0;color:var(--green)">MINI GAME // FIND THE SMILEY</p>
+          <p id="gameInstructions">One smiley is hiding in the grid. Find it! Score: <strong id="gameScore">0</strong></p>
+          <div class="game-grid" id="gameGrid">
+            ${Array.from({length:9},(_,i)=>`<button class="game-cell" type="button" data-game-cell="${i}" aria-label="Game tile ${i+1}">?</button>`).join("")}
+          </div>
+          <p class="app-muted" id="gameFeedback">A tiny game for the long wait between downloads.</p>
+        </div>`,
+        "05": `<div class="app-window">
+          <div class="app-toolbar"><span>DOWNLOAD MANAGER</span><span>1 FILE IN QUEUE</span></div>
+          <p style="margin:0;color:var(--cyan)">afterweb_dreams.zip</p>
+          <p class="app-muted">Estimated time remaining: depends on the weather.</p>
+          <div class="progress-track"><div class="progress-fill" id="downloadFill"></div></div>
+          <p id="downloadStatus" class="app-muted">0% · Waiting for connection</p>
+          <button class="app-button" type="button" data-action="download">START DOWNLOAD</button>
+        </div>`,
+        "06": `<div class="app-window">
+          <div class="app-toolbar"><span>FOTOLOG</span><span>SUBÍ TU FOTO</span><span>FAVORITOS</span></div>
+          <div class="photo-placeholder">✦ 2004 ✦</div>
+          <p style="margin:9px 0 4px;color:var(--pink)">#1 · noche de cyber</p>
+          <p class="app-muted" style="margin:0">lunes, 22:47 · 14 comments</p>
+          <div id="photoComments"><p class="photo-comment">luli_89: salimos lindosss</p><p class="photo-comment">fantasma.exe: yo estaba atrás</p></div>
+          <form class="app-form" data-app-form="comment">
+            <input class="app-input" name="comment" placeholder="Dejá tu firma..." maxlength="100" required>
+            <button class="app-button" type="submit">FIRMAR FOTO</button>
+          </form>
+        </div>`,
+        "07": `<div class="app-window">
+          <div class="ghost-terminal" id="ghostTerminal" aria-live="polite">
+            <p>GHOST_USER@PC-07:~$ connection --status</p>
+            <p>CONNECTED. SESSION STARTED: 2003-11-20 03:33</p>
+            <p>---</p>
+            <p>hola, Eureka.</p>
+            <p>pensé que no ibas a volver.</p>
+          </div>
+          <div class="ghost-choices">
+            <button class="app-button" type="button" data-ghost-choice="who">WHO ARE YOU?</button>
+            <button class="app-button" type="button" data-ghost-choice="time">HOW LONG?</button>
+            <button class="app-button" type="button" data-ghost-choice="close">CLOSE CONNECTION</button>
+          </div>
+        </div>`
+      };
+      popupAppContent.innerHTML=screens[id] || "<p>NO SIGNAL</p>";
+      if(id==="04"){gameScore=0;gameTarget=Math.floor(Math.random()*9);updateGameGrid();}
+      if(id==="07")ghostStep=0;
+    }
+
+    function updateGameGrid(){
+      const grid=document.querySelector("#gameGrid");
+      if(!grid)return;
+      grid.querySelectorAll("[data-game-cell]").forEach(button=>{
+        button.textContent="?";
+        button.disabled=false;
+      });
+      const score=document.querySelector("#gameScore");
+      if(score)score.textContent=String(gameScore);
+    }
+
+    function appendChatLine(speaker,text){
+      const chat=document.querySelector("#msnChat");
+      if(!chat)return;
+      const line=document.createElement("p");
+      const name=document.createElement("strong");
+      name.textContent=speaker+": ";
+      line.append(name,document.createTextNode(text));
+      chat.appendChild(line);
+      chat.scrollTop=chat.scrollHeight;
+    }
+
+    function handleAppSubmit(event){
+      const form=event.target.closest("[data-app-form]");
+      if(!form)return;
+      event.preventDefault();
+      const data=new FormData(form);
+      if(form.dataset.appForm==="search"){
+        const query=String(data.get("query")||"").trim();
+        const result=document.querySelector("#browserResult");
+        if(result)result.textContent=query
+          ?'SEARCH COMPLETE: 1 cached result for "'+query+'". Last indexed: 2004.'
+          :"Type something to search.";
+        return;
+      }
+      if(form.dataset.appForm==="msn"){
+        const input=form.elements.chat;
+        const text=input.value.trim();
+        if(!text)return;
+        appendChatLine("You",text);
+        input.value="";
+        window.setTimeout(()=>{
+          const replies=["jajaja mal","te estaba esperando","no cierres la ventana todavía","¿te acordás de esta canción?","creo que alguien más está conectado"];
+          appendChatLine("nube_azul",replies[Math.floor(Math.random()*replies.length)]);
+        },650);
+        return;
+      }
+      if(form.dataset.appForm==="comment"){
+        const text=String(data.get("comment")||"").trim();
+        if(!text)return;
+        const line=document.createElement("p");
+        line.className="photo-comment";
+        line.textContent="visitante: "+text;
+        document.querySelector("#photoComments").appendChild(line);
+        form.reset();
+      }
+    }
+
+    function handleAppClick(event){
+      const button=event.target.closest("button");
+      if(!button)return;
+      if(button.dataset.gameCell!==undefined){
+        const chosen=Number(button.dataset.gameCell);
+        const feedback=document.querySelector("#gameFeedback");
+        if(chosen===gameTarget){
+          gameScore+=1;
+          if(feedback)feedback.textContent="YOU FOUND IT! The smiley says gracias. A new one is hiding.";
+          gameTarget=Math.floor(Math.random()*9);
+          updateGameGrid();
+        }else{
+          button.textContent="·";
+          button.disabled=true;
+          if(feedback)feedback.textContent="Not there. Keep looking.";
+        }
+        const score=document.querySelector("#gameScore");
+        if(score)score.textContent=String(gameScore);
+        return;
+      }
+      if(button.dataset.action==="save-doc"){
+        const status=document.querySelector("#wordStatus");
+        if(status)status.textContent="Saved locally · DOCUMENT1.DOC";
+        return;
+      }
+      if(button.dataset.action==="download"){
+        if(downloadTimer)window.clearInterval(downloadTimer);
+        const status=document.querySelector("#downloadStatus");
+        const fill=document.querySelector("#downloadFill");
+        let progress=0;
+        button.disabled=true;
+        button.textContent="DOWNLOADING...";
+        status.textContent="0% · Connecting to server";
+        downloadTimer=window.setInterval(()=>{
+          progress=Math.min(100,progress+Math.floor(Math.random()*9)+3);
+          fill.style.width=progress+"%";
+          status.textContent=progress+"% · "+(progress===100?"Download complete":"Receiving packets...");
+          if(progress===100){
+            window.clearInterval(downloadTimer);downloadTimer=null;
+            button.disabled=false;button.textContent="DOWNLOAD AGAIN";
+          }
+        },260);
+        return;
+      }
+      if(button.dataset.ghostChoice){
+        const terminal=document.querySelector("#ghostTerminal");
+        const lines={
+          who:["GHOST_USER: no tengo un nombre que te sirva.","GHOST_USER: pero vos me guardaste en favoritos."],
+          time:["GHOST_USER: desde la última vez que apagaste esta máquina.","GHOST_USER: el reloj no avanzó acá adentro."],
+          close:["GHOST_USER: está bien. la próxima vez dejá la luz encendida.","SESSION STILL OPEN // USER EXITED"]
+        };
+        const choice=button.dataset.ghostChoice;
+        terminal.replaceChildren();
+        lines[choice].forEach(text=>{
+          const p=document.createElement("p");p.textContent=text;terminal.appendChild(p);
+        });
+        if(choice==="close"){
+          button.textContent="CONNECTION CLOSED";
+          button.disabled=true;
+          popupStatus.textContent="● SESSION CLOSED // REMOTE USER STILL ONLINE";
+          return;
+        }
+        ghostStep+=1;
+      }
+    }
+
+    popupAppContent.addEventListener("submit",handleAppSubmit);
+    popupAppContent.addEventListener("click",handleAppClick);
 
     function closePopup(){
       if(computerPopup.open) computerPopup.close();
