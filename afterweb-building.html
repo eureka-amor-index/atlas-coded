@@ -423,8 +423,8 @@
             <span>PB Fotolog</span>
           </a>
 
-          <a class="window" href="#" title="Storage">
-            <span>Storage</span>
+          <a class="window lit blue" href="central-56k.html" title="Central 56K">
+            <span>Central 56K // Patch Bay</span>
           </a>
 
           <a class="window lit violet" href="https://internet-traveler.neocities.org/machine-holidays-board.html" title="Machine Holidays">
@@ -435,7 +435,7 @@
             <span>Midnight Supermarket</span>
           </a>
 
-          <a class="window" href="#" title="Do not open">
+          <a class="window" id="sublevelWindow" href="sublevel-0.html" title="Do not open" aria-label="Do not open">
             <span>Do not open</span>
           </a>
 
@@ -467,5 +467,24 @@
   <footer>
     <a href="index.html">return to atlas-coded.net</a>
   </footer>
+
+  <script>
+    (() => {
+      const sublevelWindow = document.getElementById("sublevelWindow");
+      if (!sublevelWindow) return;
+      try {
+        if (localStorage.getItem("afterweb.sublevel0.unlocked") === "true") {
+          sublevelWindow.classList.add("lit", "red");
+          sublevelWindow.title = "Sublevel 0";
+          sublevelWindow.setAttribute("aria-label", "Sublevel 0 unlocked");
+          const label = sublevelWindow.querySelector("span");
+          if (label) label.textContent = "Sublevel 0";
+        }
+      } catch (error) {
+        // The locked door remains available even when browser storage is disabled.
+      }
+    })();
+  </script>
+
 </body>
 </html>
