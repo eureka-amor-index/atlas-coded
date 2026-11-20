@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07080d">
+  <title>CENTRAL 56K // Afterweb Building</title>
+  <meta name="description" content="The Afterweb Building's maintenance room. Reconnect the signal through the Central 56K patch bay.">
+  <link rel="canonical" href="https://atlas-coded.net/central-56k.html">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CENTRAL 56K // Patch Bay">
+  <meta property="og:description" content="Three carrier lines. One building. Something is answering from below.">
+  <meta property="og:url" content="https://atlas-coded.net/central-56k.html">
+  <meta property="og:site_name" content="ATLAS-CODED.NET // AFTERWEB">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CENTRAL 56K // Patch Bay">
+  <meta name="twitter:description" content="Reconnect the building's signal.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #07080d;
+      --panel: rgba(15, 17, 25, .94);
+      --panel-2: #171923;
+      --line: #36364b;
+      --text: #eee9ff;
+      --muted: #9694aa;
+      --violet: #b99cff;
+      --cyan: #85e8ff;
+      --green: #a6ffbb;
+      --amber: #ffd88b;
+      --red: #ff8498;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(116, 72, 173, .19), transparent 48%),
+        linear-gradient(180deg, #0b0c14, var(--bg) 72%);
+      color: var(--text);
+      font-family: "Courier New", monospace;
+    }
+    a { color: var(--cyan); }
+    button { font: inherit; }
+    .shell { width: min(980px, 100%); margin: 0 auto; padding: 24px 18px 40px; position: relative; z-index: 1; }
+    .topline { display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; margin-bottom:30px; }
+    .back { color:var(--violet); text-decoration:none; border-bottom:1px dotted currentColor; font-size:.82rem; }
+    .system-id { color:var(--muted); font-size:.7rem; letter-spacing:.14em; }
+    header { text-align:center; margin:12px auto 28px; }
+    .eyebrow { color:var(--cyan); font-size:.72rem; letter-spacing:.22em; }
+    h1 { margin:10px 0 7px; font-size:clamp(2rem, 7vw, 4.3rem); letter-spacing:.12em; text-shadow:0 0 20px rgba(185,156,255,.4); }
+    .subtitle { margin:0; color:var(--muted); font-size:.9rem; }
+    .rack {
+      border:1px solid #514765;
+      background:linear-gradient(145deg, rgba(26,25,39,.97), rgba(9,11,17,.98));
+      box-shadow:0 0 0 6px rgba(0,0,0,.22), 0 24px 70px rgba(0,0,0,.42), inset 0 0 45px rgba(112,88,155,.08);
+      padding:clamp(16px, 4vw, 30px);
+      position:relative;
+    }
+    .rack::before,.rack::after { content:""; position:absolute; width:8px; height:8px; border-radius:50%; background:#625873; box-shadow:0 0 8px rgba(185,156,255,.25); }
+    .rack::before { top:12px; left:12px; } .rack::after { top:12px; right:12px; }
+    .rack-head { display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; border-bottom:1px solid var(--line); padding:5px 0 18px; }
+    .rack-head strong { color:var(--amber); font-size:.8rem; letter-spacing:.15em; }
+    .status { display:flex; align-items:center; gap:9px; color:var(--muted); font-size:.72rem; }
+    .led { width:9px; height:9px; border-radius:50%; background:var(--red); box-shadow:0 0 12px currentColor; }
+    .led.online { background:var(--green); color:var(--green); }
+    .circuit-list { display:grid; gap:12px; margin:22px 0; }
+    .circuit {
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      align-items:center;
+      gap:14px;
+      padding:15px;
+      border:1px solid var(--line);
+      background:rgba(4,6,12,.58);
+    }
+    .circuit-main { display:flex; align-items:center; gap:13px; min-width:0; }
+    .socket { width:38px; height:38px; flex:0 0 38px; display:grid; place-items:center; border:2px solid #5b536d; border-radius:50%; color:var(--muted); font-size:.8rem; background:#090b12; box-shadow:inset 0 0 12px #000; }
+    .circuit.connected .socket { border-color:var(--green); color:var(--green); box-shadow:0 0 13px rgba(166,255,187,.25), inset 0 0 12px rgba(166,255,187,.12); }
+    .circuit-copy { min-width:0; }
+    .circuit-copy strong { display:block; font-size:.83rem; letter-spacing:.07em; }
+    .circuit-copy small { display:block; margin-top:5px; color:var(--muted); font-size:.7rem; line-height:1.45; }
+    .circuit-path { color:#726b85; font-size:.68rem; margin-top:7px; letter-spacing:.08em; overflow-wrap:anywhere; }
+    .circuit.connected .circuit-path { color:var(--green); }
+    .patch {
+      border:1px solid #75678c;
+      color:var(--text);
+      background:#211b2d;
+      padding:10px 12px;
+      min-width:112px;
+      cursor:pointer;
+      font-size:.7rem;
+      letter-spacing:.08em;
+      transition:background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+    .patch:hover:not(:disabled) { background:#392c4d; border-color:var(--violet); transform:translateY(-1px); }
+    .circuit.connected .patch { color:#07120b; background:var(--green); border-color:var(--green); }
+    .patch:focus-visible,.reset:focus-visible,.enter:focus-visible { outline:2px solid var(--cyan); outline-offset:3px; }
+    .meter-wrap { border-top:1px solid var(--line); padding-top:18px; }
+    .meter-label { display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:.7rem; margin-bottom:9px; }
+    .meter { height:8px; border:1px solid #454257; background:#090a11; overflow:hidden; }
+    .meter-fill { width:0%; height:100%; background:linear-gradient(90deg,var(--violet),var(--cyan),var(--green)); box-shadow:0 0 14px rgba(133,232,255,.5); transition:width .3s ease; }
+    .response { min-height:68px; margin-top:20px; padding:15px; border:1px dashed #50465f; color:var(--muted); background:rgba(5,6,12,.45); font-size:.78rem; line-height:1.7; }
+    .response strong { color:var(--amber); }
+    .response.success { border-color:rgba(166,255,187,.55); color:var(--green); box-shadow:inset 0 0 25px rgba(166,255,187,.05); }
+    .actions { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-top:17px; }
+    .reset { border:0; padding:7px 0; background:transparent; color:var(--muted); text-decoration:underline dotted; cursor:pointer; font-size:.7rem; }
+    .enter { display:none; color:#07120b; background:var(--green); text-decoration:none; padding:12px 15px; font-size:.72rem; letter-spacing:.08em; box-shadow:0 0 18px rgba(166,255,187,.25); }
+    .enter.visible { display:inline-block; }
+    .note { color:var(--muted); text-align:center; font-size:.7rem; line-height:1.7; margin:22px auto 0; max-width:650px; }
+    .note em { color:var(--violet); font-style:normal; }
+    .footer { text-align:center; color:#777287; font-size:.68rem; padding:30px 0 0; }
+    .footer a { color:var(--violet); text-decoration:none; }
+    @media (max-width:560px) {
+      .circuit { grid-template-columns:1fr; }
+      .circuit-main { align-items:flex-start; }
+      .patch { width:100%; }
+      .system-id { display:none; }
+    }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:1ms !important; transition-duration:1ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="topline" aria-label="Room navigation">
+      <a class="back" href="afterweb-building.html">← BACK TO AFTERWEB BUILDING</a>
+      <span class="system-id">MAINTENANCE ACCESS // AUTHORIZED BY NOBODY</span>
+    </nav>
+
+    <header>
+      <div class="eyebrow">AFTERWEB BUILDING / BASEMENT MAINTENANCE</div>
+      <h1>CENTRAL 56K</h1>
+      <p class="subtitle">patch bay · carrier signal distribution · est. unknown</p>
+    </header>
+
+    <section class="rack" aria-labelledby="rackTitle">
+      <div class="rack-head">
+        <strong id="rackTitle">PATCH PANEL // A-03</strong>
+        <div class="status"><span class="led" id="statusLed"></span><span id="statusText">CARRIER OFFLINE</span></div>
+      </div>
+
+      <div class="circuit-list">
+        <article class="circuit" data-circuit="city">
+          <div class="circuit-main">
+            <div class="socket" aria-hidden="true">01</div>
+            <div class="circuit-copy">
+              <strong>CITY LOOP</strong>
+              <small>External carrier · Nightlife District / street-level access</small>
+              <div class="circuit-path">SOURCE: OUTSIDE WORLD → DESTINATION: BUILDING GRID</div>
+            </div>
+          </div>
+          <button class="patch" type="button" data-patch="city" aria-pressed="false">PATCH LINE</button>
+        </article>
+
+        <article class="circuit" data-circuit="memory">
+          <div class="circuit-main">
+            <div class="socket" aria-hidden="true">02</div>
+            <div class="circuit-copy">
+              <strong>MEMORY BUS</strong>
+              <small>Archive carrier · Dream Archive / recovered room index</small>
+              <div class="circuit-path">SOURCE: MEMORY ARCHIVE → DESTINATION: BUILDING GRID</div>
+            </div>
+          </div>
+          <button class="patch" type="button" data-patch="memory" aria-pressed="false">PATCH LINE</button>
+        </article>
+
+        <article class="circuit" data-circuit="root">
+          <div class="circuit-main">
+            <div class="socket" aria-hidden="true">03</div>
+            <div class="circuit-copy">
+              <strong>ROOT CIRCUIT</strong>
+              <small>Unregistered carrier · Floor index: <span style="color:var(--red)">-1</span></small>
+              <div class="circuit-path">SOURCE: UNKNOWN → DESTINATION: UNKNOWN</div>
+            </div>
+          </div>
+          <button class="patch" type="button" data-patch="root" aria-pressed="false">PATCH LINE</button>
+        </article>
+      </div>
+
+      <div class="meter-wrap">
+        <div class="meter-label"><span>CARRIER INTEGRITY</span><span id="progressText">0 / 3 LINES</span></div>
+        <div class="meter" role="progressbar" aria-label="Carrier integrity" aria-valuemin="0" aria-valuemax="3" aria-valuenow="0" id="progressBar">
+          <div class="meter-fill" id="progressFill"></div>
+        </div>
+      </div>
+
+      <div class="response" id="response" role="status" aria-live="polite">
+        No carrier detected. Three lines are disconnected. The building is running on residual memory.
+      </div>
+
+      <div class="actions">
+        <button class="reset" id="resetPanel" type="button">RESET PATCH PANEL</button>
+        <a class="enter" id="enterSublevel" href="sublevel-0.html">SIGNAL RESTORED // ENTER SUBLEVEL 0 ↗</a>
+      </div>
+    </section>
+
+    <p class="note">The panel remembers its connections in this browser. <em>Do not disconnect the root circuit after it answers.</em></p>
+    <footer class="footer">CENTRAL 56K // <a href="index.html">ATLAS-CODED.NET</a> // DO NOT POWER DOWN THE BUILDING</footer>
+  </main>
+
+  <script>
+    (() => {
+      const STORAGE_KEY = "afterweb.central56k.connections";
+      const UNLOCK_KEY = "afterweb.sublevel0.unlocked";
+      const names = ["city", "memory", "root"];
+      const connected = new Set();
+
+      function readSaved() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          return Array.isArray(parsed) ? parsed.filter((item) => names.includes(item)) : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function isUnlocked() {
+        try {
+          return localStorage.getItem(UNLOCK_KEY) === "true";
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function save() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(Array.from(connected)));
+        } catch (error) {
+          response.textContent = "This browser is blocking local storage. The patch panel will work for this visit, but its connections may not persist.";
+        }
+      }
+
+      const response = document.getElementById("response");
+      const progressText = document.getElementById("progressText");
+      const progressFill = document.getElementById("progressFill");
+      const progressBar = document.getElementById("progressBar");
+      const statusLed = document.getElementById("statusLed");
+      const statusText = document.getElementById("statusText");
+      const enterSublevel = document.getElementById("enterSublevel");
+
+      readSaved().forEach((name) => connected.add(name));
+
+      function render() {
+        names.forEach((name) => {
+          const card = document.querySelector('[data-circuit="' + name + '"]');
+          const button = document.querySelector('[data-patch="' + name + '"]');
+          const active = connected.has(name);
+          card.classList.toggle("connected", active);
+          button.textContent = active ? "DISCONNECT" : "PATCH LINE";
+          button.setAttribute("aria-pressed", String(active));
+        });
+
+        const count = connected.size;
+        progressText.textContent = count + " / 3 LINES";
+        progressFill.style.width = ((count / 3) * 100) + "%";
+        progressBar.setAttribute("aria-valuenow", String(count));
+        statusLed.classList.toggle("online", count === 3);
+        statusText.textContent = count === 3 ? "CARRIER ONLINE" : (count === 0 ? "CARRIER OFFLINE" : "SIGNAL DEGRADED");
+
+        if (count === 3) {
+          try { localStorage.setItem(UNLOCK_KEY, "true"); } catch (error) {}
+          response.classList.add("success");
+          response.innerHTML = "<strong>ROOT SIGNAL RETURNED.</strong><br>The antenna just moved. Something answered from below the building. A new floor has appeared in the directory.";
+          enterSublevel.classList.add("visible");
+        } else if (isUnlocked()) {
+          response.classList.add("success");
+          response.innerHTML = "<strong>SUBLEVEL 0 IS STILL ACCESSIBLE.</strong><br>The root signal was restored previously. The building remembers.";
+          enterSublevel.classList.add("visible");
+        } else {
+          response.classList.remove("success");
+          response.textContent = count === 0
+            ? "No carrier detected. Three lines are disconnected. The building is running on residual memory."
+            : "Carrier fragment detected. " + (3 - count) + " line(s) remain disconnected. The root circuit is still silent.";
+          enterSublevel.classList.remove("visible");
+        }
+      }
+
+      document.querySelectorAll("[data-patch]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const name = button.dataset.patch;
+          if (connected.has(name)) connected.delete(name);
+          else connected.add(name);
+          save();
+          render();
+        });
+      });
+
+      document.getElementById("resetPanel").addEventListener("click", () => {
+        connected.clear();
+        save();
+        render();
+        if (isUnlocked()) {
+          response.classList.add("success");
+          response.innerHTML = "<strong>PATCH PANEL RESET.</strong><br>The lower-floor access remains in the building's memory.";
+          enterSublevel.classList.add("visible");
+        }
+      });
+
+      render();
+    })();
+  </script>
+</body>
+</html>
