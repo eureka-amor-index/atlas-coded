@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#110b0b">
+  <title>VIDECLUB: ÚLTIMA COPIA // Afterweb</title>
+  <meta name="description" content="A neighborhood video rental store preserved somewhere in the Afterweb. Browse VHS tapes, get a membership card, and rent a little story.">
+  <link rel="canonical" href="https://atlas-coded.net/videoclub.html">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="VIDECLUB: ÚLTIMA COPIA">
+  <meta property="og:description" content="Rebobinar antes de devolver. A little video store that stayed open.">
+  <meta property="og:url" content="https://atlas-coded.net/videoclub.html">
+  <meta property="og:site_name" content="ATLAS-CODED.NET // AFTERWEB">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="VIDECLUB: ÚLTIMA COPIA">
+  <meta name="twitter:description" content="The neighborhood video store is still open.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg:#100b0c;
+      --bg2:#1a1013;
+      --panel:#211619;
+      --panel2:#2b1b20;
+      --line:#5b3b43;
+      --text:#f7e9dc;
+      --muted:#b49b94;
+      --pink:#ff8c9f;
+      --red:#ff5d73;
+      --amber:#ffd18a;
+      --mint:#b4efc8;
+      --blue:#9bdcff;
+    }
+    * { box-sizing:border-box; }
+    body {
+      margin:0;
+      min-height:100vh;
+      color:var(--text);
+      font-family:"Courier New",monospace;
+      background:
+        radial-gradient(ellipse at 50% -10%,rgba(186,75,90,.22),transparent 48%),
+        repeating-linear-gradient(0deg,rgba(255,255,255,.012) 0 1px,transparent 1px 4px),
+        linear-gradient(180deg,#1b1014,var(--bg) 70%);
+    }
+    button,input { font:inherit; }
+    button { -webkit-tap-highlight-color:transparent; }
+    a { color:var(--amber); }
+    .shell { width:min(1100px,100%); margin:0 auto; padding:22px 18px 44px; }
+    .topbar { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:25px; }
+    .back { color:var(--pink); text-decoration:none; font-size:.78rem; border-bottom:1px dotted currentColor; }
+    .closed-note { color:var(--muted); font-size:.67rem; letter-spacing:.12em; }
+    .sign {
+      position:relative; width:min(650px,100%); margin:0 auto 28px; padding:21px 18px 18px;
+      text-align:center; border:2px solid #a85464; background:linear-gradient(135deg,#2a121a,#130c10);
+      box-shadow:0 0 0 5px rgba(0,0,0,.22),0 0 38px rgba(255,93,115,.13),inset 0 0 28px rgba(255,140,159,.08);
+    }
+    .sign::before,.sign::after { content:""; position:absolute; top:8px; width:7px; height:7px; border-radius:50%; background:var(--amber); box-shadow:0 0 12px var(--amber); }
+    .sign::before { left:9px; } .sign::after { right:9px; }
+    .sign-top { color:var(--amber); font-size:.68rem; letter-spacing:.28em; }
+    h1 { margin:8px 0 5px; color:var(--pink); font-family:Impact,Haettenschweiler,"Arial Narrow Bold",sans-serif; font-size:clamp(2.8rem,9vw,5.7rem); line-height:.94; letter-spacing:.04em; text-shadow:3px 3px 0 #5a1c2b,0 0 22px rgba(255,140,159,.48); }
+    .sign-sub { color:#e8c9c1; font-size:.78rem; letter-spacing:.1em; }
+    .sign-lights { display:flex; justify-content:center; gap:9px; margin-top:15px; }
+    .sign-lights i { display:block; width:6px; height:6px; border-radius:50%; background:var(--pink); box-shadow:0 0 10px var(--pink); animation:blink 2.6s infinite alternate; }
+    .sign-lights i:nth-child(2n) { animation-delay:.6s; background:var(--amber); box-shadow:0 0 10px var(--amber); }
+    @keyframes blink { from{opacity:.35} to{opacity:1} }
+    .store-grid { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(260px,.8fr); gap:18px; align-items:start; }
+    .panel { border:1px solid var(--line); background:linear-gradient(145deg,rgba(42,27,31,.96),rgba(20,13,16,.97)); box-shadow:0 14px 40px rgba(0,0,0,.25),inset 0 0 28px rgba(255,140,159,.025); }
+    .panel-head { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:14px 16px; border-bottom:1px solid var(--line); background:rgba(0,0,0,.15); }
+    .panel-head strong { color:var(--amber); font-size:.72rem; letter-spacing:.15em; }
+    .panel-head span { color:var(--muted); font-size:.65rem; }
+    .shelf { padding:18px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .tape-card {
+      min-width:0; min-height:174px; padding:11px 9px 12px; border:1px solid #63444b; border-radius:3px;
+      color:var(--text); background:linear-gradient(150deg,#39262c,#1c1418 70%);
+      cursor:pointer; text-align:left; transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+    }
+    .tape-card:hover:not(:disabled) { transform:translateY(-4px); border-color:var(--pink); box-shadow:0 9px 20px rgba(0,0,0,.3),0 0 13px rgba(255,140,159,.1); }
+    .tape-card:focus-visible,.small-button:focus-visible,.action:focus-visible,input:focus-visible { outline:2px solid var(--blue); outline-offset:3px; }
+    .tape-card[aria-pressed="true"] { border-color:var(--amber); box-shadow:inset 0 0 0 1px var(--amber),0 0 18px rgba(255,209,138,.12); }
+    .tape-card:disabled { cursor:not-allowed; opacity:.58; }
+    .cassette {
+      height:82px; position:relative; margin-bottom:10px; padding:10px 8px;
+      border:1px solid rgba(255,255,255,.17); background:linear-gradient(140deg,#16161d,#07080d);
+      box-shadow:inset 0 0 10px rgba(0,0,0,.8),2px 3px 0 rgba(0,0,0,.28);
+    }
+    .cassette::before { content:""; position:absolute; left:7px; right:7px; top:7px; height:7px; border:1px solid rgba(255,255,255,.13); background:rgba(255,255,255,.035); }
+    .cassette-label { position:relative; z-index:1; display:flex; align-items:center; justify-content:space-between; gap:3px; height:47px; margin-top:14px; padding:5px; background:var(--tape-color,#bd6573); color:#180e11; }
+    .cassette-label b { display:block; font-size:.64rem; line-height:1.1; letter-spacing:.03em; }
+    .cassette-label small { font-size:.48rem; writing-mode:vertical-rl; font-weight:bold; }
+    .reels { position:absolute; bottom:5px; left:50%; transform:translateX(-50%); display:flex; gap:34px; }
+    .reels i { display:block; width:13px; height:13px; border:2px solid #a8a5ac; border-radius:50%; background:#181921; box-shadow:inset 0 0 0 2px #34333a; }
+    .tape-title { display:block; min-height:29px; font-size:.68rem; line-height:1.3; font-weight:bold; }
+    .tape-meta { display:block; margin-top:5px; color:var(--muted); font-size:.59rem; }
+    .tape-status { display:block; margin-top:8px; color:var(--mint); font-size:.56rem; letter-spacing:.08em; }
+    .tape-card.hidden-tape { display:none; border-style:dashed; }
+    .shelf-foot { border-top:1px dashed #60434a; padding:12px 16px; color:var(--muted); font-size:.67rem; line-height:1.6; }
+    .side { display:grid; gap:18px; }
+    .member-body,.detail-body,.rental-body { padding:16px; }
+    .member-card { position:relative; overflow:hidden; padding:14px; border:1px solid #bd8a76; color:#261318; background:linear-gradient(130deg,#f1c49e,#d88b8f 65%,#8e5267); box-shadow:0 7px 18px rgba(0,0,0,.2); }
+    .member-card::after { content:"AFTERWEB"; position:absolute; right:-6px; bottom:-10px; font-family:Impact,sans-serif; font-size:2.4rem; color:rgba(41,16,25,.11); transform:rotate(-9deg); }
+    .member-brand { font-size:.6rem; letter-spacing:.18em; }
+    .member-name { position:relative; z-index:1; margin:22px 0 5px; font-size:1.1rem; font-weight:bold; text-transform:uppercase; overflow-wrap:anywhere; }
+    .member-number { font-size:.6rem; letter-spacing:.12em; }
+    .member-form { display:flex; gap:7px; margin-top:12px; }
+    input { min-width:0; width:100%; padding:10px; color:var(--text); border:1px solid #63444b; background:#110d11; font-size:.72rem; }
+    .small-button,.action { border:1px solid #92616b; background:#3a222a; color:var(--text); padding:10px 12px; cursor:pointer; font-size:.67rem; letter-spacing:.07em; white-space:nowrap; }
+    .small-button:hover,.action:hover { border-color:var(--pink); background:#522b37; }
+    .hint { margin:10px 0 0; color:var(--muted); font-size:.62rem; line-height:1.6; }
+    .empty { color:var(--muted); font-size:.72rem; line-height:1.7; }
+    .detail-kicker { color:var(--pink); font-size:.64rem; letter-spacing:.15em; margin-bottom:8px; }
+    .detail-title { margin:0 0 7px; color:var(--amber); font-size:1.05rem; }
+    .detail-meta { color:var(--muted); font-size:.65rem; line-height:1.6; }
+    .detail-copy { color:#e7d8d0; font-size:.72rem; line-height:1.75; margin:13px 0; }
+    .detail-quote { border-left:2px solid var(--pink); padding:8px 10px; color:#dcaeb4; background:rgba(255,140,159,.055); font-size:.68rem; line-height:1.6; }
+    .detail-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+    .action.primary { color:#211015; border-color:var(--amber); background:var(--amber); }
+    .action:disabled { cursor:not-allowed; opacity:.4; }
+    .rental-item { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:10px 0; border-bottom:1px dashed #60434a; }
+    .rental-item:last-child { border-bottom:0; }
+    .rental-copy { min-width:0; }
+    .rental-copy strong { display:block; font-size:.68rem; }
+    .rental-copy small { display:block; margin-top:5px; color:var(--muted); font-size:.6rem; line-height:1.5; }
+    .rental-actions { display:flex; gap:5px; flex-wrap:wrap; justify-content:flex-end; }
+    .rental-actions button { padding:7px; font-size:.58rem; }
+    .counter-note { margin-top:18px; padding:14px; border:1px dashed #75545a; color:#d0aaa8; background:rgba(0,0,0,.16); font-size:.67rem; line-height:1.7; transform:rotate(-.35deg); }
+    .counter-note strong { color:var(--amber); }
+    .bottomline { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-top:22px; color:var(--muted); font-size:.65rem; }
+    .toast { min-height:23px; margin-top:13px; color:var(--mint); font-size:.68rem; line-height:1.5; }
+    @media (max-width:820px) { .store-grid { grid-template-columns:1fr; } .side { grid-template-columns:repeat(2,minmax(0,1fr)); } .side .panel:last-child { grid-column:1/-1; } }
+    @media (max-width:560px) { .shell { padding:14px 12px 30px; } .shelf { grid-template-columns:repeat(2,minmax(0,1fr)); padding:12px; gap:9px; } .tape-card { min-height:162px; } .side { grid-template-columns:1fr; } .side .panel:last-child { grid-column:auto; } .member-form { flex-wrap:wrap; } .member-form .small-button { width:100%; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:1ms !important; transition-duration:1ms !important; } }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <nav class="topbar" aria-label="Room navigation">
+      <a class="back" href="afterweb-building.html">← BACK TO AFTERWEB BUILDING</a>
+      <span class="closed-note">OPEN DAILY // 16:00—LATE // CASH ONLY (PROBABLY)</span>
+    </nav>
+
+    <header class="sign">
+      <div class="sign-top">VIDEO CLUB · ALQUILER DE PELÍCULAS</div>
+      <h1>ÚLTIMA COPIA</h1>
+      <div class="sign-sub">REBOBINAR ANTES DE DEVOLVER · EST. 1998</div>
+      <div class="sign-lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </header>
+
+    <div class="store-grid">
+      <section class="panel" aria-labelledby="shelfTitle">
+        <div class="panel-head">
+          <strong id="shelfTitle">ESTANTERÍA A // CATÁLOGO VHS</strong>
+          <span id="catalogCount">05 COPIAS</span>
+        </div>
+        <div class="shelf" id="shelf">
+          <button class="tape-card" type="button" data-tape="canal3" aria-pressed="false">
+            <span class="cassette" style="--tape-color:#d58c70"><span class="cassette-label"><b>CANAL<br>03</b><small>HORROR</small></span><span class="reels"><i></i><i></i></span></span>
+            <span class="tape-title">La casa del Canal 3</span><span class="tape-meta">HORROR · 1998 · 92 MIN</span><span class="tape-status">COPIA DISPONIBLE</span>
+          </button>
+          <button class="tape-card" type="button" data-tape="verano" aria-pressed="false">
+            <span class="cassette" style="--tape-color:#e7bd78"><span class="cassette-label"><b>VERANO<br>2002</b><small>DRAMA</small></span><span class="reels"><i></i><i></i></span></span>
+            <span class="tape-title">Verano en pausa</span><span class="tape-meta">DRAMA · 2002 · 104 MIN</span><span class="tape-status">COPIA DISPONIBLE</span>
+          </button>
+          <button class="tape-card" type="button" data-tape="manual" aria-pressed="false">
+            <span class="cassette" style="--tape-color:#9d8bd1"><span class="cassette-label"><b>MANUAL<br>PARA...</b><small>SCI-FI</small></span><span class="reels"><i></i><i></i></span></span>
+            <span class="tape-title">Manual para desaparecer</span><span class="tape-meta">SCI-FI · 2003 · 87 MIN</span><span class="tape-status">COPIA DISPONIBLE</span>
+          </button>
+          <button class="tape-card" type="button" data-tape="perros" aria-pressed="false">
+            <span class="cassette" style="--tape-color:#a1bf9c"><span class="cassette-label"><b>LOS<br>PERROS</b><small>COMEDIA</small></span><span class="reels"><i></i><i></i></span></span>
+            <span class="tape-title">Los perros del videoclub</span><span class="tape-meta">COMEDIA · 1997 · 68 MIN</span><span class="tape-status">COPIA DISPONIBLE</span>
+          </button>
+          <button class="tape-card" type="button" data-tape="frecuencia" aria-pressed="false">
+            <span class="cassette" style="--tape-color:#85abc4"><span class="cassette-label"><b>FRECUENCIA<br>FANTASMA</b><small>MYSTERY</small></span><span class="reels"><i></i><i></i></span></span>
+            <span class="tape-title">Frecuencia fantasma</span><span class="tape-meta">MYSTERY · 2004 · 90 MIN</span><span class="tape-status">COPIA DISPONIBLE</span>
+          </button>
+          <button class="tape-card hidden-tape" id="ghostTape" type="button" data-tape="copia00" aria-pressed="false">
+            <span class="cassette" style="--tape-color:#d8a5c7"><span class="cassette-label"><b>NO<br>ETIQUETA</b><small>???</small></span><span class="reels"><i></i><i></i></span></span>
+            <span class="tape-title">Copia 00 // El edificio</span><span class="tape-meta">ORIGEN DESCONOCIDO · ??? MIN</span><span class="tape-status">COPIA NO CATALOGADA</span>
+          </button>
+        </div>
+        <div class="shelf-foot">Elegí una película para ver la ficha. Las copias se alquilan por 24 horas. No aceptamos devoluciones después de medianoche. Bueno, depende.</div>
+      </section>
+
+      <aside class="side">
+        <section class="panel" aria-labelledby="memberTitle">
+          <div class="panel-head"><strong id="memberTitle">TARJETA DE SOCIO</strong><span>ALTA GRATUITA</span></div>
+          <div class="member-body">
+            <div class="member-card">
+              <div class="member-brand">ÚLTIMA COPIA // VIDEO CLUB</div>
+              <div class="member-name" id="memberName">SOCIO INVITADO</div>
+              <div class="member-number" id="memberNumber">Nº 000-000 // SIN REGISTRO</div>
+            </div>
+            <form class="member-form" id="memberForm">
+              <input id="memberInput" name="nickname" maxlength="20" autocomplete="off" placeholder="Tu apodo, nada más" aria-label="Membership nickname">
+              <button class="small-button" type="submit">HACERME SOCIO</button>
+            </form>
+            <p class="hint">Usá un apodo. La tarjeta queda guardada solamente en este navegador.</p>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="detailTitle">
+          <div class="panel-head"><strong id="detailTitle">FICHA DE PELÍCULA</strong><span>VHS / 01</span></div>
+          <div class="detail-body" id="detailBody" aria-live="polite">
+            <div class="empty">Todavía no elegiste una cinta. Hay olor a plástico tibio y pochoclos viejos.</div>
+          </div>
+        </section>
+
+        <section class="panel" aria-labelledby="rentalTitle">
+          <div class="panel-head"><strong id="rentalTitle">MOSTRADOR // TUS ALQUILERES</strong><span id="rentalCount">0 ACTIVOS</span></div>
+          <div class="rental-body" id="rentalBody"><div class="empty">No tenés películas alquiladas. El mostrador está despejado.</div></div>
+        </section>
+      </aside>
+    </div>
+
+    <div class="counter-note"><strong>AVISO DEL ENCARGADO:</strong> Si encontrás una cinta sin etiqueta, no la pongas en el reproductor del local. No sabemos quién la trajo. Nadie recuerda haberla alquilado.</div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <footer class="bottomline">
+      <span>ÚLTIMA COPIA // BARRIO AFTERWEB</span>
+      <a href="central-56k.html">CENTRAL 56K ↗</a>
+      <a href="afterweb-building.html">VOLVER AL EDIFICIO ←</a>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const KEYS = {
+        member: "afterweb.videoclub.member",
+        rentals: "afterweb.videoclub.rentals",
+        history: "afterweb.videoclub.history"
+      };
+
+      const tapes = {
+        canal3: {
+          title:"La casa del Canal 3",
+          genre:"HORROR",
+          year:"1998",
+          runtime:"92 minutos",
+          director:"M. Ledesma",
+          synopsis:"En un edificio de departamentos, todos los televisores empiezan a transmitir el mismo living. Una noche, una vecina reconoce la puerta de su propio departamento en la pantalla. La señal sólo aparece después de las 03:00.",
+          quote:"«No cambies de canal. Ya sabe dónde vivís.»",
+          color:"terracotta"
+        },
+        verano: {
+          title:"Verano en pausa",
+          genre:"DRAMA",
+          year:"2002",
+          runtime:"104 minutos",
+          director:"Lucía Ferrer",
+          synopsis:"Un grupo de amigos pasa el último verano antes de que cada uno tome un camino distinto. Hay una pileta vacía, una cámara MiniDV y una promesa que nadie se anima a cumplir.",
+          quote:"«Nos vemos cuando vuelva el calor.»",
+          color:"sun-faded"
+        },
+        manual: {
+          title:"Manual para desaparecer",
+          genre:"CIENCIA FICCIÓN",
+          year:"2003",
+          runtime:"87 minutos",
+          director:"N. Salvatierra",
+          synopsis:"Un empleado de correo descubre un manual fotocopiado que enseña a borrarse de los registros digitales. Cada capítulo elimina un dato. El último capítulo tiene su letra.",
+          quote:"«Paso 4: no dejes una dirección de reenvío.»",
+          color:"violet"
+        },
+        perros: {
+          title:"Los perros del videoclub",
+          genre:"COMEDIA",
+          year:"1997",
+          runtime:"68 minutos",
+          director:"Colectivo La Vereda",
+          synopsis:"Dos perros callejeros se adueñan de un videoclub durante una tormenta. El encargado intenta echarlos, pero los clientes empiezan a alquilar las películas que ellos eligen.",
+          quote:"«El cliente siempre tiene razón. El perro también.»",
+          color:"mint"
+        },
+        frecuencia: {
+          title:"Frecuencia fantasma",
+          genre:"MISTERIO",
+          year:"2004",
+          runtime:"90 minutos",
+          director:"R. Quiroga",
+          synopsis:"Una radioaficionada capta una transmisión nocturna con mensajes destinados a personas que todavía no nacieron. En el fondo de cada grabación se escucha el zumbido de un proyector.",
+          quote:"«Si escuchás tu nombre, apagá la radio.»",
+          color:"blue"
+        },
+        copia00: {
+          title:"Copia 00 // El edificio",
+          genre:"SIN CATALOGAR",
+          year:"????",
+          runtime:"NO INDICADO",
+          director:"NO REGISTRADO",
+          synopsis:"La cinta muestra el frente de un edificio oscuro. Una ventana se enciende cada vez que alguien alquila una película. En el último minuto, la cámara baja hasta una puerta que no figura en los planos.",
+          quote:"«La próxima copia todavía no fue grabada.»",
+          color:"unknown"
+        }
+      };
+
+      const $ = (selector) => document.querySelector(selector);
+      const shelf = $("#shelf");
+      const detailBody = $("#detailBody");
+      const rentalBody = $("#rentalBody");
+      const toast = $("#toast");
+      let selectedId = null;
+      let rentals = readJSON(KEYS.rentals, {});
+      let history = readJSON(KEYS.history, { returned:0, rewound:0 });
+      let member = readMember();
+
+      function readJSON(key, fallback) {
+        try {
+          const value = localStorage.getItem(key);
+          return value ? JSON.parse(value) : fallback;
+        } catch (error) {
+          return fallback;
+        }
+      }
+
+      function writeJSON(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        } catch (error) {
+          say("El navegador no permite guardar datos. Podés seguir explorando durante esta visita.");
+          return false;
+        }
+      }
+
+      function readMember() {
+        try { return localStorage.getItem(KEYS.member) || ""; }
+        catch (error) { return ""; }
+      }
+
+      function say(message) { toast.textContent = message; }
+
+      function memberNumber(name) {
+        let hash = 0;
+        for (let i=0;i<name.length;i+=1) hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
+        return "Nº " + String(hash % 900 + 100) + "-" + String((hash * 7) % 900 + 100);
+      }
+
+      function renderMember() {
+        $("#memberName").textContent = member ? member.toUpperCase() : "SOCIO INVITADO";
+        $("#memberNumber").textContent = member ? memberNumber(member) + " // SOCIO ACTIVO" : "Nº 000-000 // SIN REGISTRO";
+        $("#memberInput").value = member;
+      }
+
+      function formatDue(timestamp) {
+        const date = new Date(timestamp);
+        return new Intl.DateTimeFormat("es-AR", { dateStyle:"short", timeStyle:"short" }).format(date);
+      }
+
+      function isOverdue(rental) { return Date.now() > rental.dueAt; }
+
+      function renderShelf() {
+        const activeCount = Object.keys(rentals).length;
+        const completed = Number(history.returned || 0);
+        const ghostUnlocked = completed >= 2;
+        const ghost = $("#ghostTape");
+        ghost.classList.toggle("hidden-tape", !ghostUnlocked);
+        $("#catalogCount").textContent = (ghostUnlocked ? "06" : "05") + " COPIAS";
+
+        shelf.querySelectorAll("[data-tape]").forEach((button) => {
+          const id = button.dataset.tape;
+          if (!tapes[id]) return;
+          const rental = rentals[id];
+          const status = button.querySelector(".tape-status");
+          const disabled = !ghostUnlocked && id === "copia00";
+          button.disabled = disabled;
+          button.setAttribute("aria-pressed", String(selectedId === id));
+          if (rental) status.textContent = rental.rewound ? "ALQUILADA // REBOBINADA" : "ALQUILADA // EN USO";
+          else if (disabled) status.textContent = "DEVOLVÉ 2 CINTAS PARA VERLA";
+          else status.textContent = id === "copia00" ? "NO DEVOLVER" : "COPIA DISPONIBLE";
+        });
+
+        if (activeCount >= 2) {
+          shelf.setAttribute("aria-label","Estantería VHS. Ya tenés dos alquileres activos.");
+        } else {
+          shelf.setAttribute("aria-label","Estantería VHS");
+        }
+      }
+
+      function renderDetail() {
+        if (!selectedId || !tapes[selectedId]) {
+          detailBody.innerHTML = '<div class="empty">Todavía no elegiste una cinta. Hay olor a plástico tibio y pochoclos viejos.</div>';
+          return;
+        }
+        const tape = tapes[selectedId];
+        const rental = rentals[selectedId];
+        const locked = selectedId === "copia00" && Number(history.returned || 0) < 2;
+        const available = !rental && Object.keys(rentals).length < 2 && !locked;
+        const quote = tape.quote;
+        detailBody.innerHTML = "";
+        const kicker = document.createElement("div");
+        kicker.className = "detail-kicker";
+        kicker.textContent = "FICHA Nº " + selectedId.toUpperCase();
+        const title = document.createElement("h2");
+        title.className = "detail-title";
+        title.textContent = tape.title;
+        const meta = document.createElement("div");
+        meta.className = "detail-meta";
+        meta.textContent = tape.genre + " · " + tape.year + " · " + tape.runtime + " · DIR. " + tape.director;
+        const synopsis = document.createElement("p");
+        synopsis.className = "detail-copy";
+        synopsis.textContent = tape.synopsis;
+        const quoteBox = document.createElement("div");
+        quoteBox.className = "detail-quote";
+        quoteBox.textContent = quote;
+        const actions = document.createElement("div");
+        actions.className = "detail-actions";
+        if (rental) {
+          const state = document.createElement("p");
+          state.className = "detail-meta";
+          state.textContent = (rental.rewound ? "CINTA REBOBINADA" : "REBOBINAR ANTES DE DEVOLVER") + " · VENCE: " + formatDue(rental.dueAt);
+          const rewind = document.createElement("button");
+          rewind.className = "action";
+          rewind.type = "button";
+          rewind.textContent = rental.rewound ? "YA ESTÁ REBOBINADA" : "REBOBINAR CINTA";
+          rewind.disabled = rental.rewound;
+          rewind.addEventListener("click", () => rewindTape(selectedId));
+          const giveBack = document.createElement("button");
+          giveBack.className = "action primary";
+          giveBack.type = "button";
+          giveBack.textContent = "DEVOLVER";
+          giveBack.addEventListener("click", () => returnTape(selectedId));
+          detailBody.append(kicker,title,meta,synopsis,quoteBox,state);
+          actions.append(rewind,giveBack);
+        } else {
+          const checkout = document.createElement("button");
+          checkout.className = "action primary";
+          checkout.type = "button";
+          checkout.textContent = locked ? "NO ESTÁ EN EL CATÁLOGO" : (Object.keys(rentals).length >= 2 ? "LÍMITE: 2 CINTAS" : "ALQUILAR POR 24 HS");
+          checkout.disabled = !available;
+          checkout.addEventListener("click", () => rentTape(selectedId));
+          detailBody.append(kicker,title,meta,synopsis,quoteBox);
+          actions.append(checkout);
+        }
+        detailBody.append(actions);
+      }
+
+      function renderRentals() {
+        const entries = Object.entries(rentals);
+        $("#rentalCount").textContent = entries.length + " ACTIVOS";
+        rentalBody.replaceChildren();
+        if (!entries.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "No tenés películas alquiladas. El mostrador está despejado.";
+          rentalBody.append(empty);
+          return;
+        }
+        entries.forEach(([id,rental]) => {
+          const item = document.createElement("div");
+          item.className = "rental-item";
+          const copy = document.createElement("div");
+          copy.className = "rental-copy";
+          const title = document.createElement("strong");
+          title.textContent = tapes[id] ? tapes[id].title : id;
+          const small = document.createElement("small");
+          small.textContent = (rental.rewound ? "REBOBINADA" : "PENDIENTE DE REBOBINAR") + " · " + (isOverdue(rental) ? "VENCIDA" : "DEVOLVER ANTES DE " + formatDue(rental.dueAt));
+          copy.append(title,small);
+          const actions = document.createElement("div");
+          actions.className = "rental-actions";
+          const select = document.createElement("button");
+          select.className = "small-button";
+          select.type = "button";
+          select.textContent = "VER";
+          select.addEventListener("click", () => selectTape(id));
+          const ret = document.createElement("button");
+          ret.className = "small-button";
+          ret.type = "button";
+          ret.textContent = "DEVOLVER";
+          ret.addEventListener("click", () => returnTape(id));
+          actions.append(select,ret);
+          item.append(copy,actions);
+          rentalBody.append(item);
+        });
+      }
+
+      function saveRentals() { writeJSON(KEYS.rentals,rentals); writeJSON(KEYS.history,history); }
+
+      function selectTape(id) {
+        if (!tapes[id]) return;
+        if (id === "copia00" && Number(history.returned || 0) < 2) {
+          say("La cinta no figura en el catálogo. El encargado te mira y cambia de tema.");
+          return;
+        }
+        selectedId = id;
+        renderShelf();
+        renderDetail();
+        const title = tapes[id].title;
+        say("Seleccionaste: " + title + ".");
+      }
+
+      function rentTape(id) {
+        if (!member) {
+          say("Primero necesitás una tarjeta de socio. Sólo hace falta un apodo.");
+          $("#memberInput").focus();
+          return;
+        }
+        if (Object.keys(rentals).length >= 2) {
+          say("Dos cintas por socio. Devolvé una antes de llevar otra.");
+          return;
+        }
+        if (id === "copia00" && Number(history.returned || 0) < 2) return;
+        rentals[id] = { dueAt:Date.now()+24*60*60*1000, rewound:false, rentedBy:member };
+        saveRentals();
+        renderShelf(); renderRentals(); renderDetail();
+        say("Alquiler registrado para " + member + ". Tenés 24 horas. ¡Que la disfrutes!");
+      }
+
+      function rewindTape(id) {
+        if (!rentals[id]) return;
+        rentals[id].rewound = true;
+        saveRentals();
+        renderShelf(); renderRentals(); renderDetail();
+        say("Cinta rebobinada. El encargado te agradece.");
+      }
+
+      function returnTape(id) {
+        const rental = rentals[id];
+        if (!rental) return;
+        const wasRewound = rental.rewound;
+        delete rentals[id];
+        history.returned = Number(history.returned || 0) + 1;
+        if (wasRewound) history.rewound = Number(history.rewound || 0) + 1;
+        saveRentals();
+        renderShelf(); renderRentals(); renderDetail();
+        if (history.returned >= 2 && !sessionStorage.getItem("afterweb.videoclub.ghostNotice")) {
+          try { sessionStorage.setItem("afterweb.videoclub.ghostNotice","1"); } catch (error) {}
+          say("Devolución registrada. El encargado encontró otra cinta detrás del mostrador. Dice que no estaba ahí.");
+        } else {
+          say(wasRewound ? "Devolución registrada. Gracias por rebobinar." : "Devolución registrada. La próxima vez, acordate de rebobinar.");
+        }
+      }
+
+      shelf.querySelectorAll("[data-tape]").forEach((button) => {
+        button.addEventListener("click", () => selectTape(button.dataset.tape));
+      });
+
+      $("#memberForm").addEventListener("submit",(event) => {
+        event.preventDefault();
+        const value = $("#memberInput").value.trim().replace(/\s+/g," ").slice(0,20);
+        if (!value) { say("Escribí un apodo para tu tarjeta."); $("#memberInput").focus(); return; }
+        member = value;
+        try { localStorage.setItem(KEYS.member,member); }
+        catch (error) { say("No se pudo guardar la tarjeta, pero podés usarla durante esta visita."); }
+        renderMember();
+        say("Tarjeta emitida. Bienvenido/a al videoclub, " + member + ".");
+        if (selectedId) renderDetail();
+      });
+
+      renderMember();
+      renderShelf();
+      renderRentals();
+      if (Object.keys(rentals).length) {
+        selectedId = Object.keys(rentals)[0];
+        renderShelf();
+        renderDetail();
+      }
+    })();
+  </script>
+</body>
+</html>
