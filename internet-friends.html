@@ -435,6 +435,15 @@ Internet no era solamente una herramienta. Era un lugar al que íbamos.</textare
         </div>`
       };
       popupAppContent.innerHTML=screens[id] || "<p>NO SIGNAL</p>";
+      if(id==="03"){
+        const editor=document.querySelector("#wordPad");
+        try {
+          const saved=localStorage.getItem("internet-friends-pc03-document");
+          if(saved!==null)editor.value=saved;
+        } catch(error) {
+          // The editor remains usable when browser storage is unavailable.
+        }
+      }
       if(id==="04"){gameScore=0;gameTarget=Math.floor(Math.random()*9);updateGameGrid();}
       if(id==="07")ghostStep=0;
     }
@@ -519,7 +528,13 @@ Internet no era solamente una herramienta. Era un lugar al que íbamos.</textare
       }
       if(button.dataset.action==="save-doc"){
         const status=document.querySelector("#wordStatus");
-        if(status)status.textContent="Saved locally · DOCUMENT1.DOC";
+        const editor=document.querySelector("#wordPad");
+        try {
+          localStorage.setItem("internet-friends-pc03-document",editor.value);
+          if(status)status.textContent="Saved in this browser · DOCUMENT1.DOC";
+        } catch(error) {
+          if(status)status.textContent="Browser storage unavailable · document remains open";
+        }
         return;
       }
       if(button.dataset.action==="download"){
@@ -569,6 +584,12 @@ Internet no era solamente una herramienta. Era un lugar al que íbamos.</textare
     function closePopup(){
       if(computerPopup.open) computerPopup.close();
     }
+    computerPopup.addEventListener("close",()=>{
+      if(downloadTimer){
+        window.clearInterval(downloadTimer);
+        downloadTimer=null;
+      }
+    });
     document.querySelector("#closePopup").addEventListener("click",closePopup);
     document.querySelector("#closePopupTop").addEventListener("click",closePopup);
     computerPopup.addEventListener("click",event=>{
