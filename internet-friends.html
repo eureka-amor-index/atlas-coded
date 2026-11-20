@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09080d">
+  <meta name="description" content="Internet Friends — a haunted Argentine cybercafé, open since 2003.">
+  <title>INTERNET FRIENDS // AFTERWEB</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    :root {
+      --void:#09080d; --wall:#302535; --floor:#211c26; --tile:#29232e;
+      --line:#514454; --amber:#ffd98a; --violet:#b894ff; --cyan:#83d8ff;
+      --green:#a5ffb8; --pink:#ff7a99; --text:#eee5f5; --muted:#a99caf;
+    }
+    * { box-sizing:border-box }
+    body {
+      margin:0; min-height:100vh; color:var(--text);
+      background:radial-gradient(ellipse at 50% 0%,#211729 0%,var(--void) 62%);
+      font-family:"Courier New",monospace;
+    }
+    .shell { width:min(1100px,96vw); margin:auto; padding:26px 0 36px }
+    .topline { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      color:var(--muted); font-size:.72rem; letter-spacing:.12em; padding:0 4px 16px }
+    h1 { margin:0; text-align:center; letter-spacing:.19em; font-size:clamp(1.7rem,5vw,3.2rem);
+      color:#e9dcff; text-shadow:0 0 18px #9e73cf }
+    .subtitle { margin:9px 0 22px; text-align:center; color:var(--muted); font-size:.78rem; letter-spacing:.12em }
+    .game-frame { border:1px solid #55465c; background:#100d14; padding:12px;
+      box-shadow:0 0 0 5px #0006,0 20px 70px #000b }
+    .hud { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      padding:4px 4px 12px; color:var(--amber); font-size:.76rem; letter-spacing:.06em }
+    .map-wrap { overflow:auto; background:#15111a; border:1px solid #403644; padding:8px }
+    #map { display:grid; grid-template-columns:repeat(17,minmax(28px,1fr)); gap:2px;
+      width:100%; min-width:510px; aspect-ratio:17/11; }
+    .tile { position:relative; display:grid; place-items:center; min-width:0; min-height:0;
+      background:var(--floor); border:1px solid #332b38; font-size:clamp(14px,2.1vw,24px);
+      user-select:none }
+    .tile.wall { background:linear-gradient(135deg,#3c3040,#251e2a); border-color:#55465c;
+      box-shadow:inset 0 0 8px #0008 }
+    .tile.counter { background:#48352c; border-color:#87664b }
+    .tile.station { background:#342a3c; border-color:#756184; cursor:pointer }
+    .tile.station:hover,.tile.station:focus-visible { outline:2px solid var(--cyan); outline-offset:-3px }
+    .tile.secret { animation:ghostGlow 3s infinite alternate }
+    .tile.player { z-index:2; font-size:clamp(18px,2.8vw,29px); filter:drop-shadow(0 0 7px #83d8ff) }
+    .tile.door { background:#17111c; border-color:var(--amber) }
+    .legend { display:flex; gap:14px; flex-wrap:wrap; padding:13px 4px 4px;
+      color:var(--muted); font-size:.7rem }
+    .legend span { white-space:nowrap }
+    .controls { display:flex; justify-content:center; align-items:center; gap:8px; margin:14px auto 4px }
+    .controls button,.action {
+      border:1px solid #665575; background:#211a29; color:var(--text); padding:9px 13px;
+      font:inherit; cursor:pointer; border-radius:3px }
+    .controls button:hover,.action:hover { background:#382942; border-color:var(--violet) }
+    .controls button:focus-visible,.action:focus-visible { outline:2px solid var(--cyan); outline-offset:3px }
+    .controls .spacer { width:28px }
+    .below { display:grid; grid-template-columns:1fr minmax(220px,.7fr); gap:14px; margin-top:14px }
+    .panel { border:1px solid #403644; background:#15111a; padding:14px; min-height:112px }
+    .panel h2 { margin:0 0 9px; color:var(--violet); font-size:.78rem; letter-spacing:.12em }
+    #message { margin:0; color:#d4c9da; font-size:.85rem; line-height:1.6 }
+    .station-list { display:flex; gap:7px; flex-wrap:wrap }
+    .station-list button { border:1px solid #55465c; background:#211a29; color:var(--text);
+      padding:7px 9px; font:inherit; font-size:.72rem; cursor:pointer }
+    .station-list button:hover { border-color:var(--amber); color:var(--amber) }
+    .foot { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      margin-top:18px; color:#82768b; font-size:.7rem }
+    .foot a { color:var(--violet); text-decoration:none }
+    .mobile-note { display:none; color:var(--muted); text-align:center; font-size:.68rem; margin:9px 0 0 }
+    @keyframes ghostGlow { from{box-shadow:inset 0 0 5px #b894ff22} to{box-shadow:inset 0 0 16px #b894ff99} }
+    @media(max-width:650px) {
+      .shell{width:94vw;padding-top:18px}.below{grid-template-columns:1fr}
+      .mobile-note{display:block}#map{grid-template-columns:repeat(17,30px);width:max-content}
+      .map-wrap{overflow:auto}
+    }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after{animation:none!important;scroll-behavior:auto!important} }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topline"><span>AFTERWEB DISTRICT // SAN ISIDRO NODE</span><span>OPEN 24 HOURS · EST. 2003</span></div>
+    <h1>INTERNET FRIENDS</h1>
+    <p class="subtitle">CYBER · LOCUTORIO · FOTOCOPIAS · UNKNOWN CONNECTIONS</p>
+
+    <section class="game-frame" aria-label="Playable cybercafé">
+      <div class="hud"><span>PLAYER 01: THE TRAVELER</span><span id="clock">LOCAL TIME: 03:33</span><span>CREDIT: $200</span></div>
+      <div class="map-wrap">
+        <div id="map" role="grid" aria-label="Top-down cybercafé map"></div>
+      </div>
+      <div class="legend">
+        <span>🧍 YOU</span><span>🖥️ COMPUTER</span><span>🪑 CHAIR</span><span>🧱 WALL</span><span>👻 UNKNOWN</span>
+      </div>
+      <p class="mobile-note">Use the arrow buttons below to walk around.</p>
+      <div class="controls" aria-label="Movement controls">
+        <span class="spacer"></span><button data-move="up" aria-label="Move up">▲</button><span class="spacer"></span>
+      </div>
+      <div class="controls">
+        <button data-move="left" aria-label="Move left">◀</button>
+        <button data-move="down" aria-label="Move down">▼</button>
+        <button data-move="right" aria-label="Move right">▶</button>
+      </div>
+    </section>
+
+    <section class="below">
+      <div class="panel" aria-live="polite">
+        <h2>CYBER LOG // LIVE TRANSMISSION</h2>
+        <p id="message">Welcome. Pick a computer, or use the arrow keys to explore. The coffee is questionable; the connection is eternal.</p>
+      </div>
+      <div class="panel">
+        <h2>QUICK CONNECT</h2>
+        <div class="station-list">
+          <button data-station="01">PC-01</button><button data-station="02">PC-02</button>
+          <button data-station="03">PC-03</button><button data-station="04">PC-04</button>
+          <button data-station="05">PC-05</button><button data-station="06">PC-06</button>
+          <button data-station="07">PC-07</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="foot"><span>NO APAGAR LA COMPUTADORA 07.</span><a href="afterweb-building.html">← RETURN TO AFTERWEB BUILDING</a></div>
+  </main>
+
+  <script>
+  (() => {
+    const mapEl = document.querySelector("#map");
+    const message = document.querySelector("#message");
+    const cols = 17, rows = 11;
+    const layout = [
+      "#################",
+      "#...............#",
+      "#..##.....##....#",
+      "#..##.....##....#",
+      "#...............#",
+      "#....###........#",
+      "#....###........#",
+      "#...............#",
+      "#..##......##...#",
+      "#..##......##...#",
+      "########.########"
+    ];
+    const stations = {
+      "01": {x:3,y:2, chair:"🪑", title:"PC-01 // EL REGULAR", text:"The browser history is immaculate. Someone visits the same weather page every morning."},
+      "02": {x:8,y:2, chair:"🪑", title:"PC-02 // MSN ADDICT", text:"MSN Messenger is already open. A contact called nube_azul is typing…"},
+      "03": {x:13,y:2, chair:"🪑", title:"PC-03 // TAREAS", text:"A half-finished Word document. The printer beside it has been waiting since 2004."},
+      "04": {x:3,y:5, chair:"🪑", title:"PC-04 // GAMING", text:"A folder called JUEGUITOS. Inside: three shortcuts and one save file dated tomorrow."},
+      "05": {x:8,y:5, chair:"🪑", title:"PC-05 // DOWNLOADS", text:"The download is at 99%. It has been at 99% for twenty-three years."},
+      "06": {x:13,y:5, chair:"🪑", title:"PC-06 // FOTolog", text:"A Fotolog profile with one new comment. The username is familiar, but impossible."},
+      "07": {x:8,y:8, chair:"🪑", title:"PC-07 // GHOST_USER", text:"USER GHOST_USER IS ALREADY LOGGED IN. Last activity: 03:33. The chair is warm."}
+    };
+    const objects = new Map();
+    const player = {x:8,y:9};
+    let playerTile = null;
+    let lastMove = 0;
+    const keyToDirection = {
+      ArrowUp:[0,-1], w:[0,-1], ArrowDown:[0,1], s:[0,1],
+      ArrowLeft:[-1,0], a:[-1,0], ArrowRight:[1,0], d:[1,0]
+    };
+    const keyOf = (x,y) => x+","+y;
+    Object.entries(stations).forEach(([id,s]) => {
+      objects.set(keyOf(s.x,s.y), {type:"station",id});
+      objects.set(keyOf(s.x,s.y+1), {type:"chair",id});
+    });
+    function render() {
+      mapEl.replaceChildren();
+      for(let y=0;y<rows;y++) for(let x=0;x<cols;x++) {
+        const tile=document.createElement("div");
+        tile.className="tile";
+        tile.setAttribute("role","gridcell");
+        const cell=layout[y][x], obj=objects.get(keyOf(x,y));
+        if(cell==="#"){tile.classList.add("wall");tile.textContent="🧱";}
+        else if(obj?.type==="station"){
+          tile.classList.add("station");
+          if(obj.id==="07") tile.classList.add("secret");
+          tile.textContent=obj.id==="07"?"👻":"🖥️";
+          tile.tabIndex=0;
+          tile.setAttribute("aria-label","Computer "+obj.id);
+          tile.addEventListener("click",()=>connect(obj.id));
+          tile.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();connect(obj.id);}});
+        } else if(obj?.type==="chair"){tile.textContent="🪑";}
+        else if(y===10 && x===8){tile.classList.add("door");tile.textContent="🚪";}
+        else if(x===1&&y===1){tile.textContent="🧾";}
+        else if(x===14&&y===8){tile.textContent="☎️";}
+        if(player.x===x&&player.y===y){tile.classList.add("player");tile.textContent="🧍";tile.setAttribute("aria-label","You");playerTile=tile;}
+        mapEl.appendChild(tile);
+      }
+    }
+    function walk(dx,dy){
+      const now=Date.now(); if(now-lastMove<90)return; lastMove=now;
+      const nx=player.x+dx, ny=player.y+dy;
+      if(nx<0||ny<0||nx>=cols||ny>=rows||layout[ny][nx]==="#")return;
+      if(objects.has(keyOf(nx,ny))) {
+        const obj=objects.get(keyOf(nx,ny));
+        if(obj.type==="station"){connect(obj.id);return;}
+        message.textContent="A chair is occupying this tile. Very inconsiderate of it.";
+        return;
+      }
+      player.x=nx;player.y=ny;render();
+      if(nx===8&&ny===9) message.textContent="Welcome to Internet Friends. The door is always unlocked.";
+      else if(nx===14&&ny===8) message.textContent="The phone rings once. Nobody is on the other end.";
+      else if(nx===1&&ny===1) message.textContent="RECEIPT // 2 HOURS // 200 PESOS // PAID IN CASH.";
+      else message.textContent="You walk between humming CRT monitors. Somewhere, a modem is negotiating with the universe.";
+    }
+    function connect(id){
+      const s=stations[id]; message.textContent=s.title+" — "+s.text;
+      if(id==="07") message.textContent+=" [CONNECTION OPENED BY UNKNOWN USER]";
+    }
+    document.addEventListener("keydown",e=>{
+      if(["INPUT","TEXTAREA"].includes(document.activeElement?.tagName))return;
+      const direction=keyToDirection[e.key]; if(!direction)return;
+      e.preventDefault();walk(direction[0],direction[1]);
+    });
+    document.querySelectorAll("[data-move]").forEach(button=>{
+      button.addEventListener("click",()=>{
+        const dirs={up:[0,-1],down:[0,1],left:[-1,0],right:[1,0]};
+        const [dx,dy]=dirs[button.dataset.move];walk(dx,dy);
+      });
+    });
+    document.querySelectorAll("[data-station]").forEach(button=>{
+      button.addEventListener("click",()=>connect(button.dataset.station));
+    });
+    render();
+  })();
+  </script>
+</body>
+</html>
