@@ -147,6 +147,14 @@
     .lift-button[hidden] { display:none; }
     .elevator-note { text-align:center; font-size:.52rem; line-height:1.5; letter-spacing:.1em; color:#61576b; }
     /* Empire State-inspired Afterweb silhouette: a monumental Art Deco crown */
+
+    .power-transformer{position:absolute;left:12px;bottom:12px;z-index:6;width:76px;padding:7px 6px 8px;background:linear-gradient(135deg,#302b25,#151314);border:1px solid #806c4e;box-shadow:0 0 12px rgba(255,190,90,.08);font-size:.52rem;text-align:center;color:#b8a782;letter-spacing:.07em;}
+    .power-transformer::before{content:"";display:block;height:20px;margin-bottom:5px;background:repeating-linear-gradient(90deg,#544a3b 0 5px,#28231e 6px 9px);border:1px solid #736249;}
+    .power-switch{display:block;margin:5px auto 2px;width:30px;height:16px;border:1px solid #78664b;background:#221e19;position:relative;cursor:pointer;padding:0;}
+    .power-switch::after{content:"";position:absolute;top:2px;left:3px;width:10px;height:10px;background:#c1a16c;transition:transform .18s,background .18s;}
+    .power-transformer.powered .power-switch::after{transform:translateX(12px);background:#a5ffb8;box-shadow:0 0 8px #a5ffb8;}
+    .power-transformer.powered{border-color:#a5ffb8;box-shadow:0 0 18px rgba(165,255,184,.22);color:#a5ffb8;}
+
     .building {
       height: 720px;
       background:
@@ -703,6 +711,7 @@
 
         <a class="door" href="index.html">INDEX</a>
         <div class="side-note">not abandoned · remembered differently</div>
+        <div class="power-transformer" id="powerTransformer" aria-label="Building power transformer">POWER // AWB-01<button class="power-switch" id="powerSwitch" type="button" aria-label="Toggle building power" aria-pressed="false"></button><div id="powerLabel">OFFLINE</div></div>
       </div>
     </section>
 
@@ -821,7 +830,10 @@
       const output=document.getElementById('awbConsoleOutput'); const lightsBtn=document.getElementById('awbLights'); const signalBtn=document.getElementById('awbSignal'); const floorBtn=document.getElementById('awbFloor'); const secretBtn=document.getElementById('awbSecret');
       if(!output||!lightsBtn||!signalBtn||!floorBtn||!secretBtn)return;
       const say=(lines)=>{output.replaceChildren();lines.forEach((line,i)=>{const row=document.createElement('div');row.textContent=line;if(i===lines.length-1)row.className='console-line';output.appendChild(row);});};
-      const audioBtn=document.getElementById('awbAudio'); let humEnabled=false; let audioContext=null; let humNodes=null; let humStopTimer=null; let humTimeout=null;
+      const transformer=document.getElementById('powerTransformer'), powerSwitch=document.getElementById('powerSwitch'), powerLabel=document.getElementById('powerLabel');
+      const audioBtn=document.getElementById('awbAudio');
+      let powerHumTimer=null;
+      if(powerSwitch)powerSwitch.addEventListener('click',()=>{const powered=transformer.classList.toggle('powered');powerSwitch.setAttribute('aria-pressed',String(powered));if(powerLabel)powerLabel.textContent=powered?'POWER FLOW // ACTIVE':'OFFLINE';humEnabled=powered;if(audioBtn){audioBtn.textContent=powered?'AUDIO: ON':'AUDIO: OFF';audioBtn.classList.toggle('audio-toggle',powered);}if(powered){say(['AWB-01 POWER UNIT','Transformer switch engaged.','Building power is flowing.']);startHum();}else{stopHum();say(['POWER UNIT // DISCONNECTED','The building returns to standby.']);}}); let humEnabled=false; let audioContext=null; let humNodes=null; let humStopTimer=null; let humTimeout=null;
       const stopHum=()=>{const nodes=humNodes;if(!nodes)return;humNodes=null;if(humTimeout)clearTimeout(humTimeout);if(humStopTimer)clearTimeout(humStopTimer);const now=audioContext.currentTime;nodes.gain.gain.cancelScheduledValues(now);nodes.gain.gain.setValueAtTime(nodes.gain.gain.value,now);nodes.gain.gain.linearRampToValueAtTime(0,now+0.25);humStopTimer=setTimeout(()=>{try{nodes.osc1.stop();nodes.osc2.stop();nodes.osc1.disconnect();nodes.osc2.disconnect();nodes.mix.disconnect();nodes.filter.disconnect();nodes.gain.disconnect();}catch(e){}},350);};
       const startHum=()=>{if(!humEnabled)return;try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();const resumed=audioContext.state==='suspended'?audioContext.resume():Promise.resolve();resumed.then(()=>{stopHum();const gain=audioContext.createGain(),filter=audioContext.createBiquadFilter(),osc1=audioContext.createOscillator(),osc2=audioContext.createOscillator(),mix=audioContext.createGain();filter.type='lowpass';filter.frequency.value=420;gain.gain.value=0;mix.gain.value=.25;osc1.type='sine';osc1.frequency.value=110;osc2.type='sine';osc2.frequency.value=220;osc1.connect(mix);osc2.connect(mix);mix.connect(filter);filter.connect(gain);gain.connect(audioContext.destination);const now=audioContext.currentTime;gain.gain.setValueAtTime(0,now);gain.gain.linearRampToValueAtTime(.07,now+0.25);osc1.start();osc2.start();humNodes={gain,filter,osc1,osc2,mix};humTimeout=setTimeout(stopHum,5200);}).catch(()=>say(['AUDIO SYSTEM UNAVAILABLE','Browser did not grant audio playback.']));}catch(e){say(['AUDIO SYSTEM UNAVAILABLE','The building remains silent.']);}};
       if(audioBtn)audioBtn.addEventListener('click',()=>{humEnabled=!humEnabled;audioBtn.textContent=humEnabled?'AUDIO: ON':'AUDIO: OFF';audioBtn.classList.toggle('audio-toggle',humEnabled);say(['AUDIO SYSTEM // '+(humEnabled?'ENABLED':'DISABLED'),humEnabled?'Transformer hum will play during WAKE.':'Silent mode restored.']);});
