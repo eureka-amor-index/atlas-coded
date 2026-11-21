@@ -444,6 +444,33 @@
     .courtyard-note { margin-top:16px; color:#8b9a8c; font-size:.65rem; line-height:1.8; letter-spacing:.05em; }
     @keyframes courtyardGlow { from {opacity:.65;filter:brightness(.9)} to {opacity:1;filter:brightness(1.15)} }
 
+    /* AFTERWEB DISTRICT — first neighborhood pass */
+    .district { width:min(900px,96vw); margin:24px auto 0; padding:20px 12px 24px; border:1px solid #30293a; background:linear-gradient(#090a11,#050507); }
+    .district-heading { text-align:center; color:#83d8ff; letter-spacing:.18em; font-size:.78rem; text-shadow:0 0 12px rgba(131,216,255,.25); }
+    .district-caption { text-align:center; color:#81778f; font-size:.62rem; letter-spacing:.1em; margin:8px 0 18px; }
+    .district-map { position:relative; display:grid; grid-template-columns:1fr 1.3fr 1fr; grid-template-rows:120px 170px 115px; gap:10px; min-height:435px; padding:12px; overflow:hidden; border:1px solid #242330; background:radial-gradient(circle at 50% 48%,rgba(184,148,255,.08),transparent 45%),#08090d; }
+    .district-map::before { content:""; position:absolute; inset:0; background:repeating-linear-gradient(0deg,transparent 0 34px,rgba(255,255,255,.015) 35px 36px); pointer-events:none; }
+    .district-object { position:relative; display:flex; align-items:flex-end; justify-content:center; padding:9px; border:1px solid #2c2933; background:#11121a; color:#9f96b2; text-align:center; font-size:.58rem; letter-spacing:.08em; text-shadow:0 0 8px rgba(0,0,0,.8); box-shadow:inset 0 0 20px rgba(0,0,0,.35); }
+    .district-object::before { content:""; position:absolute; inset:8px 8px 26px; border:1px dashed rgba(255,255,255,.06); }
+    .district-kiosk { grid-column:1; grid-row:1; background:linear-gradient(#1c1622,#101017); color:#a5ffb8; }
+    .district-stop { grid-column:3; grid-row:1; color:#83d8ff; }
+    .district-building { grid-column:2; grid-row:1 / span 2; background:linear-gradient(180deg,#241925,#120f16); color:#b894ff; border-color:#5b4565; font-size:.72rem; }
+    .district-building::before { inset:12px 16px 38px; border:1px solid rgba(184,148,255,.15); background:repeating-linear-gradient(0deg,transparent 0 22px,rgba(255,217,138,.09) 23px 25px),repeating-linear-gradient(90deg,transparent 0 20px,rgba(255,217,138,.08) 21px 23px); }
+    .district-phone { grid-column:1; grid-row:2; color:#ff7a8a; }
+    .district-alley { grid-column:3; grid-row:2; color:#b894ff; }
+    .district-square { grid-column:1 / span 3; grid-row:3; color:#a5ffb8; background:linear-gradient(#0e1513,#0a0c0d); }
+    .district-square::before { inset:14px; background:radial-gradient(circle at 30% 50%,rgba(165,255,184,.08),transparent 30%),radial-gradient(circle at 70% 45%,rgba(255,217,138,.06),transparent 25%); }
+    .district-small { position:absolute; top:10px; left:10px; color:#666178; font-size:.5rem; letter-spacing:.08em; }
+    .district-glow { position:absolute; width:8px; height:8px; border-radius:50%; background:#ffd98a; box-shadow:0 0 18px 6px rgba(255,217,138,.25); top:20px; right:20px; }
+    @media(max-width:560px) { .district-map { grid-template-rows:100px 140px 100px; gap:6px; padding:7px; min-height:360px; } .district-object { font-size:.5rem; padding:6px; } .district-building::before { inset:8px 9px 30px; } }
+    /* Keep landmark elements separated: antenna above crown, sign on facade */
+    .building { height:720px; background:repeating-linear-gradient(to bottom,transparent 0 34px,rgba(255,255,255,.035) 35px 36px),linear-gradient(135deg,#171116,#241923); }
+    .building::before { left:17%; right:17%; top:-66px; height:64px; background:linear-gradient(#17121a,#100d13); border:2px solid #514258; clip-path:polygon(0 100%,12% 100%,12% 42%,26% 42%,26% 0,74% 0,74% 42%,88% 42%,88% 100%,100% 100%); }
+    .building::after { content:""; position:absolute; left:50%; top:-76px; transform:translateX(-50%); width:34%; height:12px; background:#28202c; border:1px solid #5c4d67; box-shadow:0 0 22px rgba(184,148,255,.12); }
+    .antenna { top:-164px; height:116px; }
+    .windows { padding:78px 42px 110px; grid-auto-rows:66px; gap:18px; }
+    .sign { top:18px; z-index:4; padding:7px 18px; letter-spacing:.2em; font-size:.9rem; box-shadow:0 0 16px rgba(184,148,255,.42),inset 0 0 12px rgba(184,148,255,.06); }
+
     @media (max-width: 560px) {
       .lamp { display: none; }
       .building { height: 560px; }
@@ -566,6 +593,19 @@
         <div class="courtyard-plant"></div>
       </div>
       <div class="courtyard-note">PLANTS ARE QUIETLY GROWING.<br>THE LIGHT IS ALWAYS WARM HERE.</div>
+    </section>
+
+    <section class="district" aria-label="The Afterweb neighborhood">
+      <div class="district-heading">AFTERWEB DISTRICT // BLOCK 01</div>
+      <div class="district-caption">THE BUILDING IS NOT ALONE</div>
+      <div class="district-map" aria-hidden="true">
+        <div class="district-object district-kiosk"><span class="district-small">OPEN 24/7</span><span class="district-glow"></span>KIOSK.exe</div>
+        <div class="district-object district-stop"><span class="district-small">ROUTE 56K</span>BUS STOP</div>
+        <div class="district-object district-building"><span class="district-small">LANDMARK</span>AFTERWEB BUILDING</div>
+        <div class="district-object district-phone"><span class="district-small">LINE UNKNOWN</span>GHOST PHONE</div>
+        <div class="district-object district-alley"><span class="district-small">NIGHT ACCESS</span>GLITCH ALLEY</div>
+        <div class="district-object district-square"><span class="district-small">A PLACE TO WAIT</span>MEMORY SQUARE</div>
+      </div>
     </section>
 
     <div class="ground"></div>
