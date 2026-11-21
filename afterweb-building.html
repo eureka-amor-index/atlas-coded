@@ -197,7 +197,7 @@
 
     .sign {
       position: absolute;
-      top: -34px;
+      top: 18px;
       left: 50%;
       transform: translateX(-50%) rotate(-1deg);
       padding: 4px 12px;
@@ -211,6 +211,13 @@
       white-space: nowrap;
     }
 
+    .sign {
+      z-index: 4;
+      padding: 7px 18px;
+      letter-spacing: 0.2em;
+      font-size: 0.9rem;
+      box-shadow: 0 0 16px rgba(184,148,255,0.42), inset 0 0 12px rgba(184,148,255,0.06);
+    }
     @keyframes flicker {
       0%, 100% { opacity: 1; }
       7% { opacity: 0.45; }
