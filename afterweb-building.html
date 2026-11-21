@@ -561,6 +561,17 @@
         grid-auto-rows: 62px;
       }
     }
+  
+    /* AWB-01 CONTROL CONSOLE */
+    .building-console{width:min(520px,88vw);margin:24px auto 0;padding:16px;border:1px solid #51445f;background:linear-gradient(#0b0a12,#050508);box-shadow:0 0 24px rgba(131,216,255,.12),inset 0 0 20px rgba(184,148,255,.04)}
+    .console-top{display:flex;justify-content:space-between;gap:8px;color:#8c82a0;font-size:.58rem;letter-spacing:.12em;margin-bottom:10px}
+    .console-screen{background:#020406;border:1px solid #283d43;padding:12px;min-height:94px;color:#83d8ff;text-shadow:0 0 8px rgba(131,216,255,.35);font-size:.68rem;line-height:1.8;box-shadow:inset 0 0 18px rgba(0,234,255,.04)}
+    .console-line{color:#a5ffb8!important}
+    .console-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+    .console-actions button{font-family:inherit;font-size:.62rem;letter-spacing:.08em;color:#b894ff;background:#100d18;border:1px solid #51445f;padding:11px 8px;cursor:pointer;transition:.2s}
+    .console-actions button:hover,.console-actions button:focus-visible{outline:none;color:#83d8ff;border-color:#83d8ff;box-shadow:0 0 12px rgba(131,216,255,.18)}
+    .console-foot{margin-top:10px;color:#655c72;font-size:.55rem;letter-spacing:.1em;text-align:center}
+
   </style>
 </head>
 
@@ -691,6 +702,14 @@
       <div class="courtyard-note">PLANTS ARE QUIETLY GROWING.<br>THE LIGHT IS ALWAYS WARM HERE.</div>
     </section>
 
+    
+    <section class="building-console" aria-label="Afterweb Building interactive console">
+      <div class="console-top"><span>BUILDING CONTROL // AWB-01</span><span>CRT TERMINAL</span></div>
+      <div class="console-screen" id="awbConsoleOutput" aria-live="polite"><div>AFTERWEB BUILDING SYSTEM</div><div>LOCAL CONTROL READY_</div><div class="console-line">Awaiting command.</div></div>
+      <div class="console-actions"><button type="button" id="awbLights">WINDOW LIGHTS</button><button type="button" id="awbSignal">SEND SIGNAL</button><button type="button" id="awbFloor">SCAN FLOORS</button><button type="button" id="awbSecret">??? / UNKNOWN</button></div>
+      <div class="console-foot">INPUT ACCEPTED · USE WITH CAUTION · 56K CONNECTED</div>
+    </section>
+
     <section class="district" aria-label="The Afterweb neighborhood">
       <div class="district-heading">AFTERWEB DISTRICT // BLOCK 01</div>
       <div class="district-caption">THE BUILDING IS NOT ALONE</div>
@@ -772,6 +791,19 @@
         if (event.key === unlockKey || event.key === null) revealSublevel();
       });
     })();
+
+    // AWB-01 building console interactions
+    (() => {
+      const output = document.getElementById('awbConsoleOutput');
+      if (!output) return;
+      const say = (lines) => { output.replaceChildren(); lines.forEach((line,i)=>{const row=document.createElement('div');row.textContent=line;if(i===lines.length-1)row.className='console-line';output.appendChild(row);}); };
+      const windows=[...document.querySelectorAll('.building .window:not(.secret-window)')];let litMode=false;
+      document.getElementById('awbLights').addEventListener('click',()=>{litMode=!litMode;windows.forEach((w,i)=>{if(i%2===0)w.classList.toggle('lit',litMode);});say(['AWB-01 / LIGHT CONTROL','Alternating window grid '+(litMode?'energized':'dimmed')+'.','Visual state updated.']);});
+      document.getElementById('awbSignal').addEventListener('click',()=>{const b=document.querySelector('.building');if(b&&b.animate)b.animate([{filter:'brightness(1)'},{filter:'brightness(2.2) hue-rotate(35deg)'},{filter:'brightness(1)'}],{duration:900});say(['SIGNAL TRANSMITTED','Pulse sent across the facade.','No reply detected... yet.']);});
+      document.getElementById('awbFloor').addEventListener('click',()=>{const labels=['LOBBY / INDEX','FLOOR ∞ / RESIDENTS','SUBLEVEL 0 / UNKNOWN','QUIET ROOM / VIOLET','SIGNAL ROOM / CYAN'];const picked=labels[Math.floor(Math.random()*labels.length)];say(['FLOOR SCAN COMPLETE','Location found: '+picked,'Map data incomplete.']);});
+      document.getElementById('awbSecret').addEventListener('click',()=>{say(['COMMAND NOT RECOGNIZED','...','TRY AGAIN WHEN THE BUILDING IS LISTENING.']);output.style.color='#ff7a8a';setTimeout(()=>output.style.color='',1200);});
+    })();
+
   </script>
 
 </body>
