@@ -136,6 +136,16 @@
       animation: flicker 5s infinite;
     }
 
+    .elevator { width:78px; flex:0 0 78px; align-self:center; margin-bottom:35px; padding:12px 9px; display:flex; flex-direction:column; align-items:center; gap:10px; color:var(--muted); border:1px solid #4b4054; background:linear-gradient(#0a080d,#17111b); box-shadow:0 0 22px rgba(0,0,0,.55); }
+    .elevator-label { text-align:center; letter-spacing:.16em; font-size:.65rem; line-height:1.6; color:var(--violet); }
+    .elevator-label small { color:#70677c; font-size:.58rem; }
+    .lift-display { width:100%; text-align:center; padding:7px 3px; background:#030306; border:1px solid #332a39; color:var(--blue); text-shadow:0 0 10px var(--blue); min-height:32px; }
+    .lift-button { display:grid; place-items:center; width:32px; height:32px; border-radius:50%; border:1px solid #51445b; background:#09070b; color:#90839e; text-decoration:none; font-size:.9rem; transition:.2s; }
+    .lift-button:hover,.lift-button:focus-visible { outline:none; border-color:var(--blue); color:var(--blue); box-shadow:0 0 14px rgba(131,216,255,.4); }
+    .lift-button.infinity { color:var(--violet); border-color:#66517a; }
+    .lift-button.secret-lift { color:var(--red); border-color:#75414b; }
+    .lift-button[hidden] { display:none; }
+    .elevator-note { text-align:center; font-size:.52rem; line-height:1.5; letter-spacing:.1em; color:#61576b; }
     .building {
       position: relative;
       width: min(520px, 88vw);
@@ -412,6 +422,14 @@
     </header>
 
     <section class="street" aria-label="A haunted memory building">
+      <aside class="elevator" aria-label="Elevator panel">
+        <div class="elevator-label">LIFT<br><small>AWB-01</small></div>
+        <div class="lift-display" id="liftDisplay">--</div>
+        <a class="lift-button" href="index.html" title="Lobby">L</a>
+        <a class="lift-button infinity" href="floor-residents.html" title="Floor Infinity — The Residents">∞</a>
+        <a class="lift-button secret-lift" id="secretLift" href="sublevel-0.html" title="Sublevel 0" hidden>0</a>
+        <div class="elevator-note">NOT ALL FLOORS<br>ARE LISTED</div>
+      </aside>
       <div class="lamp"></div>
 
       <div class="building">
@@ -531,6 +549,18 @@
             window.history.replaceState({}, "", url.pathname + url.search + url.hash);
           }
         }
+
+        const secretLift = document.getElementById("secretLift");
+        if (secretLift && unlocked) secretLift.hidden = false;
+        const liftDisplay = document.getElementById("liftDisplay");
+        document.querySelectorAll(".lift-button").forEach((button) => {
+          const showFloor = () => { if (liftDisplay) liftDisplay.textContent = button.textContent.trim(); };
+          const clearFloor = () => { if (liftDisplay) liftDisplay.textContent = "--"; };
+          button.addEventListener("mouseenter", showFloor);
+          button.addEventListener("focus", showFloor);
+          button.addEventListener("mouseleave", clearFloor);
+          button.addEventListener("blur", clearFloor);
+        });
 
         if (!unlocked) return;
 
