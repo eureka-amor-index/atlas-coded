@@ -283,7 +283,32 @@
     .window.blue { background: var(--blue); box-shadow: 0 0 18px rgba(131,216,255,0.6); }
     .window.green { background: var(--green); box-shadow: 0 0 18px rgba(165,255,184,0.45); }
     .window.red { background: var(--red); box-shadow: 0 0 18px rgba(255,122,138,0.5); }
-    .window.glitchamous-window {\n      background: linear-gradient(135deg, #ff3bc8 0 48%, #00eaff 52% 100%);\n      border-color: #ff77df;\n      box-shadow: 0 0 12px rgba(255,59,200,.45), 0 0 18px rgba(0,234,255,.28);\n      animation: glitchWindow 4.8s steps(1) infinite;\n    }\n    .window.glitchamous-window::before { content: ""; position:absolute; inset:4px; border:1px solid rgba(255,255,255,.65); background: repeating-linear-gradient(0deg, transparent 0 5px, rgba(0,0,0,.16) 6px 7px); }\n    .window.glitchamous-window span { color:#fff; border-color:#ff3bc8; text-shadow:0 0 7px #00eaff; }\n    @keyframes glitchWindow { 0%,92%,100% { filter:none; transform:translateY(0); } 93% { filter:hue-rotate(35deg) brightness(1.7); transform:translateX(2px); } 95% { filter:contrast(1.5); transform:translateX(-2px); } 97% { filter:none; transform:translateY(0); } }\n    .window.secret-window {
+    .window.glitchamous-window {
+      position: relative;
+      background: linear-gradient(135deg, #ff3bc8 0 48%, #00eaff 52% 100%);
+      border-color: #ff77df;
+      box-shadow: 0 0 12px rgba(255,59,200,.45), 0 0 18px rgba(0,234,255,.28);
+      animation: glitchWindow 4.8s steps(1) infinite;
+    }
+    .window.glitchamous-window::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(255,255,255,.65);
+      background: repeating-linear-gradient(0deg, transparent 0 5px, rgba(0,0,0,.16) 6px 7px);
+    }
+    .window.glitchamous-window span {
+      color: #fff;
+      border-color: #ff3bc8;
+      text-shadow: 0 0 7px #00eaff;
+    }
+    @keyframes glitchWindow {
+      0%,92%,100% { filter: none; transform: translateY(0); }
+      93% { filter: hue-rotate(35deg) brightness(1.7); transform: translateX(2px); }
+      95% { filter: contrast(1.5); transform: translateX(-2px); }
+      97% { filter: none; transform: translateY(0); }
+    }
+    .window.secret-window {
       visibility: hidden;
       opacity: 0;
       pointer-events: none;
