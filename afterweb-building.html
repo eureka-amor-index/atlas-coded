@@ -246,6 +246,34 @@
     .window.blue { background: var(--blue); box-shadow: 0 0 18px rgba(131,216,255,0.6); }
     .window.green { background: var(--green); box-shadow: 0 0 18px rgba(165,255,184,0.45); }
     .window.red { background: var(--red); box-shadow: 0 0 18px rgba(255,122,138,0.5); }
+    .window.secret-window {
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.82);
+      filter: blur(8px);
+    }
+
+    .window.secret-window.revealed {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+      filter: blur(0);
+      animation: sublevelReveal 1.25s cubic-bezier(0.18, 0.8, 0.22, 1) both,
+                 roomPulse 2.4s 1.25s infinite alternate;
+    }
+
+    @keyframes sublevelReveal {
+      0% { opacity: 0; transform: scale(0.5) rotate(-8deg); filter: blur(12px) brightness(3); }
+      42% { opacity: 1; transform: scale(1.16) rotate(2deg); filter: blur(0) brightness(2.2); }
+      72% { transform: scale(0.96) rotate(-1deg); filter: brightness(1.4); }
+      100% { opacity: 1; transform: scale(1) rotate(0); filter: brightness(1); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .window.secret-window.revealed { animation: none; }
+    }
 
     @keyframes roomPulse {
       from { filter: brightness(0.9); }
@@ -435,8 +463,8 @@
             <span>Midnight Supermarket</span>
           </a>
 
-          <a class="window" id="sublevelWindow" href="sublevel-0.html" title="Do not open" aria-label="Do not open">
-            <span>Do not open</span>
+          <a class="window secret-window" id="sublevelWindow" href="sublevel-0.html" title="Unknown floor" aria-label="Unknown floor" aria-hidden="true" tabindex="-1">
+            <span>—</span>
           </a>
 
           <a class="window lit blue" href="/ministry-of-portal-navigation/" title="Portal Navigation">
@@ -472,17 +500,42 @@
     (() => {
       const sublevelWindow = document.getElementById("sublevelWindow");
       if (!sublevelWindow) return;
-      try {
-        if (localStorage.getItem("afterweb.sublevel0.unlocked") === "true") {
-          sublevelWindow.classList.add("lit", "red");
-          sublevelWindow.title = "Sublevel 0";
-          sublevelWindow.setAttribute("aria-label", "Sublevel 0 unlocked");
-          const label = sublevelWindow.querySelector("span");
-          if (label) label.textContent = "Sublevel 0";
+
+      const unlockKey = "afterweb.sublevel0.unlocked";
+
+      function revealSublevel() {
+        let unlocked = false;
+
+        try {
+          unlocked = localStorage.getItem(unlockKey) === "true";
+        } catch (error) {
+          // The URL signal below still allows the reveal when storage is unavailable.
         }
-      } catch (error) {
-        // The locked door remains available even when browser storage is disabled.
+
+        const url = new URL(window.location.href);
+        if (url.searchParams.get("reveal") === "sublevel-0") {
+          unlocked = true;
+          try { localStorage.setItem(unlockKey, "true"); } catch (error) {}
+          url.searchParams.delete("reveal");
+          window.history.replaceState({}, "", url.pathname + url.search + url.hash);
+        }
+
+        if (!unlocked) return;
+
+        sublevelWindow.classList.add("revealed", "lit", "red");
+        sublevelWindow.removeAttribute("aria-hidden");
+        sublevelWindow.removeAttribute("tabindex");
+        sublevelWindow.title = "Sublevel 0";
+        sublevelWindow.setAttribute("aria-label", "Sublevel 0 — newly revealed");
+        const label = sublevelWindow.querySelector("span");
+        if (label) label.textContent = "SUBLEVEL 0 // REVEALED";
       }
+
+      revealSublevel();
+      window.addEventListener("pageshow", revealSublevel);
+      window.addEventListener("storage", (event) => {
+        if (event.key === unlockKey || event.key === null) revealSublevel();
+      });
     })();
   </script>
 
