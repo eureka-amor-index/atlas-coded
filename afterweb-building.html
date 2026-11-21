@@ -444,6 +444,43 @@
     .courtyard-note { margin-top:16px; color:#8b9a8c; font-size:.65rem; line-height:1.8; letter-spacing:.05em; }
     @keyframes courtyardGlow { from {opacity:.65;filter:brightness(.9)} to {opacity:1;filter:brightness(1.15)} }
 
+    /* MATRIX MEMORY RAIN — vertical haunted memories */
+    .matrix-memory-rain {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      overflow: hidden;
+      display: flex;
+      justify-content: space-around;
+      opacity: .72;
+      mix-blend-mode: screen;
+    }
+    .matrix-memory-rain span {
+      position: relative;
+      display: block;
+      writing-mode: vertical-rl;
+      text-orientation: upright;
+      white-space: nowrap;
+      color: #8cffb1;
+      font-size: clamp(12px, 1.5vw, 18px);
+      letter-spacing: .22em;
+      text-shadow: 0 0 6px #35ff79, 0 0 16px rgba(53,255,121,.45);
+      animation: memoryFall linear infinite;
+      opacity: .15;
+    }
+    .matrix-memory-rain span:nth-child(1) { animation-duration: 13s; animation-delay: -8s; opacity:.28; }
+    .matrix-memory-rain span:nth-child(2) { animation-duration: 19s; animation-delay: -4s; opacity:.16; }
+    .matrix-memory-rain span:nth-child(3) { animation-duration: 16s; animation-delay: -11s; opacity:.3; }
+    .matrix-memory-rain span:nth-child(4) { animation-duration: 22s; animation-delay: -3s; opacity:.12; }
+    .matrix-memory-rain span:nth-child(5) { animation-duration: 15s; animation-delay: -7s; opacity:.24; }
+    .matrix-memory-rain span:nth-child(6) { animation-duration: 18s; animation-delay: -13s; opacity:.18; }
+    @keyframes memoryFall {
+      from { transform: translateY(-120vh); }
+      to { transform: translateY(120vh); }
+    }
+    @media (prefers-reduced-motion: reduce) { .matrix-memory-rain span { animation:none; } }
+
     /* Make the building subtitle readable beneath the landmark title */
     .subtitle {
       color: #c5b9d7;
@@ -494,6 +531,9 @@
 
 <body>
   <div class="rain"></div>
+  <div class="matrix-memory-rain" aria-hidden="true">
+    <span>HAUNTEDMEMORIESHAUNTEDMEMORIES</span><span>MEMORIESHAUNTEDMEMORIES</span><span>HAUNTEDMEMORIES</span><span>MEMORIESHAUNTED</span><span>HAUNTEDMEMORIESHAUNTED</span><span>MEMORIES</span>
+  </div>
 
   <main class="page">
     <header>
