@@ -146,6 +146,25 @@
     .lift-button.secret-lift { color:var(--red); border-color:#75414b; }
     .lift-button[hidden] { display:none; }
     .elevator-note { text-align:center; font-size:.52rem; line-height:1.5; letter-spacing:.1em; color:#61576b; }
+    /* Empire State-inspired Afterweb silhouette: a monumental Art Deco crown */
+    .building {
+      height: 720px;
+      background:
+        repeating-linear-gradient(to bottom, transparent 0 34px, rgba(255,255,255,0.035) 35px 36px),
+        linear-gradient(135deg, #171116, #241923);
+    }
+    .building::before {
+      left: 17%; right: 17%; top: -66px; height: 64px;
+      background: linear-gradient(#17121a,#100d13);
+      border: 2px solid #514258;
+      clip-path: polygon(0 100%, 12% 100%, 12% 42%, 26% 42%, 26% 0, 74% 0, 74% 42%, 88% 42%, 88% 100%, 100% 100%);
+    }
+    .building::after {
+      content: ""; position:absolute; left:50%; top:-76px; transform:translateX(-50%);
+      width: 34%; height: 12px; background:#28202c; border:1px solid #5c4d67;
+      box-shadow: 0 0 22px rgba(184,148,255,.12);
+    }
+    .windows { padding: 78px 42px 110px; grid-auto-rows: 66px; gap: 18px; }
     .building {
       position: relative;
       width: min(520px, 88vw);
@@ -202,6 +221,7 @@
       80% { opacity: 1; }
     }
 
+    .antenna { top: -164px; height: 116px; }
     .antenna {
       position: absolute;
       top: -112px;
