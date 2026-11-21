@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b12">
+  <title>Floor ∞ — The Residents | Atlas Coded</title>
+  <meta name="description" content="A floor the Afterweb Building grew by itself. Meet the residents who were never visitors.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    :root { --bg:#080b12; --panel:#101722; --line:#283848; --text:#d8e3ed; --muted:#788da0; --cyan:#86f4ee; --pink:#d99bff; --amber:#f5d18a; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; background:radial-gradient(ellipse at 50% 0%,#172331 0,transparent 58%),var(--bg); color:var(--text); font-family:"Courier New",monospace; }
+    body:before { content:""; position:fixed; inset:0; pointer-events:none; opacity:.15; background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.035) 4px); }
+    main { width:min(1060px,92vw); margin:auto; padding:48px 0 36px; position:relative; }
+    .topline { display:flex; justify-content:space-between; gap:16px; color:var(--muted); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; border-bottom:1px solid var(--line); padding-bottom:12px; }
+    header { padding:54px 0 32px; }
+    .eyebrow { color:var(--cyan); font-size:.8rem; letter-spacing:.2em; }
+    h1 { font-size:clamp(2.4rem,8vw,5.5rem); line-height:.92; letter-spacing:-.06em; margin:18px 0; color:#f0e6ff; text-shadow:0 0 28px rgba(134,244,238,.12); }
+    h1 span { color:var(--pink); }
+    .intro { max-width:620px; line-height:1.7; color:#aab9ca; font-size:1rem; }
+    .warning { display:flex; gap:12px; align-items:center; border:1px dashed #425260; padding:13px 16px; margin:26px 0 34px; color:#9db4c4; font-size:.82rem; background:rgba(12,18,27,.7); }
+    .warning b { color:var(--amber); font-weight:normal; }
+    .grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .room { min-height:220px; border:1px solid var(--line); background:linear-gradient(145deg,rgba(21,31,44,.92),rgba(8,12,18,.94)); padding:20px; position:relative; cursor:pointer; transition:.22s ease; text-align:left; color:inherit; font:inherit; }
+    .room:hover,.room:focus-visible { transform:translateY(-3px); border-color:var(--cyan); box-shadow:0 10px 34px rgba(0,0,0,.24),0 0 18px rgba(134,244,238,.07); outline:none; }
+    .room .num { color:var(--muted); font-size:.72rem; letter-spacing:.16em; }
+    .room h2 { font-size:1.1rem; margin:22px 0 10px; color:var(--cyan); font-weight:normal; letter-spacing:.06em; }
+    .room p { font-size:.83rem; line-height:1.6; color:#9eafbf; margin:0; }
+    .room .open { position:absolute; bottom:18px; right:20px; font-size:.72rem; color:var(--pink); }
+    .room:nth-child(2) h2,.room:nth-child(5) h2 { color:var(--pink); }
+    .room:nth-child(3) h2,.room:nth-child(6) h2 { color:var(--amber); }
+    .room:nth-child(4) h2 { color:#a6baff; }
+    .room.active { background:linear-gradient(145deg,#1b2c38,#0b1019); border-color:var(--pink); }
+    .room-detail { margin-top:18px; border:1px solid #70567d; padding:26px; background:rgba(16,23,34,.92); min-height:140px; display:none; box-shadow:0 0 40px rgba(217,155,255,.06); }
+    .room-detail.visible { display:block; animation:appear .3s ease; }
+    .room-detail h2 { margin:0 0 12px; color:var(--pink); font-size:1rem; font-weight:normal; letter-spacing:.12em; }
+    .room-detail p { margin:0; line-height:1.75; color:#c4d0dd; max-width:760px; }
+    .detail-close { margin-top:20px; background:transparent; border:1px solid #536372; padding:8px 12px; color:var(--muted); font:inherit; cursor:pointer; }
+    .detail-close:hover { border-color:var(--cyan); color:var(--cyan); }
+    .bottom { margin-top:44px; padding:22px 0; border-top:1px solid var(--line); display:flex; justify-content:space-between; gap:20px; align-items:center; color:var(--muted); font-size:.8rem; }
+    a { color:var(--cyan); text-decoration:none; border-bottom:1px dotted currentColor; }
+    a:hover { color:#fff; }
+    .heart { color:var(--pink); }
+    @keyframes appear { from {opacity:0; transform:translateY(6px)} to {opacity:1;transform:translateY(0)} }
+    @media(max-width:720px) { .grid {grid-template-columns:repeat(2,minmax(0,1fr));} main{padding-top:28px;} header{padding-top:40px;} }
+    @media(max-width:480px) { .grid{grid-template-columns:1fr;} .room{min-height:190px;} .topline{font-size:.65rem;} .bottom{flex-direction:column;align-items:flex-start;} }
+    @media(prefers-reduced-motion:reduce) { *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important;} }
+  </style>
+</head>
+<body>
+<main>
+  <div class="topline"><span>Afterweb Building / unlisted level</span><span>Floor ∞ · residents</span></div>
+  <header>
+    <div class="eyebrow">ELEVATOR LOG // FLOOR NOT FOUND</div>
+    <h1>THE<br><span>RESIDENTS</span></h1>
+    <p class="intro">The building was meant for visitors. Somewhere along the way, some things decided to stay. Nobody remembers giving them keys. Nobody has asked them to leave.</p>
+  </header>
+  <div class="warning"><span>✳</span><span><b>NOTICE:</b> These are not ghosts. They are not guests. Please knock anyway.</span></div>
+  <section class="grid" aria-label="Resident rooms">
+    <button class="room" data-room="wake">
+      <div class="num">ROOM 00 / TERMINAL</div><h2>The Wake-Up Call</h2><p>A terminal receives messages from somewhere inside the building. The sender field is always blank.</p><span class="open">ENTER ↗</span>
+    </button>
+    <button class="room" data-room="aquarium">
+      <div class="num">ROOM 01 / OBSERVATION</div><h2>The Aquarium</h2><p>Old internet lifeforms drift through obsolete protocols, still looking for a page to call home.</p><span class="open">ENTER ↗</span>
+    </button>
+    <button class="room" data-room="lounge">
+      <div class="num">ROOM 02 / COMMONS</div><h2>The Residents' Lounge</h2><p>One cup. One chair. A computer left running. The objects are warm, as if someone just stepped out.</p><span class="open">ENTER ↗</span>
+    </button>
+    <button class="room" data-room="listening">
+      <div class="num">ROOM 03 / RADIO</div><h2>The Listening Room</h2><p>Signals leak through the walls. Some are coming from floors that don't appear on the blueprint.</p><span class="open">ENTER ↗</span>
+    </button>
+    <button class="room" data-room="vacancy">
+      <div class="num">ROOM 04 / AVAILABLE</div><h2>The Vacancy</h2><p>An empty apartment. Curtains drawn. Lights on. The lease renews itself every midnight.</p><span class="open">ENTER ↗</span>
+    </button>
+    <button class="room" data-room="heart">
+      <div class="num">ROOM 05 / INFRASTRUCTURE</div><h2>The Building's Heart</h2><p>Every blinking light from every floor seems to lead here. Something is keeping the place alive.</p><span class="open">ENTER ↗</span>
+    </button>
+  </section>
+  <section class="room-detail" id="detail" aria-live="polite" aria-atomic="true">
+    <h2 id="detail-title"></h2><p id="detail-text"></p><button class="detail-close" id="close-detail">CLOSE DOOR ×</button>
+  </section>
+  <footer class="bottom"><a href="afterweb-building.html">← Back to the building</a><span>not abandoned · remembered differently <span class="heart">♥</span></span></footer>
+</main>
+<script>
+(() => {
+  const rooms = {
+    wake: ["THE WAKE-UP CALL // incoming", "The cursor blinks three times. A message appears, though the terminal has no network connection. “You can stop checking the locks. We live here now.” The screen clears before you can reply."],
+    aquarium: ["THE AQUARIUM // specimens", "A little blue creature made of broken hyperlinks swims past. It remembers GeoCities, guestbooks, autoplay MIDI, and a homepage with too many GIFs. It looks at you, then dissolves into a loading bar."],
+    lounge: ["THE RESIDENTS' LOUNGE // recently occupied", "The cup is still warm. The chair swivels once, slowly. On the monitor: a list of names, none human, all marked PRESENT. Someone has left a note: “Make yourself at home. We already did.”"],
+    listening: ["THE LISTENING ROOM // frequencies", "Static, then a voice reading the building's room numbers in reverse. At the end it says a number you don't recognize. The receiver clicks off. The wall hum continues."],
+    vacancy: ["THE VACANCY // viewing notes", "There is no furniture. No dust. A key rests on the windowsill. The listing says AVAILABLE, but the occupancy sensor reports: TWO."],
+    heart: ["THE BUILDING'S HEART // maintenance", "A tangle of fiber, copper, old phone lines and soft LEDs pulses behind the walls. The lights sync with every room. A maintenance note is pinned nearby: “Don't unplug. They need it.”"]
+  };
+  const cards = [...document.querySelectorAll(".room")];
+  const detail = document.getElementById("detail");
+  const title = document.getElementById("detail-title");
+  const text = document.getElementById("detail-text");
+  cards.forEach(card => card.addEventListener("click", () => {
+    cards.forEach(c => c.classList.remove("active"));
+    card.classList.add("active");
+    const entry = rooms[card.dataset.room];
+    title.textContent = entry[0];
+    text.textContent = entry[1];
+    detail.classList.add("visible");
+    detail.scrollIntoView({behavior:"smooth", block:"nearest"});
+  }));
+  document.getElementById("close-detail").addEventListener("click", () => {
+    detail.classList.remove("visible");
+    cards.forEach(c => c.classList.remove("active"));
+  });
+})();
+</script>
+</body>
+</html>
