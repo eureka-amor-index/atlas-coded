@@ -69,7 +69,7 @@
     </section>
 
     <nav class="nav" aria-label="Room navigation">
-      <a href="afterweb-building.html">← AFTERWEB BUILDING</a>
+      <a href="afterweb-building.html" id="buildingReturn">← AFTERWEB BUILDING</a>
       <a href="central-56k.html">CENTRAL 56K / PATCH BAY ↗</a>
     </nav>
   </main>
@@ -79,6 +79,10 @@
       let unlocked = false;
       try { unlocked = localStorage.getItem("afterweb.sublevel0.unlocked") === "true"; } catch (error) {}
       document.getElementById(unlocked ? "unlocked" : "locked").classList.remove("hidden");
+      if (unlocked) {
+        const buildingReturn = document.getElementById("buildingReturn");
+        if (buildingReturn) buildingReturn.href = "afterweb-building.html?reveal=sublevel-0";
+      }
 
       const answers = {
         origin: "No single user. The floor grew every time someone made a door and left it open.",
