@@ -811,7 +811,7 @@
       if(!panel||!toggle)return;
       const setOpen=(open)=>{panel.classList.toggle('console-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'[ T ] CLOSE CONSOLE':'[ T ] BUILDING CONSOLE';};
       toggle.addEventListener('click',()=>setOpen(!panel.classList.contains('console-open')));
-      document.addEventListener('keydown',(e)=>{if(e.key==='F2'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!(e.target instanceof HTMLElement&&(['INPUT','TEXTAREA'].includes(e.target.tagName)||e.target.isContentEditable))){e.preventDefault();setOpen(!panel.classList.contains('console-open'));}else if(e.key==='Escape'&&panel.classList.contains('console-open')){setOpen(false);}});
+      document.addEventListener('keydown',(e)=>{if(e.key.toLowerCase()==='a'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!(e.target instanceof HTMLElement&&(['INPUT','TEXTAREA'].includes(e.target.tagName)||e.target.isContentEditable))){e.preventDefault();setOpen(!panel.classList.contains('console-open'));}else if(e.key==='Escape'&&panel.classList.contains('console-open')){setOpen(false);}});
       const output=document.getElementById('awbConsoleOutput'); const lightsBtn=document.getElementById('awbLights'); const signalBtn=document.getElementById('awbSignal'); const floorBtn=document.getElementById('awbFloor'); const secretBtn=document.getElementById('awbSecret');
       if(!output||!lightsBtn||!signalBtn||!floorBtn||!secretBtn)return;
       const say=(lines)=>{output.replaceChildren();lines.forEach((line,i)=>{const row=document.createElement('div');row.textContent=line;if(i===lines.length-1)row.className='console-line';output.appendChild(row);});};
