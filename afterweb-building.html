@@ -302,6 +302,16 @@
       border-color: #ff3bc8;
       text-shadow: 0 0 7px #00eaff;
     }
+    .window.quiet-room-window {
+      background: linear-gradient(135deg, #b894ff, #302642);
+      border-color: #9d83d8;
+      box-shadow: 0 0 14px rgba(184,148,255,.35);
+    }
+    .window.signal-room-window {
+      background: linear-gradient(135deg, #00eaff, #14323b);
+      border-color: #62eaff;
+      box-shadow: 0 0 14px rgba(0,234,255,.35);
+    }
     @keyframes glitchWindow {
       0%,92%,100% { filter: none; transform: translateY(0); }
       93% { filter: hue-rotate(35deg) brightness(1.7); transform: translateX(2px); }
@@ -642,7 +652,19 @@
             <span>Pupoville</span>
           </a>
 
-          <a class="window glitchamous-window" href="glitchamous.html" title="Glitchamous — Afterweb DJ">\n            <span>Glitchamous // Afterweb DJ</span>\n          </a>\n\n          <a class="window" href="/room-404.html" title="Room 404">
+          <a class="window glitchamous-window" href="glitchamous.html" title="Glitchamous — Afterweb DJ">
+            <span>Glitchamous // Afterweb DJ</span>
+          </a>
+
+          <a class="window quiet-room-window" href="quiet-room.html" title="The Quiet Room">
+            <span>The Quiet Room</span>
+          </a>
+
+          <a class="window signal-room-window" href="signal-room.html" title="The Signal Room">
+            <span>The Signal Room</span>
+          </a>
+
+          <a class="window" href="/room-404.html" title="Room 404">
             <span>Room 404</span>
           </a>
 
