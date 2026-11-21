@@ -124,7 +124,7 @@
 <body>
   <main class="shell">
     <nav class="topline" aria-label="Room navigation">
-      <a class="back" href="afterweb-building.html">← BACK TO AFTERWEB BUILDING</a>
+      <a class="back" id="buildingReturn" href="afterweb-building.html">← BACK TO AFTERWEB BUILDING</a>
       <span class="system-id">MAINTENANCE ACCESS // AUTHORIZED BY NOBODY</span>
     </nav>
 
@@ -239,6 +239,7 @@
       const statusLed = document.getElementById("statusLed");
       const statusText = document.getElementById("statusText");
       const enterSublevel = document.getElementById("enterSublevel");
+      const buildingReturn = document.getElementById("buildingReturn");
 
       readSaved().forEach((name) => connected.add(name));
 
@@ -261,8 +262,9 @@
 
         if (count === 3) {
           try { localStorage.setItem(UNLOCK_KEY, "true"); } catch (error) {}
+          if (buildingReturn) buildingReturn.href = "afterweb-building.html?reveal=sublevel-0";
           response.classList.add("success");
-          response.innerHTML = "<strong>ROOT SIGNAL RETURNED.</strong><br>The antenna just moved. Something answered from below the building. A new floor has appeared in the directory.";
+          response.innerHTML = "<strong>ROOT SIGNAL RETURNED.</strong><br>The antenna just moved. Something answered from below the building. Go back to the facade: a new red window is about to reveal itself.";
           enterSublevel.classList.add("visible");
         } else if (isUnlocked()) {
           response.classList.add("success");
