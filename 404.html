@@ -39,7 +39,8 @@ input:focus{border-color:var(--violet);box-shadow:0 0 12px rgba(184,148,255,.12)
 .foot{margin-top:22px;text-align:center;color:#61576b;font-size:.63rem;letter-spacing:.1em;line-height:1.8}
 .foot a{color:var(--muted)}
 @media(max-width:500px){.topline{font-size:.58rem}.screen{padding:13px}.actions button,.actions a{flex:1;text-align:center}}
-</style>
+
+.secret-room{display:none;position:fixed;inset:0;z-index:20;background:rgba(3,3,7,.96);padding:20px;align-items:center;justify-content:center}.secret-room.open{display:flex}.room-card{width:min(680px,100%);border:1px solid #4a5360;background:radial-gradient(circle at 50% 20%,#182c2b,#08080c 70%);padding:clamp(18px,4vw,36px);box-shadow:0 0 40px rgba(131,216,255,.12)}.room-card h2{color:var(--green);letter-spacing:.12em}.room-card p{color:#b9b0c8;line-height:1.8}.room-card .room-note{color:var(--amber);font-size:.75rem;letter-spacing:.12em}.cell.lost{cursor:pointer}.cell.unlocked{border-color:var(--green);box-shadow:0 0 16px rgba(165,255,184,.3)}</style>
 </head>
 <body>
 <main>
@@ -68,13 +69,14 @@ Coordinates unknown. The Afterweb is still listening.</div><span class="cursor" 
 <div class="actions"><button id="find">TRY TO FIND IT</button><a class="btn home" href="https://atlas-coded.net/">GO HOME // ATLAS CODED</a></div>
 <div class="foot">IF YOU FOUND THIS PLACE, YOU WERE MEANT TO.<br> <a href="https://atlas-coded.net/afterweb-building.html">AFTERWEB BUILDING</a> // CONNECTION UNSTABLE</div>
 </section>
-</main>
+<div class="secret-room" id="secretRoom" role="dialog" aria-modal="true"><div class="room-card"><div class="room-note">HIDDEN LOCATION // ROUTE FOUND</div><h2>THE QUIET ROOM</h2><p>You found a room that was never on the map. A little CRT glows in the corner. There is no error here, only the soft sound of a connection waiting.</p><p>Somewhere else was not an error. It was a place.</p><div class="actions"><button id="leaveRoom">RETURN TO THE TERMINAL</button><a class="btn home" href="https://atlas-coded.net/afterweb-building.html">VISIT AFTERWEB BUILDING</a></div></div></div></main>
 <script>
 const signal=document.getElementById('signal'), mapCaption=document.getElementById('mapCaption'), lost=document.querySelector('.cell.lost');
 const base='SIGNAL LOST // PAGE NOT FOUND\nThe page you\'re looking for isn\'t here.\nOr perhaps it moved somewhere it shouldn\'t.\n\nCoordinates unknown. The Afterweb is still listening.';
 function reconnect(){signal.textContent='SEARCHING ROUTES...\nPING 01 // NO RESPONSE\nPING 02 // STATIC\nPING 03 // SOMETHING ANSWERED\n\nSignal remains unstable. You are somewhere else.';mapCaption.textContent='ROUTE SEARCH // 3 PINGS';lost.classList.add('lost');}
 document.getElementById('find').addEventListener('click',reconnect);
-document.getElementById('commandForm').addEventListener('submit',e=>{e.preventDefault();const cmd=document.getElementById('command').value.trim().toUpperCase();if(cmd==='WAKE'){signal.textContent='WAKE RECEIVED.\nA distant window lights up.\nThe lost room is awake, but its coordinates remain unknown.';mapCaption.textContent='UNKNOWN ROOM // AWAKE';lost.classList.add('lost')}else if(cmd==='MEMORY'){signal.textContent='MEMORY FRAGMENT:\nYou were not lost the whole time.\nSome places only appear when you stop looking for the exit.';mapCaption.textContent='MEMORY // FRAGMENT RECOVERED'}else if(cmd==='56K'){signal.textContent='CONNECTING...\n56K MODEM // HANDSHAKE\nBEEP—KRRR—SHHH\nConnection made. The map is still incomplete.' ;mapCaption.textContent='56K // CONNECTION ESTABLISHED'}else{signal.textContent='COMMAND UNKNOWN.\nThe Afterweb heard you, but does not recognize that signal.\nTry WAKE, MEMORY, or 56K.';mapCaption.textContent='UNKNOWN COMMAND // LISTENING'}});
-</script>
+document.getElementById('commandForm').addEventListener('submit',e=>{e.preventDefault();const cmd=document.getElementById('command').value.trim().toUpperCase();if(cmd==='WAKE'){signal.textContent='WAKE RECEIVED.\nA distant window lights up.\nThe lost room is awake, but its coordinates remain unknown.';mapCaption.textContent='UNKNOWN ROOM // AWAKE';lost.classList.add('lost')}else if(cmd==='MEMORY'){roomUnlocked=true;lost.classList.add('unlocked');signal.textContent='MEMORY FRAGMENT:\nYou were not lost the whole time.\nSome places only appear when you stop looking for the exit.';mapCaption.textContent='MEMORY // FRAGMENT RECOVERED'}else if(cmd==='56K'){signal.textContent='CONNECTING...\n56K MODEM // HANDSHAKE\nBEEP—KRRR—SHHH\nConnection made. The map is still incomplete.' ;mapCaption.textContent='56K // CONNECTION ESTABLISHED'}else{signal.textContent='COMMAND UNKNOWN.\nThe Afterweb heard you, but does not recognize that signal.\nTry WAKE, MEMORY, or 56K.';mapCaption.textContent='UNKNOWN COMMAND // LISTENING'}});
+
+let roomUnlocked=false;const secretRoom=document.getElementById('secretRoom');function openSecretRoom(){if(!roomUnlocked){signal.textContent='ROOM LOCKED.\nRecover a MEMORY fragment first.';mapCaption.textContent='LOCKED // MEMORY REQUIRED';return}secretRoom.classList.add('open');signal.textContent='SECRET ROUTE OPEN.\nYou found the quiet room.';mapCaption.textContent='SECRET ROOM // OPEN'}lost.addEventListener('click',openSecretRoom);document.getElementById('leaveRoom').addEventListener('click',()=>secretRoom.classList.remove('open'));</script>
 </body>
 </html>
