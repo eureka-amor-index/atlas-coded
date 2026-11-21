@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GLITCH EMUS // AFTERWEB NIGHTLIFE</title>
+<title>GLITCHAMOUS // AFTERWEB NIGHTLIFE</title>
 <style>
 :root{--green:#76ff9a;--pink:#ff2e91;--cyan:#39f7ff;--ink:#06070d}
 *{box-sizing:border-box}
@@ -26,7 +26,7 @@ main{max-width:1100px;margin:auto;padding:12px 20px 80px}
 disc{display:block}
 .disc{position:absolute;width:min(72vw,360px);aspect-ratio:1;border-radius:50%;border:1px solid #ff2e9170;background:repeating-radial-gradient(circle,#170c24 0 12px,#21102b 13px 20px,#10091b 21px 28px);box-shadow:0 0 25px #ff2e9125;animation:spin 9s linear infinite}
 .disc:before{content:"";position:absolute;inset:35%;border-radius:50%;background:radial-gradient(circle,#39f7ff,#ff2e91 60%,#090912 70%);box-shadow:0 0 24px #39f7ff}
-.disc:after{content:"GLITCH EMUS";position:absolute;inset:48% 0;text-align:center;font-weight:bold;font-size:clamp(12px,2vw,16px);letter-spacing:.4em;color:#fff;text-shadow:0 0 8px var(--pink)}
+.disc:after{content:"GLITCHAMOUS";position:absolute;inset:48% 0;text-align:center;font-weight:bold;font-size:clamp(12px,2vw,16px);letter-spacing:.4em;color:#fff;text-shadow:0 0 8px var(--pink)}
 .beam{position:absolute;width:80%;height:140%;top:-20%;background:linear-gradient(90deg,transparent,#ff2e9114,transparent,#39f7ff15,transparent);transform:rotate(18deg);animation:beam 4s ease-in-out infinite alternate}
 .emu{position:absolute;z-index:3;bottom:6%;width:220px;max-width:60%;filter:drop-shadow(0 0 12px #39f7ff40);animation:float 3s ease-in-out infinite}
 .floor{position:absolute;bottom:0;width:100%;height:28%;background:repeating-linear-gradient(90deg,#39f7ff08 0 2px,transparent 3px 44px),repeating-linear-gradient(0deg,#ff2e9110 0 2px,transparent 3px 35px);transform:perspective(250px) rotateX(55deg);transform-origin:bottom}
@@ -42,10 +42,10 @@ body.glitch{animation:glitch .18s steps(2,end) 3} @keyframes glitch{0%{transform
 </head>
 <body>
 <div class="noise"></div>
-<header><div class="kicker">Afterweb District // Nightlife</div><h1>GLITCH EMUS</h1><div class="subtitle">a club outside the signal</div></header>
+<header><div class="kicker">Afterweb District // Nightlife</div><h1>GLITCHAMOUS</h1><div class="subtitle">a club outside the signal</div></header>
 <main><section class="club">
 <div class="copy"><h2>Dance in<br><span>the error.</span></h2><p>The signal breaks. The bass survives. Welcome to a hidden dance floor where the music arrives from corrupted memories, broken transmissions and nights that refuse to end.</p><div class="pill">OPEN AFTER DARK · 88.8 FM</div><div class="controls"><button id="glitchBtn">Trigger a glitch</button><button id="lightsBtn">Switch the mood</button></div></div>
-<div class="stage"><div class="beam"></div><div class="disc"></div><div class="floor"></div><div class="emu" aria-label="Glitch Emus club host" style="font-size:5rem;text-align:center">🦤<br><small style="font-size:.65rem;letter-spacing:.3em;color:#39f7ff">GLITCH EMUS</small></div></div>
+<div class="stage"><div class="beam"></div><div class="disc"></div><div class="floor"></div><div class="emu" aria-label="Glitchamous club host" style="font-size:5rem;text-align:center">🦤<br><small style="font-size:.65rem;letter-spacing:.3em;color:#39f7ff">GLITCHAMOUS</small></div></div>
 </section></main><footer>AFTERWEB NIGHTLIFE // NO SIGNAL, NO PROBLEM</footer>
 <script>
 document.getElementById('glitchBtn').addEventListener('click',()=>{document.body.classList.add('glitch');setTimeout(()=>document.body.classList.remove('glitch'),650)});
