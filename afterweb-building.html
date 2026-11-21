@@ -577,6 +577,13 @@
     .console-actions button:hover,.console-actions button:focus-visible{outline:none;color:#83d8ff;border-color:#83d8ff;box-shadow:0 0 12px rgba(131,216,255,.18)}
     .console-foot{margin-top:10px;color:#655c72;font-size:.55rem;letter-spacing:.1em;text-align:center}
 
+
+    .console-toggle{position:fixed;right:16px;bottom:16px;z-index:50;background:#09070d;color:#83d8ff;border:1px solid #42616b;padding:10px 13px;font: .65rem 'Courier New',monospace;letter-spacing:.1em;box-shadow:0 0 16px rgba(131,216,255,.2);cursor:pointer}
+    .building-console{position:fixed;right:16px;bottom:62px;z-index:49;width:min(440px,calc(100vw - 32px));margin:0;display:none;max-height:70vh;overflow:auto;box-shadow:0 0 30px rgba(0,0,0,.8),0 0 22px rgba(131,216,255,.2)}
+    .building-console.console-open{display:block}
+    .console-top{font-size:.62rem}
+    @media(max-width:560px){.console-toggle{right:10px;bottom:10px}.building-console{right:10px;bottom:56px;width:calc(100vw - 20px)}}
+
   </style>
 </head>
 
@@ -708,7 +715,8 @@
     </section>
 
     
-    <section class="building-console" aria-label="Afterweb Building interactive console">
+    <button class="console-toggle" id="consoleToggle" type="button" aria-expanded="false">[ T ] BUILDING CONSOLE</button>
+    <section class="building-console" id="buildingConsole" aria-label="Afterweb Building interactive console">
       <div class="console-top"><span>BUILDING CONTROL // AWB-01</span><span>CRT TERMINAL</span></div>
       <div class="console-screen" id="awbConsoleOutput" aria-live="polite"><div>AFTERWEB BUILDING SYSTEM</div><div>LOCAL CONTROL READY_</div><div class="console-line">Awaiting command.</div></div>
       <div class="console-actions"><button type="button" id="awbLights">WINDOW LIGHTS</button><button type="button" id="awbSignal">SEND SIGNAL</button><button type="button" id="awbFloor">SCAN FLOORS</button><button type="button" id="awbSecret">??? / UNKNOWN</button></div>
@@ -797,51 +805,21 @@
       });
     })();
 
-    // AWB-01 console: visible, persistent interactions
+    // AWB-01 floating console interactions
     (() => {
-      const output = document.getElementById('awbConsoleOutput');
-      const lightsBtn = document.getElementById('awbLights');
-      const signalBtn = document.getElementById('awbSignal');
-      const floorBtn = document.getElementById('awbFloor');
-      const secretBtn = document.getElementById('awbSecret');
-      if (!output || !lightsBtn || !signalBtn || !floorBtn || !secretBtn) return;
-      const say = (lines) => {
-        output.replaceChildren();
-        lines.forEach((line, i) => {
-          const row = document.createElement('div');
-          row.textContent = line;
-          if (i === lines.length - 1) row.className = 'console-line';
-          output.appendChild(row);
-        });
-      };
-      const windows = [...document.querySelectorAll('.building .window:not(.secret-window)')];
-      let lightsOn = false;
-      lightsBtn.addEventListener('click', () => {
-        lightsOn = !lightsOn;
-        windows.forEach((w, i) => w.classList.toggle('console-lit', lightsOn && i % 2 === 0));
-        lightsBtn.textContent = lightsOn ? 'LIGHTS: ON' : 'WINDOW LIGHTS';
-        say(['AWB-01 / LIGHT CONTROL', lightsOn ? 'Grid illumination: ON' : 'Grid illumination: OFF', lightsOn ? 'The residents are awake.' : 'The building returns to darkness.']);
-      });
-      signalBtn.addEventListener('click', () => {
-        const building = document.querySelector('.building');
-        if (building) {
-          building.classList.remove('console-signal');
-          void building.offsetWidth;
-          building.classList.add('console-signal');
-          building.addEventListener('animationend', () => building.classList.remove('console-signal'), {once:true});
-        }
-        say(['SIGNAL TRANSMITTED', 'Pulse sent through the facade.', 'Awaiting response...']);
-      });
-      floorBtn.addEventListener('click', () => {
-        const floors = ['LOBBY / INDEX','FLOOR ∞ / RESIDENTS','SUBLEVEL 0 / UNKNOWN','QUIET ROOM / VIOLET','SIGNAL ROOM / CYAN'];
-        const next = floors[Math.floor(Math.random() * floors.length)];
-        say(['FLOOR SCAN COMPLETE', 'Detected: ' + next, 'Directory signal unstable.']);
-      });
-      secretBtn.addEventListener('click', () => {
-        say(['UNKNOWN COMMAND RECEIVED', 'The terminal is listening.', 'Try: WAKE, MEMORY, or 56K']);
-        output.style.color = '#ff7a8a';
-        setTimeout(() => { output.style.color = ''; }, 1200);
-      });
+      const panel=document.getElementById('buildingConsole'); const toggle=document.getElementById('consoleToggle');
+      if(!panel||!toggle)return;
+      const setOpen=(open)=>{panel.classList.toggle('console-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'[ T ] CLOSE CONSOLE':'[ T ] BUILDING CONSOLE';};
+      toggle.addEventListener('click',()=>setOpen(!panel.classList.contains('console-open')));
+      document.addEventListener('keydown',(e)=>{if(e.key.toLowerCase()==='t'&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!(e.target instanceof HTMLElement&&(['INPUT','TEXTAREA'].includes(e.target.tagName)||e.target.isContentEditable))){e.preventDefault();setOpen(!panel.classList.contains('console-open'));}});
+      const output=document.getElementById('awbConsoleOutput'); const lightsBtn=document.getElementById('awbLights'); const signalBtn=document.getElementById('awbSignal'); const floorBtn=document.getElementById('awbFloor'); const secretBtn=document.getElementById('awbSecret');
+      if(!output||!lightsBtn||!signalBtn||!floorBtn||!secretBtn)return;
+      const say=(lines)=>{output.replaceChildren();lines.forEach((line,i)=>{const row=document.createElement('div');row.textContent=line;if(i===lines.length-1)row.className='console-line';output.appendChild(row);});};
+      const windows=[...document.querySelectorAll('.building .window:not(.secret-window)')];let lightsOn=false;
+      lightsBtn.addEventListener('click',()=>{lightsOn=!lightsOn;windows.forEach((w,i)=>w.classList.toggle('console-lit',lightsOn&&i%2===0));lightsBtn.textContent=lightsOn?'LIGHTS: ON':'WINDOW LIGHTS';say(['AWB-01 / LIGHT CONTROL',lightsOn?'Grid illumination: ON':'Grid illumination: OFF',lightsOn?'The residents are awake.':'The building returns to darkness.']);});
+      signalBtn.addEventListener('click',()=>{const b=document.querySelector('.building');if(b){b.classList.remove('console-signal');void b.offsetWidth;b.classList.add('console-signal');b.addEventListener('animationend',()=>b.classList.remove('console-signal'),{once:true});}say(['SIGNAL TRANSMITTED','Pulse sent through the facade.','Awaiting response...']);});
+      floorBtn.addEventListener('click',()=>{const floors=['LOBBY / INDEX','FLOOR ∞ / RESIDENTS','SUBLEVEL 0 / UNKNOWN','QUIET ROOM / VIOLET','SIGNAL ROOM / CYAN'];say(['FLOOR SCAN COMPLETE','Detected: '+floors[Math.floor(Math.random()*floors.length)],'Directory signal unstable.']);});
+      secretBtn.addEventListener('click',()=>say(['UNKNOWN COMMAND RECEIVED','The terminal is listening.','Try: WAKE, MEMORY, or 56K']));
     })();
   </script>
 
