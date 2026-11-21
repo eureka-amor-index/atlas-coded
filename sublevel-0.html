@@ -76,8 +76,17 @@
 
   <script>
     (() => {
-      let unlocked = false;
-      try { unlocked = localStorage.getItem("afterweb.sublevel0.unlocked") === "true"; } catch (error) {}
+      const unlockKey = "afterweb.sublevel0.unlocked";
+      const accessKey = new URLSearchParams(window.location.search).get("access");
+      let unlocked = accessKey === "carrier-restored";
+
+      try {
+        unlocked = unlocked || localStorage.getItem(unlockKey) === "true";
+        if (unlocked) localStorage.setItem(unlockKey, "true");
+      } catch (error) {
+        // The carrier-restored URL parameter is a complete access pass on its own.
+      }
+
       document.getElementById(unlocked ? "unlocked" : "locked").classList.remove("hidden");
       if (unlocked) {
         const buildingReturn = document.getElementById("buildingReturn");
