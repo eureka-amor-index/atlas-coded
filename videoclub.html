@@ -306,7 +306,9 @@
       function readJSON(key, fallback) {
         try {
           const value = localStorage.getItem(key);
-          return value ? JSON.parse(value) : fallback;
+          if (!value) return fallback;
+          const parsed = JSON.parse(value);
+          return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : fallback;
         } catch (error) {
           return fallback;
         }
@@ -522,8 +524,14 @@
         if (wasRewound) history.rewound = Number(history.rewound || 0) + 1;
         saveRentals();
         renderShelf(); renderRentals(); renderDetail();
-        if (history.returned >= 2 && !sessionStorage.getItem("afterweb.videoclub.ghostNotice")) {
-          try { sessionStorage.setItem("afterweb.videoclub.ghostNotice","1"); } catch (error) {}
+        let showGhostNotice = false;
+        try {
+          showGhostNotice = history.returned >= 2 && !sessionStorage.getItem("afterweb.videoclub.ghostNotice");
+          if (showGhostNotice) sessionStorage.setItem("afterweb.videoclub.ghostNotice","1");
+        } catch (error) {
+          showGhostNotice = history.returned === 2;
+        }
+        if (showGhostNotice) {
           say("Devolución registrada. El encargado encontró otra cinta detrás del mostrador. Dice que no estaba ahí.");
         } else {
           say(wasRewound ? "Devolución registrada. Gracias por rebobinar." : "Devolución registrada. La próxima vez, acordate de rebobinar.");
