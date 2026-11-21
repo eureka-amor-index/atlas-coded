@@ -572,6 +572,10 @@
     .building.console-signal { animation:consoleSignal 1s ease-out!important; }
     @keyframes consoleSignal { 0%{filter:brightness(1)} 30%{filter:brightness(2.4) hue-rotate(35deg)} 65%{filter:brightness(1.8) hue-rotate(-25deg)} 100%{filter:brightness(1)} }
 
+    .console-command-form{display:flex;gap:8px;margin-top:10px}
+    .console-command-form input{flex:1;min-width:0;background:#05070b;border:1px solid #283d43;color:#83d8ff;padding:10px;font:inherit;font-size:.68rem;outline:none}
+    .console-command-form input:focus{border-color:#83d8ff;box-shadow:0 0 10px rgba(131,216,255,.2)}
+    .console-command-form button{font:inherit;font-size:.62rem;letter-spacing:.08em;color:#a5ffb8;background:#0b1411;border:1px solid #415c4a;padding:10px;cursor:pointer}
     .console-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
     .console-actions button{font-family:inherit;font-size:.62rem;letter-spacing:.08em;color:#b894ff;background:#100d18;border:1px solid #51445f;padding:11px 8px;cursor:pointer;transition:.2s}
     .console-actions button:hover,.console-actions button:focus-visible{outline:none;color:#83d8ff;border-color:#83d8ff;box-shadow:0 0 12px rgba(131,216,255,.18)}
@@ -719,6 +723,7 @@
     <section class="building-console" id="buildingConsole" aria-label="Afterweb Building interactive console">
       <div class="console-top"><span>BUILDING CONTROL // AWB-01</span><span>CRT TERMINAL</span></div>
       <div class="console-screen" id="awbConsoleOutput" aria-live="polite"><div>AFTERWEB BUILDING SYSTEM</div><div>LOCAL CONTROL READY_</div><div class="console-line">Awaiting command.</div></div>
+      <form class="console-command-form" id="awbCommandForm"><input id="awbCommandInput" type="text" autocomplete="off" spellcheck="false" placeholder="TYPE WAKE / MEMORY / 56K..." aria-label="Enter console command"><button type="submit">EXECUTE</button></form>
       <div class="console-actions"><button type="button" id="awbLights">WINDOW LIGHTS</button><button type="button" id="awbSignal">SEND SIGNAL</button><button type="button" id="awbFloor">SCAN FLOORS</button><button type="button" id="awbSecret">??? / UNKNOWN</button></div>
       <div class="console-foot">INPUT ACCEPTED · USE WITH CAUTION · 56K CONNECTED</div>
     </section>
@@ -821,8 +826,8 @@
       signalBtn.addEventListener('click',()=>{const b=document.querySelector('.building');if(b){b.classList.remove('console-signal');void b.offsetWidth;b.classList.add('console-signal');b.addEventListener('animationend',()=>b.classList.remove('console-signal'),{once:true});}say(['SIGNAL TRANSMITTED','Pulse sent through the facade.','Awaiting response...']);});
       floorBtn.addEventListener('click',()=>{const floors=['LOBBY / INDEX','FLOOR ∞ / RESIDENTS','SUBLEVEL 0 / UNKNOWN','QUIET ROOM / VIOLET','SIGNAL ROOM / CYAN'];say(['FLOOR SCAN COMPLETE','Detected: '+floors[Math.floor(Math.random()*floors.length)],'Directory signal unstable.']);});
       secretBtn.addEventListener('click',()=>say(['UNKNOWN COMMAND RECEIVED','The terminal is listening.','Try: WAKE, MEMORY, or 56K']));
-      const commandInput=panel.querySelector('input');
-      if(commandInput){commandInput.addEventListener('keydown',(e)=>{if(e.key!=='Enter')return;const command=commandInput.value.trim().toUpperCase();commandInput.value='';if(command==='WAKE'){wakeBuilding();}else if(command==='MEMORY'){say(['MEMORY RECOVERED // AWB-01','A warm light stayed on for someone who had not arrived yet.','Some places remember.']);}else if(command==='56K'){say(['MODEM HANDSHAKE // 56K','CONNECTING...','BEEP—KRRRSHHH—','CONNECTION ESTABLISHED: AFTERWEB']);panel.classList.add('console-56k');setTimeout(()=>panel.classList.remove('console-56k'),2400);}else if(command){say(['COMMAND NOT RECOGNIZED: '+command,'Available: WAKE / MEMORY / 56K']);}});}
+      const commandInput=document.getElementById('awbCommandInput'); const commandForm=document.getElementById('awbCommandForm');
+      if(commandInput&&commandForm){commandForm.addEventListener('submit',(e)=>{e.preventDefault();const command=commandInput.value.trim().toUpperCase();commandInput.value='';if(command==='WAKE'){wakeBuilding();}else if(command==='MEMORY'){say(['MEMORY RECOVERED // AWB-01','A warm light stayed on for someone who had not arrived yet.','Some places remember.']);}else if(command==='56K'){say(['MODEM HANDSHAKE // 56K','CONNECTING...','BEEP—KRRRSHHH—','CONNECTION ESTABLISHED: AFTERWEB']);panel.classList.add('console-56k');setTimeout(()=>panel.classList.remove('console-56k'),2400);}else if(command){say(['COMMAND NOT RECOGNIZED: '+command,'Available: WAKE / MEMORY / 56K']);}});}
     })();
   </script>
 
