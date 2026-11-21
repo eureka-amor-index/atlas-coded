@@ -809,7 +809,7 @@
     (() => {
       const panel=document.getElementById('buildingConsole'); const toggle=document.getElementById('consoleToggle');
       if(!panel||!toggle)return;
-      const setOpen=(open)=>{panel.classList.toggle('console-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'[ A ] CLOSE CONSOLE':'[ T ] BUILDING CONSOLE';};
+      const setOpen=(open)=>{panel.classList.toggle('console-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'[ A ] CLOSE CONSOLE':'[ A ] BUILDING CONSOLE';};
       toggle.addEventListener('click',()=>setOpen(!panel.classList.contains('console-open')));
       window.addEventListener('keydown',(e)=>{if((e.code==='KeyA'||e.key.toLowerCase()==='a')&&!e.ctrlKey&&!e.metaKey&&!e.altKey&&!(e.target instanceof HTMLElement&&(['INPUT','TEXTAREA'].includes(e.target.tagName)||e.target.isContentEditable))){e.preventDefault();setOpen(!panel.classList.contains('console-open'));}else if(e.key==='Escape'&&panel.classList.contains('console-open')){setOpen(false);}},true);
       const output=document.getElementById('awbConsoleOutput'); const lightsBtn=document.getElementById('awbLights'); const signalBtn=document.getElementById('awbSignal'); const floorBtn=document.getElementById('awbFloor'); const secretBtn=document.getElementById('awbSecret');
