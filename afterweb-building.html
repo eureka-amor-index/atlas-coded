@@ -400,6 +400,23 @@
       to { background-position: -22px 42px; }
     }
 
+
+    .courtyard { width:min(520px,88vw); margin:24px auto 0; padding:22px 18px 26px; border:1px solid #4b4054; background:linear-gradient(180deg,rgba(16,17,25,.92),rgba(7,8,12,.96)); box-shadow:0 0 28px rgba(0,0,0,.45),0 0 24px rgba(165,255,184,.05); text-align:center; }
+    .courtyard-title { color:var(--green); letter-spacing:.18em; font-size:.8rem; text-shadow:0 0 12px rgba(165,255,184,.25); }
+    .courtyard-sub { margin:8px 0 18px; color:var(--muted); font-size:.7rem; letter-spacing:.08em; }
+    .courtyard-scene { position:relative; min-height:145px; display:flex; align-items:flex-end; justify-content:center; gap:18px; padding:18px 10px 16px; overflow:hidden; border:1px solid #292b32; background:radial-gradient(circle at 50% 12%,rgba(255,224,163,.1),transparent 50%),linear-gradient(#0c1115,#08090b); }
+    .courtyard-scene::before { content:""; position:absolute; inset:auto 0 0; height:42px; background:repeating-linear-gradient(90deg,#15191b 0 38px,#202326 39px 40px); border-top:1px solid #34363a; }
+    .courtyard-lamp { position:relative; z-index:1; width:8px; height:90px; background:#39343b; border-radius:4px; margin-bottom:12px; }
+    .courtyard-lamp::before { content:""; position:absolute; top:-5px; left:-8px; width:24px; height:14px; border-radius:8px 8px 3px 3px; background:#ffe5a4; box-shadow:0 0 20px 8px rgba(255,229,164,.22); animation:courtyardGlow 4s ease-in-out infinite alternate; }
+    .courtyard-plant { position:relative; z-index:1; width:58px; height:62px; margin-bottom:10px; }
+    .courtyard-plant::before { content:""; position:absolute; bottom:0; left:15px; width:30px; height:24px; background:#31251e; border:1px solid #65503a; clip-path:polygon(0 0,100% 0,85% 100%,15% 100%); }
+    .courtyard-plant::after { content:""; position:absolute; bottom:22px; left:25px; width:10px; height:40px; background:#497a56; border-radius:10px; box-shadow:-13px 5px 0 -2px #6b9a6c,13px 3px 0 -2px #79b27e,-8px -8px 0 -3px #89c68e,8px -12px 0 -3px #4f9864; }
+    .courtyard-bench { position:relative; z-index:1; width:92px; height:34px; margin-bottom:12px; border-bottom:5px solid #594337; }
+    .courtyard-bench::before { content:""; position:absolute; top:5px; left:0; width:100%; height:12px; background:#70523c; border:1px solid #9a7753; box-shadow:0 8px 0 #513a2d; }
+    .courtyard-bench::after { content:""; position:absolute; top:16px; left:12px; width:5px; height:18px; background:#4d3b30; box-shadow:62px 0 #4d3b30; }
+    .courtyard-note { margin-top:16px; color:#8b9a8c; font-size:.65rem; line-height:1.8; letter-spacing:.05em; }
+    @keyframes courtyardGlow { from {opacity:.65;filter:brightness(.9)} to {opacity:1;filter:brightness(1.15)} }
+
     @media (max-width: 560px) {
       .lamp { display: none; }
       .building { height: 560px; }
@@ -509,6 +526,19 @@
         <a class="door" href="index.html">INDEX</a>
         <div class="side-note">not abandoned · remembered differently</div>
       </div>
+    </section>
+
+
+    <section class="courtyard" aria-label="The Afterweb Building's quiet courtyard">
+      <div class="courtyard-title">THE COURTYARD // COMMON AREA</div>
+      <div class="courtyard-sub">a small place to breathe between floors</div>
+      <div class="courtyard-scene" aria-hidden="true">
+        <div class="courtyard-plant"></div>
+        <div class="courtyard-bench"></div>
+        <div class="courtyard-lamp"></div>
+        <div class="courtyard-plant"></div>
+      </div>
+      <div class="courtyard-note">PLANTS ARE QUIETLY GROWING.<br>THE LIGHT IS ALWAYS WARM HERE.</div>
     </section>
 
     <div class="ground"></div>
