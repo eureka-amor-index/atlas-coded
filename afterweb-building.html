@@ -444,6 +444,15 @@
     .courtyard-note { margin-top:16px; color:#8b9a8c; font-size:.65rem; line-height:1.8; letter-spacing:.05em; }
     @keyframes courtyardGlow { from {opacity:.65;filter:brightness(.9)} to {opacity:1;filter:brightness(1.15)} }
 
+    /* Make the building subtitle readable beneath the landmark title */
+    .subtitle {
+      color: #c5b9d7;
+      font-size: clamp(.82rem, 2.5vw, 1rem);
+      letter-spacing: .12em;
+      text-shadow: 0 0 8px rgba(184,148,255,.28);
+      margin-top: 12px;
+      line-height: 1.6;
+    }
     /* AFTERWEB DISTRICT — first neighborhood pass */
     .district { width:min(900px,96vw); margin:24px auto 0; padding:20px 12px 24px; border:1px solid #30293a; background:linear-gradient(#090a11,#050507); }
     .district-heading { text-align:center; color:#83d8ff; letter-spacing:.18em; font-size:.78rem; text-shadow:0 0 12px rgba(131,216,255,.25); }
