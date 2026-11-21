@@ -567,6 +567,11 @@
     .console-top{display:flex;justify-content:space-between;gap:8px;color:#8c82a0;font-size:.58rem;letter-spacing:.12em;margin-bottom:10px}
     .console-screen{background:#020406;border:1px solid #283d43;padding:12px;min-height:94px;color:#83d8ff;text-shadow:0 0 8px rgba(131,216,255,.35);font-size:.68rem;line-height:1.8;box-shadow:inset 0 0 18px rgba(0,234,255,.04)}
     .console-line{color:#a5ffb8!important}
+    .building .window.console-lit { background:#ffe6a6!important; border-color:#fff1c2!important; box-shadow:inset 0 0 14px rgba(255,255,255,.45),0 0 24px rgba(255,230,166,.8)!important; filter:brightness(1.4)!important; animation:consoleGlow 1.4s ease-in-out infinite alternate!important; }
+    @keyframes consoleGlow { from { filter:brightness(1.15); } to { filter:brightness(1.7); } }
+    .building.console-signal { animation:consoleSignal 1s ease-out!important; }
+    @keyframes consoleSignal { 0%{filter:brightness(1)} 30%{filter:brightness(2.4) hue-rotate(35deg)} 65%{filter:brightness(1.8) hue-rotate(-25deg)} 100%{filter:brightness(1)} }
+
     .console-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
     .console-actions button{font-family:inherit;font-size:.62rem;letter-spacing:.08em;color:#b894ff;background:#100d18;border:1px solid #51445f;padding:11px 8px;cursor:pointer;transition:.2s}
     .console-actions button:hover,.console-actions button:focus-visible{outline:none;color:#83d8ff;border-color:#83d8ff;box-shadow:0 0 12px rgba(131,216,255,.18)}
@@ -792,18 +797,52 @@
       });
     })();
 
-    // AWB-01 building console interactions
+    // AWB-01 console: visible, persistent interactions
     (() => {
       const output = document.getElementById('awbConsoleOutput');
-      if (!output) return;
-      const say = (lines) => { output.replaceChildren(); lines.forEach((line,i)=>{const row=document.createElement('div');row.textContent=line;if(i===lines.length-1)row.className='console-line';output.appendChild(row);}); };
-      const windows=[...document.querySelectorAll('.building .window:not(.secret-window)')];let litMode=false;
-      document.getElementById('awbLights').addEventListener('click',()=>{litMode=!litMode;windows.forEach((w,i)=>{if(i%2===0)w.classList.toggle('lit',litMode);});say(['AWB-01 / LIGHT CONTROL','Alternating window grid '+(litMode?'energized':'dimmed')+'.','Visual state updated.']);});
-      document.getElementById('awbSignal').addEventListener('click',()=>{const b=document.querySelector('.building');if(b&&b.animate)b.animate([{filter:'brightness(1)'},{filter:'brightness(2.2) hue-rotate(35deg)'},{filter:'brightness(1)'}],{duration:900});say(['SIGNAL TRANSMITTED','Pulse sent across the facade.','No reply detected... yet.']);});
-      document.getElementById('awbFloor').addEventListener('click',()=>{const labels=['LOBBY / INDEX','FLOOR ∞ / RESIDENTS','SUBLEVEL 0 / UNKNOWN','QUIET ROOM / VIOLET','SIGNAL ROOM / CYAN'];const picked=labels[Math.floor(Math.random()*labels.length)];say(['FLOOR SCAN COMPLETE','Location found: '+picked,'Map data incomplete.']);});
-      document.getElementById('awbSecret').addEventListener('click',()=>{say(['COMMAND NOT RECOGNIZED','...','TRY AGAIN WHEN THE BUILDING IS LISTENING.']);output.style.color='#ff7a8a';setTimeout(()=>output.style.color='',1200);});
+      const lightsBtn = document.getElementById('awbLights');
+      const signalBtn = document.getElementById('awbSignal');
+      const floorBtn = document.getElementById('awbFloor');
+      const secretBtn = document.getElementById('awbSecret');
+      if (!output || !lightsBtn || !signalBtn || !floorBtn || !secretBtn) return;
+      const say = (lines) => {
+        output.replaceChildren();
+        lines.forEach((line, i) => {
+          const row = document.createElement('div');
+          row.textContent = line;
+          if (i === lines.length - 1) row.className = 'console-line';
+          output.appendChild(row);
+        });
+      };
+      const windows = [...document.querySelectorAll('.building .window:not(.secret-window)')];
+      let lightsOn = false;
+      lightsBtn.addEventListener('click', () => {
+        lightsOn = !lightsOn;
+        windows.forEach((w, i) => w.classList.toggle('console-lit', lightsOn && i % 2 === 0));
+        lightsBtn.textContent = lightsOn ? 'LIGHTS: ON' : 'WINDOW LIGHTS';
+        say(['AWB-01 / LIGHT CONTROL', lightsOn ? 'Grid illumination: ON' : 'Grid illumination: OFF', lightsOn ? 'The residents are awake.' : 'The building returns to darkness.']);
+      });
+      signalBtn.addEventListener('click', () => {
+        const building = document.querySelector('.building');
+        if (building) {
+          building.classList.remove('console-signal');
+          void building.offsetWidth;
+          building.classList.add('console-signal');
+          building.addEventListener('animationend', () => building.classList.remove('console-signal'), {once:true});
+        }
+        say(['SIGNAL TRANSMITTED', 'Pulse sent through the facade.', 'Awaiting response...']);
+      });
+      floorBtn.addEventListener('click', () => {
+        const floors = ['LOBBY / INDEX','FLOOR ∞ / RESIDENTS','SUBLEVEL 0 / UNKNOWN','QUIET ROOM / VIOLET','SIGNAL ROOM / CYAN'];
+        const next = floors[Math.floor(Math.random() * floors.length)];
+        say(['FLOOR SCAN COMPLETE', 'Detected: ' + next, 'Directory signal unstable.']);
+      });
+      secretBtn.addEventListener('click', () => {
+        say(['UNKNOWN COMMAND RECEIVED', 'The terminal is listening.', 'Try: WAKE, MEMORY, or 56K']);
+        output.style.color = '#ff7a8a';
+        setTimeout(() => { output.style.color = ''; }, 1200);
+      });
     })();
-
   </script>
 
 </body>
