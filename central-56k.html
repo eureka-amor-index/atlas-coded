@@ -262,11 +262,14 @@
 
         if (count === 3) {
           try { localStorage.setItem(UNLOCK_KEY, "true"); } catch (error) {}
+          enterSublevel.href = "sublevel-0.html?access=carrier-restored";
           if (buildingReturn) buildingReturn.href = "afterweb-building.html?reveal=sublevel-0";
           response.classList.add("success");
-          response.innerHTML = "<strong>ROOT SIGNAL RETURNED.</strong><br>The antenna just moved. Something answered from below the building. Go back to the facade: a new red window is about to reveal itself.";
+          response.innerHTML = "<strong>ROOT SIGNAL RETURNED.</strong><br>The antenna just moved. Something answered from below the building. The restored-carrier key is attached to your entrance.";
           enterSublevel.classList.add("visible");
         } else if (isUnlocked()) {
+          enterSublevel.href = "sublevel-0.html?access=carrier-restored";
+          if (buildingReturn) buildingReturn.href = "afterweb-building.html?reveal=sublevel-0";
           response.classList.add("success");
           response.innerHTML = "<strong>SUBLEVEL 0 IS STILL ACCESSIBLE.</strong><br>The root signal was restored previously. The building remembers.";
           enterSublevel.classList.add("visible");
