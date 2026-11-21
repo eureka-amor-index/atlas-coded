@@ -579,6 +579,7 @@
     .console-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
     .console-actions button{font-family:inherit;font-size:.62rem;letter-spacing:.08em;color:#b894ff;background:#100d18;border:1px solid #51445f;padding:11px 8px;cursor:pointer;transition:.2s}
     .console-actions button:hover,.console-actions button:focus-visible{outline:none;color:#83d8ff;border-color:#83d8ff;box-shadow:0 0 12px rgba(131,216,255,.18)}
+    .console-actions button.audio-toggle{color:#ffd98a;border-color:#6b5940}
     .console-foot{margin-top:10px;color:#655c72;font-size:.55rem;letter-spacing:.1em;text-align:center}
 
 
@@ -724,7 +725,7 @@
       <div class="console-top"><span>BUILDING CONTROL // AWB-01</span><span>CRT TERMINAL</span></div>
       <div class="console-screen" id="awbConsoleOutput" aria-live="polite"><div>AFTERWEB BUILDING SYSTEM</div><div>LOCAL CONTROL READY_</div><div class="console-line">Awaiting command.</div></div>
       <form class="console-command-form" id="awbCommandForm"><input id="awbCommandInput" type="text" autocomplete="off" spellcheck="false" placeholder="TYPE WAKE / MEMORY / 56K..." aria-label="Enter console command"><button type="submit">EXECUTE</button></form>
-      <div class="console-actions"><button type="button" id="awbLights">WINDOW LIGHTS</button><button type="button" id="awbSignal">SEND SIGNAL</button><button type="button" id="awbFloor">SCAN FLOORS</button><button type="button" id="awbSecret">??? / UNKNOWN</button></div>
+      <div class="console-actions"><button type="button" id="awbLights">WINDOW LIGHTS</button><button type="button" id="awbSignal">SEND SIGNAL</button><button type="button" id="awbFloor">SCAN FLOORS</button><button type="button" id="awbSecret">??? / UNKNOWN</button><button type="button" id="awbAudio" class="audio-toggle">AUDIO: OFF</button></div>
       <div class="console-foot">INPUT ACCEPTED · USE WITH CAUTION · 56K CONNECTED</div>
     </section>
 
@@ -820,7 +821,11 @@
       const output=document.getElementById('awbConsoleOutput'); const lightsBtn=document.getElementById('awbLights'); const signalBtn=document.getElementById('awbSignal'); const floorBtn=document.getElementById('awbFloor'); const secretBtn=document.getElementById('awbSecret');
       if(!output||!lightsBtn||!signalBtn||!floorBtn||!secretBtn)return;
       const say=(lines)=>{output.replaceChildren();lines.forEach((line,i)=>{const row=document.createElement('div');row.textContent=line;if(i===lines.length-1)row.className='console-line';output.appendChild(row);});};
-      const wakeBuilding=()=>{say(['AWB-01 / WAKE SEQUENCE','Restoring dormant circuits...','The building is waking.']);windows.forEach((w,i)=>{w.classList.remove('console-lit');setTimeout(()=>w.classList.add('console-lit'),i*350);});lightsOn=true;lightsBtn.textContent='LIGHTS: ON';};
+      const audioBtn=document.getElementById('awbAudio'); let humEnabled=false; let audioContext=null; let humNodes=null;
+      const stopHum=()=>{if(!humNodes)return;const now=audioContext.currentTime;humNodes.gain.gain.cancelScheduledValues(now);humNodes.gain.gsetValueAtTime(humNodes.gain.gain.value,now);humNodes.gain.gain.linearRampToValueAtTime(0,now+1.2);setTimeout(()=>{try{humNodes.osc1.stop();humNodes.osc2.stop();humNodes.osc1.disconnect();humNodes.osc2.disconnect();humNodes.filter.disconnect();humNodes.gain.disconnect();}catch(e){}humNodes=null;},1300);};
+      const startHum=()=>{if(!humEnabled)return;try{audioContext=audioContext||new (window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')audioContext.resume();if(humNodes)stopHum();const gain=audioContext.createGain(),filter=audioContext.createBiquadFilter(),osc1=audioContext.createOscillator(),osc2=audioContext.createOscillator();filter.type='lowpass';filter.frequency.value=260;gain.gain.value=0;osc1.type='sine';osc1.frequency.value=60;osc2.type='sine';osc2.frequency.value=120;const mix=audioContext.createGain();mix.gain.value=.16;osc1.connect(mix);osc2.connect(mix);mix.connect(filter);filter.connect(gain);gain.connect(audioContext.destination);const now=audioContext.currentTime;gain.gain.linearRampToValueAtTime(.035,now+1.5);osc1.start();osc2.start();humNodes={gain,filter,osc1,osc2};setTimeout(stopHum,5200);}catch(e){say(['AUDIO SYSTEM UNAVAILABLE','The building remains silent.']);}};
+      if(audioBtn)audioBtn.addEventListener('click',()=>{humEnabled=!humEnabled;audioBtn.textContent=humEnabled?'AUDIO: ON':'AUDIO: OFF';audioBtn.classList.toggle('audio-toggle',humEnabled);say(['AUDIO SYSTEM // '+(humEnabled?'ENABLED':'DISABLED'),humEnabled?'Transformer hum will play during WAKE.':'Silent mode restored.']);});
+      const wakeBuilding=()=>{say(['AWB-01 / WAKE SEQUENCE','Restoring dormant circuits...','The building is waking.']);windows.forEach((w,i)=>{w.classList.remove('console-lit');setTimeout(()=>w.classList.add('console-lit'),i*350);});lightsOn=true;lightsBtn.textContent='LIGHTS: ON';startHum();};
       const windows=[...document.querySelectorAll('.building .window:not(.secret-window)')];let lightsOn=false;
       lightsBtn.addEventListener('click',()=>{lightsOn=!lightsOn;windows.forEach((w,i)=>w.classList.toggle('console-lit',lightsOn&&i%2===0));lightsBtn.textContent=lightsOn?'LIGHTS: ON':'WINDOW LIGHTS';say(['AWB-01 / LIGHT CONTROL',lightsOn?'Grid illumination: ON':'Grid illumination: OFF',lightsOn?'The residents are awake.':'The building returns to darkness.']);});
       signalBtn.addEventListener('click',()=>{const b=document.querySelector('.building');if(b){b.classList.remove('console-signal');void b.offsetWidth;b.classList.add('console-signal');b.addEventListener('animationend',()=>b.classList.remove('console-signal'),{once:true});}say(['SIGNAL TRANSMITTED','Pulse sent through the facade.','Awaiting response...']);});
