@@ -819,7 +819,7 @@
         if (secretLift && unlocked) secretLift.hidden = false;
         const rootLift = document.getElementById("rootLift");
         let rootUnlocked = false;
-        try { rootUnlocked = localStorage.getItem("afterweb.central56k.connections") && JSON.parse(localStorage.getItem("afterweb.central56k.connections")).length === 3; } catch (error) {}
+        try { rootUnlocked = localStorage.getItem("afterweb.floor-minus-one.discovered") === "true" || (localStorage.getItem("afterweb.central56k.connections") && JSON.parse(localStorage.getItem("afterweb.central56k.connections")).length === 3); } catch (error) {}
         if (rootLift && rootUnlocked) {
           rootLift.hidden = false;
           const discoveredKey = "afterweb.floor-minus-one.discovered";
