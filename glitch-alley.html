@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glitch Alley // Afterweb District</title>
+<meta name="description" content="A lost alley in the Afterweb. Something still works here.">
+<meta property="og:title" content="Glitch Alley // Afterweb"><meta property="og:description" content="Something still works here."><meta property="og:type" content="website">
+<style>
+:root{--bg:#05040b;--ink:#d7c9ff;--violet:#bb87ff;--magenta:#ff48cf;--cyan:#76edff;--green:#a4ffb8;--dim:#716784}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 40%,#20122c 0%,#0b0714 45%,#030308 100%);color:var(--ink);font:14px 'Courier New',monospace;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.04) 4px 5px);z-index:9}
+.rain{position:fixed;inset:-20%;pointer-events:none;z-index:2;opacity:.15;background-image:linear-gradient(110deg,transparent 0 49%,#aaa 50%,transparent 51%);background-size:17px 35px;animation:rain .7s linear infinite}
+@keyframes rain{to{background-position:17px 35px}}
+main{position:relative;z-index:3;max-width:920px;margin:auto;padding:36px 18px 55px}
+header{text-align:center;margin-bottom:25px}h1{font-size:clamp(1.5rem,6vw,3.3rem);letter-spacing:.25em;color:#e4d4ff;text-shadow:0 0 14px #9d42d7;margin:0}.subtitle{color:#8c7eaa;letter-spacing:.15em;margin-top:12px;font-size:.78rem}
+.scene{height:530px;position:relative;overflow:hidden;border:1px solid #30243e;background:linear-gradient(180deg,#080711,#171022 62%,#08060d);box-shadow:0 0 35px #000}
+.alley-back{position:absolute;inset:0;background:linear-gradient(90deg,#09070d 0 14%,transparent 14% 86%,#09070d 86%),repeating-linear-gradient(0deg,#21152b 0 50px,#100d1c 51px 72px);clip-path:polygon(0 0,100% 0,100% 100%,0 100%);opacity:.95}
+.wall-left,.wall-right{position:absolute;top:0;height:100%;width:40%;background:repeating-linear-gradient(0deg,#15101e 0 38px,#24162b 39px 42px,#130e1a 43px 75px);border:1px solid #35213b}
+.wall-left{left:0;clip-path:polygon(0 0,100% 0,68% 100%,0 100%)}.wall-right{right:0;clip-path:polygon(0 0,100% 0,100% 100%,32% 100%)}
+.wall-left:after,.wall-right:after{content:"";position:absolute;inset:15px;background:repeating-linear-gradient(0deg,transparent 0 65px,rgba(176,81,215,.1) 66px 67px)}
+.perspective{position:absolute;left:50%;top:0;transform:translateX(-50%);height:100%;width:100%;background:linear-gradient(180deg,transparent 50%,rgba(5,3,9,.4)),linear-gradient(90deg,transparent 35%,rgba(170,69,215,.12),transparent 65%)}
+.floor{position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(180,#09070f,#030307);clip-path:polygon(32% 0,68% 0,100% 100%,0 100%);border-top:1px solid #34253f}
+.neon{position:absolute;top:35px;left:8%;color:var(--magenta);font-size:clamp(.6rem,2vw,1rem);letter-spacing:.12em;text-shadow:0 0 9px var(--magenta);transform:rotate(-5deg);animation:flicker 4s steps(1) infinite}
+.neon.right{left:auto;right:6%;top:105px;color:var(--cyan);text-shadow:0 0 9px var(--cyan);transform:rotate(3deg)}@keyframes flicker{0%,100%{opacity:1}14%{opacity:.45}16%{opacity:1}61%{opacity:.2}64%{opacity:1}}
+.machine{position:absolute;z-index:5;left:50%;bottom:14%;transform:translateX(-50%);width:210px;padding:12px;background:linear-gradient(135deg,#191320,#09070c);border:2px solid #594266;box-shadow:0 0 28px rgba(181,68,255,.2),inset 0 0 22px #000;animation:humGlow 5s ease-in-out infinite alternate}
+@keyframes humGlow{to{box-shadow:0 0 38px rgba(181,68,255,.32),inset 0 0 22px #000}}
+.machine-top{text-align:center;color:#e4caff;letter-spacing:.12em;font-size:.65rem;padding:5px 0 10px;text-shadow:0 0 8px var(--violet)}
+.display{border:1px solid #534160;background:#030308;padding:10px 6px;min-height:48px;text-align:center;color:var(--green);font-size:.7rem;line-height:1.5;box-shadow:inset 0 0 12px #000}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}.product{background:#0a0711;color:#9e91b8;border:1px solid #3b304a;padding:9px 4px;font:inherit;font-size:.64rem;cursor:pointer}.product:hover,.product.selected{border-color:var(--magenta);color:#fff;box-shadow:0 0 9px #842b7b}
+.dispense{width:100%;padding:10px;background:#140c1b;color:var(--violet);border:1px solid #68517e;letter-spacing:.1em;cursor:pointer;font:inherit;font-size:.65rem}.slot{height:42px;margin-top:10px;border:1px solid #33273b;background:#030307;box-shadow:inset 0 0 8px #000}
+.object{position:absolute;bottom:6%;left:12%;font-size:.55rem;color:#635777;transform:rotate(-3deg)}.object.right{left:auto;right:12%;color:#62516f;transform:rotate(4deg)}
+.msg{text-align:center;min-height:50px;margin:20px auto 0;color:#a99abf;line-height:1.8;max-width:700px;font-size:.76rem}
+.secret{display:none;margin:16px auto;padding:16px;max-width:500px;text-align:center;border:1px solid #9b5ad3;background:#08050e;box-shadow:0 0 24px #541d75;color:#e0c8ff;animation:reveal .8s ease-out}@keyframes reveal{from{opacity:0;filter:blur(8px);transform:scale(.92)}to{opacity:1;filter:blur(0);transform:scale(1)}}
+.secret.show{display:block}.secret a{color:var(--cyan)}.back{text-align:center;margin-top:25px}.back a{color:#8c7bb0;text-decoration:none;border-bottom:1px dotted;padding-bottom:3px}
+@media(max-width:520px){.scene{height:500px}.machine{width:190px;bottom:12%}.neon{top:24px}.neon.right{top:85px}.wall-left,.wall-right{width:44%}}
+</style>
+</head>
+<body><div class="rain" aria-hidden="true"></div><main>
+<header><h1>GLITCH ALLEY</h1><div class="subtitle">AFTERWEB DISTRICT // NIGHT ACCESS</div></header>
+<div class="scene" aria-label="A neon-lit, rain-soaked alley with a strange vending machine">
+<div class="alley-back"></div><div class="wall-left"></div><div class="wall-right"></div><div class="perspective"></div><div class="floor"></div>
+<div class="neon">NO EXIT / NO ENTRY</div><div class="neon right">SIGNAL LOST</div>
+<div class="object">PAGE NOT FOUND</div><div class="object right">STILL LOADING...</div>
+<section class="machine" aria-label="Unusual vending machine">
+<div class="machine-top">VENDING UNIT // 0x04</div><div class="display" id="display">WELCOME, LOST TRAVELER.<br>SELECT AN ITEM.</div>
+<div class="products">
+<button class="product" data-item="404">404 / LOST PAGE</button><button class="product" data-item="MEMORY">MEMORY</button><button class="product" data-item="SIGNAL">SIGNAL</button><button class="product" data-item="VOID">VOID</button><button class="product" data-item="UNKNOWN" style="grid-column:1/3">??? / NOT IN INVENTORY</button>
+</div><button class="dispense" id="dispense">INSERT TOKEN / DISPENSE</button><div class="slot" id="slot" aria-hidden="true"></div></section>
+</div>
+<div class="msg" id="message">No wires. No outlet. Still humming.</div>
+<section class="secret" id="secret"><div>THE WALL HAS MOVED.</div><p>YOU WERE NOT SUPPOSED TO FIND THIS.</p><a href="https://atlas-coded.net/afterweb-building.html">A DOOR IS OPEN // RETURN TO THE BUILDING</a></section>
+<div class="back"><a href="https://atlas-coded.net/afterweb-building.html">← BACK TO AFTERWEB BUILDING</a></div>
+</main>
+<script>
+(()=>{const display=document.getElementById('display'),msg=document.getElementById('message'),secret=document.getElementById('secret'),slot=document.getElementById('slot'),buttons=[...document.querySelectorAll('.product')];let selected='',unknownUsed=false;
+const responses={
+'404':['PAGE NOT FOUND','This page was here.','It remembers being visited.'],
+'MEMORY':['MEMORY RECOVERED','A light left on.','Someone expected you.'],
+'SIGNAL':['SIGNAL DETECTED','...krrsh...','A voice from another block.'],
+'VOID':['NOTHING INSIDE','The slot opens.','Darkness looks back.'],
+'UNKNOWN':['INVENTORY ERROR','YOU WERE NOT SUPPOSED TO FIND THIS.','The wall shifts behind the machine.']
+};
+buttons.forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.item;buttons.forEach(x=>x.classList.toggle('selected',x===b));display.textContent='SELECTED: '+selected+' / READY';}));
+document.getElementById('dispense').addEventListener('click',()=>{if(!selected){display.textContent='PLEASE SELECT AN ITEM FIRST.';return;}const item=selected;selected='';buttons.forEach(x=>x.classList.remove('selected'));display.textContent=responses[item][0];msg.innerHTML=responses[item].slice(1).join('<br>');slot.style.boxShadow='inset 0 0 15px rgba(187,135,255,.25)';setTimeout(()=>slot.style.boxShadow='inset 0 0 8px #000',700);
+if(item==='UNKNOWN'&&!unknownUsed){unknownUsed=true;secret.classList.add('show');display.textContent='TRANSACTION COMPLETE. // WALL UNSTABLE';}
+else if(item==='UNKNOWN'){display.textContent='NOTHING ELSE HERE. FOR NOW.';}
+});})();
+</script></body></html>
