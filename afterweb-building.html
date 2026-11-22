@@ -585,6 +585,10 @@
     @keyframes ghostAppear{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
     @media(prefers-reduced-motion:reduce){.ghost-phone-details[open] .ghost-phone-panel{animation:none}}
     @media(max-width:560px) { .district-map { grid-template-rows:100px 140px 100px; gap:6px; padding:7px; min-height:360px; } .district-object { font-size:.5rem; padding:6px; } .district-building::before { inset:8px 9px 30px; } }
+    /* FIX: open Ghost Phone panel above neighboring district tiles */
+    .district-phone:has(.ghost-phone-details[open]){z-index:30}
+    .ghost-phone-details[open]{z-index:31}
+    .ghost-phone-panel{max-height:220px;overflow:auto}
     /* Keep landmark elements separated: antenna above crown, sign on facade */
     .building { height:720px; background:repeating-linear-gradient(to bottom,transparent 0 34px,rgba(255,255,255,.035) 35px 36px),linear-gradient(135deg,#171116,#241923); }
     .building::before { left:17%; right:17%; top:-66px; height:64px; background:linear-gradient(#17121a,#100d13); border:2px solid #514258; clip-path:polygon(0 100%,12% 100%,12% 42%,26% 42%,26% 0,74% 0,74% 42%,88% 42%,88% 100%,100% 100%); }
