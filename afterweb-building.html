@@ -904,30 +904,52 @@
       });
     })();
 
-    // GHOST PHONE — hidden messages from the Afterweb
+    // GHOST PHONE — robust delegated interaction + independent floating panel
     (() => {
-      const status=document.getElementById('ghostPhoneStatus');
       const phone=document.querySelector('.ghost-phone-details');
-      if(!status||!phone)return;
-      // Position the menu in the viewport so the district's overflow cannot clip it.
+      if(!phone) return;
       const summary=phone.querySelector('summary');
-      const panelEl=phone.querySelector('.ghost-phone-panel');
-      const placePanel=()=>{if(!phone.open||!summary||!panelEl)return;const r=summary.getBoundingClientRect();const width=Math.min(280,window.innerWidth-24);let left=Math.max(12,Math.min(r.left,window.innerWidth-width-12));let top=r.bottom+6;if(top+Math.min(panelEl.scrollHeight,260)>window.innerHeight-12)top=Math.max(12,r.top-Math.min(panelEl.scrollHeight,260)-6);panelEl.style.left=left+'px';panelEl.style.top=top+'px';panelEl.style.width=width+'px';};
-      phone.addEventListener('toggle',placePanel);
-      window.addEventListener('resize',placePanel);
-      window.addEventListener('scroll',placePanel,true);
-      if(summary)summary.addEventListener('click',()=>requestAnimationFrame(placePanel));
+      const originalPanel=phone.querySelector('.ghost-phone-panel');
+      if(!summary||!originalPanel) return;
       const messages={
         answer:['CALL CONNECTED','...hello?','The building remembers your footsteps.'],
         nosignal:['NO SIGNAL','KRRR—SHHH—','The line goes quiet.'],
         caller:['UNKNOWN CALLER','CALLER ID: 000-???','Somewhere, a phone is ringing too.'],
         memory:['MEMORY RECOVERED','A phone rang once in an empty district.','Nobody remembers who answered.']
       };
-      phone.querySelectorAll('[data-ghost]').forEach(button=>button.addEventListener('click',()=>{
-        const key=button.dataset.ghost;
-        status.textContent='';
-        messages[key].forEach((line,i)=>{const span=document.createElement('span');span.textContent=line;span.style.display='block';status.appendChild(span);});
-      }));
+      let modal=null;
+      const closeModal=()=>{if(modal){modal.remove();modal=null;}};
+      const showModal=()=>{
+        closeModal();
+        modal=document.createElement('div');
+        modal.id='ghostPhoneModal';
+        modal.style.cssText='position:fixed;inset:0;z-index:100000;background:rgba(0,0,0,.62);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box';
+        const card=document.createElement('div');
+        card.style.cssText='width:min(320px,100%);max-height:80vh;overflow:auto;background:#030704;border:1px solid #426a48;box-shadow:0 0 24px rgba(53,255,121,.2);padding:12px;color:#a5ffb8;font:12px Courier New,monospace;box-sizing:border-box';
+        const title=document.createElement('div');title.textContent='GHOST PHONE // LINE UNKNOWN';title.style.cssText='letter-spacing:.1em;margin-bottom:10px;color:#a5ffb8';
+        const status=document.createElement('div');status.id='ghostPhoneModalStatus';status.textContent='THE LINE IS QUIET.';status.style.cssText='min-height:48px;line-height:1.7;color:#83d8ff;margin:8px 0';
+        card.append(title,status);
+        Object.keys(messages).forEach(key=>{
+          const b=document.createElement('button');b.type='button';b.textContent=key==='nosignal'?'NO SIGNAL':key==='caller'?'UNKNOWN CALLER':key.toUpperCase();b.dataset.ghostAction=key;
+          b.style.cssText='display:block;width:100%;padding:10px;margin:6px 0;background:#0b140e;border:1px solid #385941;color:#a5ffb8;font:inherit;text-align:left;cursor:pointer';
+          card.appendChild(b);
+        });
+        const close=document.createElement('button');close.type='button';close.textContent='HANG UP / CLOSE';close.style.cssText='display:block;width:100%;padding:9px;margin-top:10px;background:#100d18;border:1px solid #51445f;color:#b894ff;font:inherit;cursor:pointer';close.addEventListener('click',closeModal);card.append(close);
+        modal.append(card);modal.addEventListener('click',e=>{if(e.target===modal)closeModal();});
+        document.body.append(modal);
+      };
+      summary.textContent='ANSWER / LISTEN';
+      summary.style.cursor='pointer';
+      summary.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();showModal();});
+      document.addEventListener('click',e=>{
+        const button=e.target.closest('[data-ghost-action]');
+        if(!button||!modal)return;
+        const status=modal.querySelector('#ghostPhoneModalStatus');
+        const key=button.dataset.ghostAction;
+        status.replaceChildren();
+        (messages[key]||[]).forEach(line=>{const span=document.createElement('div');span.textContent=line;status.append(span);});
+      });
+      document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
     })();
     // AWB-01 floating console interactions
     (() => {
