@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#03101c"/><stop offset="1" stop-color="#082b44"/></linearGradient><linearGradient id="sea" x2="0" y2="1"><stop stop-color="#08344a"/><stop offset="1" stop-color="#020b16"/></linearGradient><linearGradient id="beam"><stop stop-color="#75eaff" stop-opacity=".03"/><stop offset=".65" stop-color="#75eaff" stop-opacity=".2"/><stop offset="1" stop-color="#75eaff" stop-opacity=".02"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#sky)"/><g fill="#8deaff"><circle cx="760" cy="80" r="2"/><circle cx="660" cy="155" r="1.5"/><circle cx="1080" cy="100" r="2"/><circle cx="950" cy="70" r="1"/><circle cx="550" cy="60" r="1"/><circle cx="845" cy="180" r="2"/></g>
+<circle cx="1020" cy="130" r="66" fill="#bceeff"/><circle cx="1044" cy="115" r="62" fill="#061726"/>
+<path d="M0 330 L1200 250 L1200 500 L0 500Z" fill="#092238" opacity=".55"/>
+<rect y="405" width="1200" height="225" fill="url(#sea)"/><path d="M0 405 L1200 315 L1200 360 L0 430Z" fill="url(#beam)"/>
+<path d="M0 440 Q110 430 210 446 T430 441 T650 446 T880 438 T1200 447" stroke="#287da0" fill="none" opacity=".5"/>
+<path d="M0 480 Q150 470 300 490 T600 480 T900 490 T1200 480 M0 535 Q120 526 250 542 T550 534 T850 540 T1200 530" stroke="#135271" fill="none" opacity=".6"/>
+<g transform="translate(880 185)"><path d="M-70 350 L-42 70 L42 70 L70 350Z" fill="#0b2639" stroke="#4cb8d1" stroke-width="4"/><rect x="-58" y="35" width="116" height="44" rx="4" fill="#143d53" stroke="#8eeaff" stroke-width="5"/><rect x="-45" y="43" width="90" height="27" fill="#b4f5ff"/><path d="M-68 28 L68 28 L52 10 L-52 10Z" fill="#337e97"/><path d="M-38 4 L38 4 L22 -12 L-22 -12Z" fill="#17435b"/><path d="M-20 -12 L20 -12 L0 -42Z" fill="#75d7ee"/><path d="M-35 100 L-210 65 L-350 95 L-35 125Z" fill="#6eeaff" opacity=".14"/><rect x="-10" y="300" width="20" height="50" fill="#020c16"/></g>
+<rect x="38" y="38" width="1124" height="554" rx="8" fill="none" stroke="#3cc7e8" stroke-width="2" opacity=".65"/>
+<text x="74" y="88" font-family="monospace" font-size="22" letter-spacing="5" fill="#67cde9">ATLAS-CODED // AFTERWEB BUILDING</text><text x="74" y="150" font-family="monospace" font-size="22" fill="#6acde7">AWB-01</text>
+<text x="74" y="270" font-family="monospace" font-size="74" letter-spacing="7" fill="#c0f2ff">THE SIGNAL ROOM</text>
+<text x="78" y="322" font-family="monospace" font-size="24" fill="#7db5ce">A lighthouse, keeping a little light in the dark.</text>
+<path d="M78 355 H620" stroke="#2d95b4" stroke-width="2"/><text x="78" y="400" font-family="monospace" font-size="22" letter-spacing="3" fill="#60cbe8">&gt;&gt; SIGNAL ROOM ONLINE</text>
+<text x="78" y="555" font-family="monospace" font-size="18" letter-spacing="3" fill="#3f8fac">NO COORDINATES. JUST A SMALL HELLO.</text></svg>
