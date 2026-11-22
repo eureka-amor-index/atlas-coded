@@ -617,6 +617,17 @@
     .window.weather-station-window{background:linear-gradient(135deg,#7ed6d1,#203642);border-color:#9ce7e0;box-shadow:0 0 14px rgba(126,214,209,.38)}
     .window.robot-room-window{background:linear-gradient(135deg,#a6ffbf,#173c30);border-color:#b5ffd0;box-shadow:0 0 18px rgba(166,255,191,.42);position:relative}
     .window.robot-room-window::before{content:"R-01";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.65);display:grid;place-items:center;color:#effff4;font-size:.6rem;letter-spacing:.12em;text-shadow:0 0 6px #62ff9b}
+    /* Layout repair: reserve the lower facade for the entry door and power controls. */
+    .building { height: auto !important; min-height: 780px !important; }
+    .windows { height: auto !important; grid-auto-rows: 64px !important; gap: 14px !important; padding: 48px 36px 210px !important; }
+    .door { z-index: 3; }
+    .power-transformer { z-index: 4; }
+    @media (max-width: 560px) {
+      .building { min-height: 900px !important; }
+      .windows { grid-auto-rows: 56px !important; gap: 12px !important; padding: 36px 24px 220px !important; }
+      .door { width: 76px; height: 94px; }
+    }
+
 </style>
 </head>
 
