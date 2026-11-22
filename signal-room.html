@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Signal Room // AWB-01</title>
+  <meta name="description" content="A lighthouse quietly transmitting from the Afterweb Building. No destination required.">
+  <meta property="og:title" content="The Signal Room // AWB-01">
+  <meta property="og:description" content="A light kept on for whoever might be out there.">
+  <meta property="og:url" content="https://atlas-coded.net/signal-room.html">
+  <meta name="theme-color" content="#06111b">
+  <style>
+    :root{--night:#03070d;--deep:#07121b;--sea:#071923;--cyan:#9aeaff;--glow:#6ddfff;--muted:#65808d;--line:#1b3542;--text:#c5dce5}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 22%,#112b3b 0%,#08131e 38%,var(--night) 76%);color:var(--text);font-family:"Courier New",monospace;overflow-x:hidden}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(118,203,232,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(118,203,232,.02) 1px,transparent 1px);background-size:34px 34px;opacity:.4}
+    .wrap{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:30px 16px 18px}
+    header{text-align:center;margin-bottom:14px}
+    .eyebrow{font-size:.68rem;letter-spacing:.25em;color:#6d9ba9}
+    h1{margin:12px 0 6px;font-weight:400;font-size:clamp(1.6rem,5vw,2.65rem);letter-spacing:.18em;color:#c6f3ff;text-shadow:0 0 24px rgba(90,206,255,.2)}
+    .subtitle{font-size:.8rem;color:#7192a1;letter-spacing:.07em}
+    .scene{width:min(920px,100%);height:min(540px,62vh);min-height:350px;position:relative;margin:8px auto 0;overflow:hidden;border:1px solid #142c3a;background:linear-gradient(#07121f 0%,#102638 54%,#0b1c27 55%,#06121a 100%);box-shadow:0 0 50px rgba(0,0,0,.5),inset 0 0 60px rgba(0,0,0,.35)}
+    .stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 12% 22%,#b4e8ff 99%,transparent),radial-gradient(1px 1px at 72% 18%,#b4e8ff 99%,transparent),radial-gradient(1px 1px at 36% 13%,#b4e8ff 99%,transparent),radial-gradient(2px 2px at 85% 31%,#d1f5ff 99%,transparent),radial-gradient(1px 1px at 54% 32%,#b4e8ff 99%,transparent),radial-gradient(1px 1px at 24% 44%,#b4e8ff 99%,transparent),radial-gradient(1px 1px at 93% 10%,#b4e8ff 99%,transparent);opacity:.6}
+    .moon{position:absolute;top:11%;right:15%;width:66px;height:66px;border-radius:50%;background:#d7f0f6;box-shadow:0 0 26px rgba(196,235,255,.2);opacity:.82}
+    .moon:after{content:"";position:absolute;top:3px;left:14px;width:62px;height:62px;border-radius:50%;background:#0b1c2b}
+    .beam{position:absolute;top:19%;left:49%;width:0;height:0;border-top:95px solid transparent;border-bottom:95px solid transparent;border-left:430px solid rgba(123,223,255,.055);transform-origin:0 50%;animation:beamSweep 12s ease-in-out infinite alternate;filter:blur(2px)}
+    .beam:after{content:"";position:absolute;top:-80px;left:-3px;width:0;height:0;border-top:80px solid transparent;border-bottom:80px solid transparent;border-left:410px solid rgba(147,234,255,.045)}
+    .horizon{position:absolute;bottom:27%;width:100%;height:1px;background:#31566a;box-shadow:0 0 16px rgba(102,207,255,.15)}
+    .water{position:absolute;bottom:0;left:0;width:100%;height:28%;background:linear-gradient(180,#081923,#030a11);overflow:hidden}
+    .water:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 8px,rgba(102,194,225,.07) 9px 10px);animation:waterDrift 7s linear infinite}
+    .reflection{position:absolute;left:49%;bottom:3%;width:160px;height:100px;transform:translateX(-50%);background:linear-gradient(180,rgba(121,226,255,.08),transparent);filter:blur(9px);animation:reflect 4s ease-in-out infinite alternate}
+    .rocks{position:absolute;bottom:23%;left:0;width:100%;height:40px;background:#071019;clip-path:polygon(0 100%,0 65%,8% 56%,15% 70%,21% 43%,28% 78%,38% 53%,46% 71%,53% 48%,61% 69%,68% 54%,78% 70%,87% 49%,93% 62%,100% 56%,100% 100%)}
+    .tower{position:absolute;bottom:23%;left:49%;transform:translateX(-50%);width:68px;height:208px;background:linear-gradient(90deg,#172d39,#294657 45%,#122734);clip-path:polygon(24% 0,76% 0,100% 100%,0 100%);filter:drop-shadow(0 0 12px rgba(0,0,0,.6))}
+    .tower:before{content:"";position:absolute;top:48px;left:25px;width:18px;height:25px;background:#c0f2ff;opacity:.65;box-shadow:0 0 10px #76dfff}
+    .tower:after{content:"";position:absolute;bottom:0;left:29px;width:10px;height:35px;background:#050b10}
+    .lantern{position:absolute;left:49%;bottom:calc(23% + 202px);transform:translateX(-50%);width:80px;height:47px;border:2px solid #8bb6c9;background:linear-gradient(#d7f7ff,#6aa8c4);box-shadow:0 0 28px 12px rgba(111,220,255,.18);z-index:3}
+    .lantern:before{content:"";position:absolute;left:-10px;right:-10px;top:-8px;height:6px;background:#8bb6c9}
+    .lantern:after{content:"";position:absolute;left:-10px;right:-10px;bottom:-8px;height:6px;background:#8bb6c9}
+    .lamp-core{position:absolute;inset:6px;background:#e5fbff;box-shadow:0 0 18px #c5f5ff;animation:lampPulse 5s ease-in-out infinite}
+    .label-tower{position:absolute;bottom:calc(23% + 155px);left:49%;transform:translateX(-50%);font-size:.55rem;letter-spacing:.15em;color:#9ac7d7;white-space:nowrap}
+    .transmission{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);width:min(86%,570px);padding:10px 14px;text-align:center;border:1px solid rgba(93,159,187,.2);background:rgba(2,8,14,.72);color:#9cc8d8;font-size:.75rem;letter-spacing:.06em;line-height:1.7;z-index:4}
+    .transmission small{display:block;color:#496979;font-size:.58rem;letter-spacing:.2em;margin-bottom:4px}
+    .controls{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0 14px}
+    button{font:inherit;font-size:.66rem;letter-spacing:.12em;padding:11px 15px;color:#a4d8e9;background:#07131d;border:1px solid #254453;cursor:pointer;transition:.2s}
+    button:hover,button:focus-visible{outline:none;border-color:#8de6ff;color:#d9f8ff;box-shadow:0 0 14px rgba(109,223,255,.15)}
+    button[aria-pressed="true"]{color:#d6f7ff;border-color:#75cde9;box-shadow:0 0 10px rgba(109,223,255,.12)}
+    .readout{min-height:20px;text-align:center;color:#527486;font-size:.62rem;letter-spacing:.13em}
+    footer{text-align:center;margin-top:auto;padding-top:28px;color:#435f70;font-size:.64rem;letter-spacing:.08em}
+    footer a{color:#79bdd9;text-decoration:none;border-bottom:1px dotted #4a819b}
+    @keyframes beamSweep{from{transform:rotate(-13deg);opacity:.45}to{transform:rotate(13deg);opacity:1}}
+    @keyframes waterDrift{from{transform:translateY(-10px)}to{transform:translateY(10px)}}
+    @keyframes reflect{from{opacity:.25;transform:translateX(-50%) scaleX(.7)}to{opacity:.65;transform:translateX(-50%) scaleX(1.1)}}
+    @keyframes lampPulse{0%,100%{opacity:.75;filter:brightness(1)}50%{opacity:1;filter:brightness(1.3)}}
+    @media(max-width:520px){.scene{min-height:380px}.tower{height:170px;width:56px}.lantern{bottom:calc(23% + 164px);width:67px;height:41px}.label-tower{bottom:calc(23% + 132px)}.beam{border-left-width:280px}.beam:after{border-left-width:265px}.moon{width:48px;height:48px}.moon:after{width:45px;height:45px;left:10px}}
+    @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="eyebrow">AFTERWEB BUILDING // AWB-01</div>
+      <h1>THE SIGNAL ROOM</h1>
+      <div class="subtitle">a lighthouse, keeping a little light in the dark</div>
+    </header>
+    <section class="scene" aria-label="A lighthouse transmitting across a quiet digital sea">
+      <div class="stars"></div><div class="moon"></div><div class="beam" aria-hidden="true"></div>
+      <div class="horizon"></div><div class="water"></div><div class="reflection"></div><div class="rocks"></div>
+      <div class="tower"></div><div class="lantern"><div class="lamp-core"></div></div>
+      <div class="label-tower">LIGHTHOUSE // KEEPING</div>
+      <div class="transmission" aria-live="polite"><small>OUTGOING TRANSMISSION // 01</small><span id="message">There is still something here.</span></div>
+    </section>
+    <div class="controls">
+      <button type="button" id="send" aria-pressed="false">SEND A PULSE</button>
+      <button type="button" id="quiet">LET THE LIGHT REST</button>
+    </div>
+    <div class="readout" id="status" aria-live="polite">BEACON ACTIVE · NO DESTINATION REQUIRED</div>
+    <footer><a href="afterweb-building.html">← BACK TO THE BUILDING</a><br><br>THE LIGHT KEEPS ITS OWN TIME.</footer>
+  </main>
+  <script>
+    (() => {
+      const messages = [
+        "There is still something here.",
+        "The sea is quiet tonight.",
+        "If you found this, you were never expected.",
+        "A light left on without a reason.",
+        "Somewhere, the dark is listening.",
+        "No coordinates. Just a small hello.",
+        "Signal received by no one in particular.",
+        "You can take your time getting here."
+      ];
+      const message = document.getElementById("message");
+      const status = document.getElementById("status");
+      const send = document.getElementById("send");
+      const quiet = document.getElementById("quiet");
+      let index = 0, pulseTimer = null, isQuiet = false;
+      const rotate = () => { if (!isQuiet) { index = (index + 1) % messages.length; message.textContent = messages[index]; } };
+      const schedule = () => { clearTimeout(pulseTimer); if (!isQuiet) pulseTimer = setTimeout(() => { rotate(); schedule(); }, 11000); };
+      send.addEventListener("click", () => {
+        isQuiet = false; document.body.classList.remove("quiet");
+        message.textContent = "A pulse sent into the night. No reply required.";
+        status.textContent = "SIGNAL TRANSMITTED · THE LIGHT IS MOVING";
+        send.setAttribute("aria-pressed","true"); schedule();
+        setTimeout(() => { if (!isQuiet) { status.textContent = "BEACON ACTIVE · NO DESTINATION REQUIRED"; send.setAttribute("aria-pressed","false"); } }, 3200);
+      });
+      quiet.addEventListener("click", () => {
+        isQuiet = true; clearTimeout(pulseTimer);
+        message.textContent = "The light rests. The sea can wait.";
+        status.textContent = "QUIET MODE · THE LIGHT IS STILL HERE";
+        send.setAttribute("aria-pressed","false");
+      });
+      schedule();
+    })();
+  </script>
+</body>
+</html>
