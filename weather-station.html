@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Weather Station // AWB-01 — Atlas-coded</title>
+<meta name="description" content="An unmanned weather station at the edge of the Afterweb, measuring the weather inside the network.">
+<link rel="canonical" href="https://atlas-coded.net/weather-station.html"><link rel="icon" href="favicon.png">
+<meta name="theme-color" content="#182b39">
+<meta property="og:type" content="website"><meta property="og:title" content="Weather Station // AWB-01"><meta property="og:description" content="Weather happening inside the network."><meta property="og:url" content="https://atlas-coded.net/weather-station.html"><meta property="og:image" content="https://atlas-coded.net/weather-station-og.svg"><meta property="og:image:alt" content="Retro-futuristic Afterweb weather station over clouds">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Weather Station // AWB-01"><meta name="twitter:description" content="Weather happening inside the network."><meta name="twitter:image" content="https://atlas-coded.net/weather-station-og.svg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CreativeWork","name":"Weather Station // AWB-01","url":"https://atlas-coded.net/weather-station.html","description":"An unmanned weather station at the edge of the Afterweb, measuring the weather inside the network.","creator":{"@type":"Organization","name":"ATLAS-CODED.NET"},"isPartOf":{"@type":"CreativeWork","name":"Afterweb Building"}}</script>
+<style>
+:root{--ink:#071018;--cyan:#7ed6d1;--amber:#e6bd7e;--paper:#c6d1c5;--muted:#748a90}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0,#1a3440 0,#09131d 55%,#05090f);color:var(--paper);font:14px/1.65 "Courier New",monospace;padding:24px 14px}
+.wrap{max-width:940px;margin:auto}.top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--cyan);font-size:.68rem;letter-spacing:.15em;margin-bottom:36px}.top a{color:inherit}
+header{text-align:center;margin-bottom:26px}h1{font-size:clamp(1.9rem,6vw,3.7rem);font-weight:400;letter-spacing:.16em;color:var(--cyan);text-shadow:0 0 22px #7ed6d144;margin:.1em 0}.sub{color:var(--muted);letter-spacing:.1em}
+.sky{height:350px;position:relative;overflow:hidden;border:1px solid #57798566;background:linear-gradient(180,#0a1828 0%,#213d4c 55%,#738c93 100%);transition:filter 1s}.sky::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 48%,#06111c55),repeating-linear-gradient(0deg,#c6d1c508 0 1px,transparent 1px 5px);pointer-events:none}
+.stars{position:absolute;inset:18px 0 auto;text-align:center;color:#d3e3d7;letter-spacing:.4em;font-size:.8rem}
+.cloud{position:absolute;border-radius:50%;background:#bdc9c8;filter:blur(1px);opacity:.23;box-shadow:35px 0 0 6px #bdc9c822,75px -12px 0 16px #bdc9c822,105px 6px 0 2px #bdc9c822;animation:drift 22s linear infinite}.c1{width:85px;height:42px;left:8%;top:90px}.c2{width:110px;height:45px;left:60%;top:155px;animation-duration:32s}.c3{width:70px;height:30px;left:32%;top:225px;animation-duration:27s}
+@keyframes drift{from{transform:translateX(-25px)}to{transform:translateX(50px)}}
+.station{position:absolute;left:50%;bottom:38px;transform:translateX(-50%);width:210px;height:135px;z-index:2}.tower{position:absolute;left:83px;bottom:0;width:44px;height:115px;background:linear-gradient(90deg,#202e36,#586b6e,#26353c);clip-path:polygon(20% 0,80% 0,100% 100%,0 100%)}.roof{position:absolute;top:0;left:69px;width:72px;height:28px;background:#b0b5a5;clip-path:polygon(50% 0,100% 100%,0 100%)}.antenna{position:absolute;top:-48px;left:103px;width:4px;height:55px;background:#aab9b5}.dish{position:absolute;top:-25px;left:52px;width:34px;height:22px;border:3px solid #9bb5b0;border-radius:50% 50% 0 0;transform:rotate(-20deg)}.lamp{position:absolute;top:34px;left:101px;width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 20px 7px #e6bd7e44}.window{position:absolute;left:91px;bottom:27px;width:27px;height:18px;background:#e6bd7e88;box-shadow:0 0 15px #e6bd7e33}.horizon{position:absolute;bottom:0;height:65px;width:100%;background:linear-gradient(#526e78,#1a2d39);clip-path:polygon(0 60%,18% 45%,31% 58%,48% 32%,66% 57%,81% 40%,100% 52%,100% 100%,0 100%);z-index:1}
+.console{margin:20px auto;background:#071018;border:1px solid #5c8790;padding:18px;box-shadow:0 0 24px #7ed6d111}.report{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;border-bottom:1px dashed #29424a;padding:14px 4px}.label{font-size:.65rem;letter-spacing:.16em;color:var(--muted)}.condition{color:var(--amber);font-size:clamp(1.3rem,4vw,2rem);letter-spacing:.12em}.reading{color:var(--cyan);text-align:right}.message{min-height:55px;color:#9eafb4;text-align:center;padding:20px 5px}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}button{font:inherit;letter-spacing:.12em;color:var(--cyan);background:#0b1720;border:1px solid #7ed6d177;padding:12px 18px;cursor:pointer}button:hover,button:focus-visible{outline:none;box-shadow:0 0 16px #7ed6d133;border-color:var(--amber);color:var(--amber)}
+.footer{text-align:center;color:#53676d;font-size:.67rem;letter-spacing:.12em;padding:30px 0}.footer a{color:var(--cyan)}
+body[data-weather="drizzle"] .sky{filter:hue-rotate(-12deg) saturate(.7)}body[data-weather="solar"] .sky{filter:brightness(1.18) saturate(1.3)}body[data-weather="ghost"] .sky{filter:grayscale(.65) brightness(.8)}body[data-weather="clear"] .sky{filter:brightness(1.1)}
+@media(max-width:520px){.sky{height:300px}.report{grid-template-columns:1fr}.reading{text-align:left}.console{padding:12px}}
+</style>
+</head><body data-weather="static"><main class="wrap">
+<div class="top"><span>AFTERWEB BUILDING // AWB-01</span><a href="afterweb-building.html">← RETURN TO BUILDING</a></div>
+<header><h1>WEATHER STATION</h1><div class="sub">REMOTE ATMOSPHERIC OBSERVATION // NO STAFF ON DUTY</div></header>
+<section class="sky" id="sky" aria-label="Animated atmospheric scene above the Afterweb">
+<div class="stars">· &nbsp; ✦ &nbsp; · &nbsp; ✧ &nbsp; · &nbsp; ✦ &nbsp; ·</div><div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+<div class="station"><div class="antenna"></div><div class="dish"></div><div class="roof"></div><div class="tower"></div><div class="lamp"></div><div class="window"></div></div><div class="horizon"></div>
+</section>
+<section class="console" aria-live="polite">
+<div class="report"><div><div class="label">CURRENT CONDITIONS</div><div class="condition" id="condition">STATIC</div></div><div class="reading" id="reading">Signal noise: 18%</div></div>
+<div class="report"><div><div class="label">FORECAST</div><div id="forecast">Restless network. No known cause.</div></div><div class="reading" id="chance">12% memory chance</div></div>
+<div class="message" id="message">A cloud refusing to load has been observed over the western horizon.</div>
+<div class="controls"><button id="release" type="button">RELEASE WEATHER</button><button id="hold" type="button">LET THE SKY REST</button></div>
+</section>
+<footer class="footer">VISIBILITY: INFINITE // TRANSMISSIONS MAY OCCUR AFTER MIDNIGHT<br><a href="afterweb-building.html">AFTERWEB BUILDING</a> · <a href="index.html">ATLAS-CODED</a></footer>
+</main>
+<script>
+(()=>{const states=[
+{name:"STATIC",id:"static",reading:"Signal noise: 18%",forecast:"Restless network. No known cause.",chance:"12% memory chance",message:"A cloud refusing to load has been observed over the western horizon."},
+{name:"DRIZZLE.EXE",id:"drizzle",reading:"Nostalgia precipitation: light",forecast:"Old fragments falling gently through the archive.",chance:"3 forgotten songs nearby",message:"Tiny memories are falling. You don't have to catch them."},
+{name:"SOLAR FLARE",id:"solar",reading:"Creative output: unexpectedly high",forecast:"A bright idea has entered the atmosphere.",chance:"Warm transmissions incoming",message:"Something is glowing in the distance. It might be an idea. It might be nothing. Either is fine."},
+{name:"GHOST WIND",id:"ghost",reading:"Untraceable packets: passing",forecast:"Something crossed the network without leaving a footprint.",chance:"No source detected",message:"The curtains moved, but there are no windows open. The station logged it anyway."},
+{name:"CLEAR SKY",id:"clear",reading:"Interference: almost none",forecast:"For once, nothing requires maintenance.",chance:"100% chance of simply being",message:"Clear skies. No tasks assigned. You may stay as long as you like."}
+];let i=0;const $=id=>document.getElementById(id);function show(s){document.body.dataset.weather=s.id;$("condition").textContent=s.name;$("reading").textContent=s.reading;$("forecast").textContent=s.forecast;$("chance").textContent=s.chance;$("message").textContent=s.message}
+$("release").addEventListener("click",()=>{i=(i+1)%states.length;show(states[i])});$("hold").addEventListener("click",()=>{i=4;show(states[i])});})();
+</script></body></html>
