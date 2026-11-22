@@ -26,7 +26,7 @@ header{text-align:center;margin-bottom:25px}h1{font-size:clamp(1.5rem,6vw,3.3rem
 @keyframes humGlow{to{box-shadow:0 0 38px rgba(181,68,255,.32),inset 0 0 22px #000}}
 .machine-top{text-align:center;color:#e4caff;letter-spacing:.12em;font-size:.65rem;padding:5px 0 10px;text-shadow:0 0 8px var(--violet)}
 .display{border:1px solid #534160;background:#030308;padding:10px 6px;min-height:48px;text-align:center;color:var(--green);font-size:.7rem;line-height:1.5;box-shadow:inset 0 0 12px #000}
-.products{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}.product{background:#0a0711;color:#9e91b8;border:1px solid #3b304a;padding:9px 4px;font:inherit;font-size:.64rem;cursor:pointer}.product:hover,.product.selected{border-color:var(--magenta);color:#fff;box-shadow:0 0 9px #842b7b}
+.products{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0}.product{touch-action:manipulation;position:relative;z-index:10;min-height:44px;background:#0a0711;color:#9e91b8;border:1px solid #3b304a;padding:9px 4px;font:inherit;font-size:.64rem;cursor:pointer}.product:hover,.product.selected{border-color:var(--magenta);color:#fff;box-shadow:0 0 9px #842b7b}
 .dispense{width:100%;padding:10px;background:#140c1b;color:var(--violet);border:1px solid #68517e;letter-spacing:.1em;cursor:pointer;font:inherit;font-size:.65rem}.slot{height:42px;margin-top:10px;border:1px solid #33273b;background:#030307;box-shadow:inset 0 0 8px #000}
 .object{position:absolute;bottom:6%;left:12%;font-size:.55rem;color:#635777;transform:rotate(-3deg)}.object.right{left:auto;right:12%;color:#62516f;transform:rotate(4deg)}
 .msg{text-align:center;min-height:50px;margin:20px auto 0;color:#a99abf;line-height:1.8;max-width:700px;font-size:.76rem}
@@ -44,25 +44,19 @@ header{text-align:center;margin-bottom:25px}h1{font-size:clamp(1.5rem,6vw,3.3rem
 <section class="machine" aria-label="Unusual vending machine">
 <div class="machine-top">VENDING UNIT // 0x04</div><div class="display" id="display">WELCOME, LOST TRAVELER.<br>SELECT AN ITEM.</div>
 <div class="products">
-<button class="product" data-item="404">404 / LOST PAGE</button><button class="product" data-item="MEMORY">MEMORY</button><button class="product" data-item="SIGNAL">SIGNAL</button><button class="product" data-item="VOID">VOID</button><button class="product" data-item="UNKNOWN" style="grid-column:1/3">??? / NOT IN INVENTORY</button>
-</div><button class="dispense" id="dispense">INSERT TOKEN / DISPENSE</button><div class="slot" id="slot" aria-hidden="true"></div></section>
+<button class="product" type="button" onclick="dispenseItem('404')">404 / LOST PAGE</button><button class="product" type="button" onclick="dispenseItem('MEMORY')">MEMORY</button><button class="product" type="button" onclick="dispenseItem('SIGNAL')">SIGNAL</button><button class="product" type="button" onclick="dispenseItem('VOID')">VOID</button><button class="product" type="button" onclick="dispenseItem('UNKNOWN')" style="grid-column:1/3">??? / NOT IN INVENTORY</button>
+</div><div class="slot" id="slot" aria-hidden="true"></div></section>
 </div>
 <div class="msg" id="message">No wires. No outlet. Still humming.</div>
 <section class="secret" id="secret"><div>THE WALL HAS MOVED.</div><p>YOU WERE NOT SUPPOSED TO FIND THIS.</p><a href="https://atlas-coded.net/afterweb-building.html">A DOOR IS OPEN // RETURN TO THE BUILDING</a></section>
 <div class="back"><a href="https://atlas-coded.net/afterweb-building.html">← BACK TO AFTERWEB BUILDING</a></div>
 </main>
 <script>
-(()=>{const display=document.getElementById('display'),msg=document.getElementById('message'),secret=document.getElementById('secret'),slot=document.getElementById('slot'),buttons=[...document.querySelectorAll('.product')];let selected='',unknownUsed=false;
-const responses={
-'404':['PAGE NOT FOUND','This page was here.','It remembers being visited.'],
-'MEMORY':['MEMORY RECOVERED','A light left on.','Someone expected you.'],
-'SIGNAL':['SIGNAL DETECTED','...krrsh...','A voice from another block.'],
-'VOID':['NOTHING INSIDE','The slot opens.','Darkness looks back.'],
-'UNKNOWN':['INVENTORY ERROR','YOU WERE NOT SUPPOSED TO FIND THIS.','The wall shifts behind the machine.']
-};
-buttons.forEach(b=>b.addEventListener('click',()=>{selected=b.dataset.item;buttons.forEach(x=>x.classList.toggle('selected',x===b));display.textContent='SELECTED: '+selected+' / READY';}));
-document.getElementById('dispense').addEventListener('click',()=>{if(!selected){display.textContent='PLEASE SELECT AN ITEM FIRST.';return;}const item=selected;selected='';buttons.forEach(x=>x.classList.remove('selected'));display.textContent=responses[item][0];msg.innerHTML=responses[item].slice(1).join('<br>');slot.style.boxShadow='inset 0 0 15px rgba(187,135,255,.25)';setTimeout(()=>slot.style.boxShadow='inset 0 0 8px #000',700);
-if(item==='UNKNOWN'&&!unknownUsed){unknownUsed=true;secret.classList.add('show');display.textContent='TRANSACTION COMPLETE. // WALL UNSTABLE';}
-else if(item==='UNKNOWN'){display.textContent='NOTHING ELSE HERE. FOR NOW.';}
-});})();
+function dispenseItem(item){
+const display=document.getElementById('display'),msg=document.getElementById('message'),secret=document.getElementById('secret'),slot=document.getElementById('slot');
+const responses={'404':['PAGE NOT FOUND','This page was here. It remembers being visited.'],'MEMORY':['MEMORY RECOVERED','A light left on. Someone expected you.'],'SIGNAL':['SIGNAL DETECTED','...krrsh... A voice from another block.'],'VOID':['NOTHING INSIDE','The slot opens. Darkness looks back.'],'UNKNOWN':['INVENTORY ERROR','YOU WERE NOT SUPPOSED TO FIND THIS. The wall shifts behind the machine.']};
+display.textContent=responses[item][0];msg.textContent=responses[item][1];slot.style.boxShadow='inset 0 0 15px rgba(187,135,255,.25)';
+document.querySelectorAll('.product').forEach(b=>b.classList.toggle('selected',b.getAttribute('onclick').includes(item)));
+if(item==='UNKNOWN'){secret.classList.add('show');display.textContent='TRANSACTION COMPLETE. // WALL UNSTABLE';}
+}
 </script></body></html>
