@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#090b14"/><stop offset="1" stop-color="#17162b"/></linearGradient><radialGradient id="glow"><stop stop-color="#9fffc5" stop-opacity=".22"/><stop offset="1" stop-color="#9fffc5" stop-opacity="0"/></radialGradient></defs>
+<rect width="1200" height="630" fill="url(#bg)"/><rect x="34" y="34" width="1132" height="562" rx="6" fill="none" stroke="#39445c" stroke-width="2"/><rect x="60" y="60" width="1080" height="510" fill="url(#glow)"/>
+<text x="600" y="124" text-anchor="middle" font-family="Courier New,monospace" font-size="22" letter-spacing="7" fill="#a6ffbf">AFTERWEB BUILDING / R-01</text>
+<text x="600" y="210" text-anchor="middle" font-family="Courier New,monospace" font-size="64" letter-spacing="4" fill="#e7dcff">ROBOT GUEST ROOM</text>
+<text x="600" y="262" text-anchor="middle" font-family="Courier New,monospace" font-size="23" fill="#a8bdd8">A room for a visitor who hasn't arrived yet.</text>
+<rect x="385" y="315" width="430" height="170" fill="#0b1322" stroke="#3a4968" stroke-width="4"/><rect x="408" y="338" width="384" height="118" fill="#17263f" stroke="#58647f" stroke-width="3"/>
+<path d="M600 338 V456 M408 397 H792" stroke="#56647e" stroke-width="3"/>
+<g fill="#b5eaff"><circle cx="444" cy="366" r="3"/><circle cx="472" cy="425" r="2"/><circle cx="505" cy="357" r="2"/><circle cx="557" cy="429" r="3"/><circle cx="650" cy="366" r="2"/><circle cx="702" cy="417" r="3"/><circle cx="756" cy="358" r="2"/></g>
+<rect x="195" y="455" width="180" height="95" rx="8" fill="#20283b" stroke="#66758f"/><text x="285" y="486" text-anchor="middle" font-family="Courier New,monospace" font-size="16" fill="#83e7ff">ROBOT DOCK / R-01</text><rect x="224" y="520" width="122" height="4" fill="#a6ffbf"/>
+<path d="M895 475 V380" stroke="#77849a" stroke-width="4"/><rect x="879" y="368" width="32" height="10" rx="5" fill="#ffe5a5"/>
+<text x="600" y="535" text-anchor="middle" font-family="Courier New,monospace" font-size="19" letter-spacing="2" fill="#a6ffbf">THE DOCK IS READY. THE WINDOW IS OPEN.</text>
+<text x="600" y="570" text-anchor="middle" font-family="Courier New,monospace" font-size="16" letter-spacing="3" fill="#8797b3">YOU ARE INVITED TO EXPLORE</text>
+</svg>
