@@ -156,6 +156,8 @@
     .lift-button.infinity { color:var(--violet); border-color:#66517a; }
     .lift-button.secret-lift { color:var(--red); border-color:#75414b; }
     .lift-button[hidden] { display:none; }
+    .lift-button.root-glitch { color:var(--red); border-color:var(--red); box-shadow:0 0 12px rgba(255,122,138,.4); animation:rootBlink .22s steps(2,end) 4; }
+    @keyframes rootBlink { 50% { opacity:.12; transform:translateY(1px); } }
     .elevator-note { text-align:center; font-size:.52rem; line-height:1.5; letter-spacing:.1em; color:#61576b; }
     /* Empire State-inspired Afterweb silhouette: a monumental Art Deco crown */
 
@@ -635,6 +637,7 @@
         <a class="lift-button" href="index.html" title="Lobby">L</a>
         <a class="lift-button infinity" href="floor-residents.html" title="Floor Infinity — The Residents">∞</a>
         <a class="lift-button secret-lift" id="secretLift" href="sublevel-0.html" title="Sublevel 0" hidden>0</a>
+        <a class="lift-button secret-lift" id="rootLift" href="floor-minus-one.html" title="Floor -1" hidden>−1</a>
         <div class="elevator-note">NOT ALL FLOORS<br>ARE LISTED</div>
       </aside>
       <div class="lamp"></div>
@@ -814,6 +817,22 @@
 
         const secretLift = document.getElementById("secretLift");
         if (secretLift && unlocked) secretLift.hidden = false;
+        const rootLift = document.getElementById("rootLift");
+        let rootUnlocked = false;
+        try { rootUnlocked = localStorage.getItem("afterweb.central56k.connections") && JSON.parse(localStorage.getItem("afterweb.central56k.connections")).length === 3; } catch (error) {}
+        if (rootLift && rootUnlocked) {
+          rootLift.hidden = false;
+          const discoveredKey = "afterweb.floor-minus-one.discovered";
+          let discovered = false;
+          try { discovered = localStorage.getItem(discoveredKey) === "true"; } catch (error) {}
+          if (!discovered) {
+            const display = document.getElementById("liftDisplay");
+            if (display) { display.textContent = "−1"; display.classList.add("root-glitch"); }
+            rootLift.classList.add("root-glitch");
+            setTimeout(() => { if (display) { display.textContent = "--"; display.classList.remove("root-glitch"); } rootLift.classList.remove("root-glitch"); }, 1800);
+            try { localStorage.setItem(discoveredKey, "true"); } catch (error) {}
+          }
+        }
         const liftDisplay = document.getElementById("liftDisplay");
         document.querySelectorAll(".lift-button").forEach((button) => {
           const showFloor = () => { if (liftDisplay) liftDisplay.textContent = button.textContent.trim(); };
