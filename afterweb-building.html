@@ -615,6 +615,8 @@
     .window.tape-garden-window{background:linear-gradient(135deg,#a9d28e,#203421);border-color:#bce4a1;box-shadow:0 0 14px rgba(169,210,142,.38)}
     .window.night-bus-window{background:linear-gradient(135deg,#8bb4e8,#20364d);border-color:#a4c9f2;box-shadow:0 0 14px rgba(139,180,232,.38)}
     .window.weather-station-window{background:linear-gradient(135deg,#7ed6d1,#203642);border-color:#9ce7e0;box-shadow:0 0 14px rgba(126,214,209,.38)}
+    .window.robot-room-window{background:linear-gradient(135deg,#a6ffbf,#173c30);border-color:#b5ffd0;box-shadow:0 0 18px rgba(166,255,191,.42);position:relative}
+    .window.robot-room-window::before{content:"R-01";position:absolute;inset:5px;border:1px solid rgba(255,255,255,.65);display:grid;place-items:center;color:#effff4;font-size:.6rem;letter-spacing:.12em;text-shadow:0 0 6px #62ff9b}
 </style>
 </head>
 
@@ -638,6 +640,7 @@
         <a class="lift-button infinity" href="floor-residents.html" title="Floor Infinity — The Residents">∞</a>
         <a class="lift-button secret-lift" id="secretLift" href="sublevel-0.html" title="Sublevel 0" hidden>0</a>
         <a class="lift-button secret-lift" id="rootLift" href="floor-minus-one.html" title="Floor -1" hidden>−1</a>
+        <a class="lift-button" href="robot-guest-room.html" title="Robot Guest Room">R</a>
         <div class="elevator-note">NOT ALL FLOORS<br>ARE LISTED</div>
       </aside>
       <div class="lamp"></div>
@@ -724,6 +727,7 @@
           <a class="window tape-garden-window" href="tape-garden.html" title="Tape Garden"><span>Tape Garden</span></a>
           <a class="window night-bus-window" href="night-bus.html" title="Night Bus"><span>Night Bus</span></a>
           <a class="window weather-station-window" href="weather-station.html" title="Weather Station"><span>Weather Station</span></a>
+          <a class="window robot-room-window" href="robot-guest-room.html" title="Robot Guest Room"><span>Robot Guest Room // R-01</span></a>
 
           <a class="window" href="/room-404.html" title="Room 404">
             <span>Room 404</span>
