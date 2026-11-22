@@ -564,6 +564,26 @@
     .district-square::before { inset:14px; background:radial-gradient(circle at 30% 50%,rgba(165,255,184,.08),transparent 30%),radial-gradient(circle at 70% 45%,rgba(255,217,138,.06),transparent 25%); }
     .district-small { position:absolute; top:10px; left:10px; color:#666178; font-size:.5rem; letter-spacing:.08em; }
     .district-glow { position:absolute; width:8px; height:8px; border-radius:50%; background:#ffd98a; box-shadow:0 0 18px 6px rgba(255,217,138,.25); top:20px; right:20px; }
+    /* GHOST PHONE — public line on Block 01 */
+    .district-phone{grid-column:1;grid-row:2;align-items:center;justify-content:flex-start;flex-direction:column;gap:7px;color:#a5ffb8;background:radial-gradient(circle at 50% 30%,rgba(53,255,121,.12),transparent 52%),linear-gradient(#101a15,#070b09);border-color:#355c40;cursor:pointer;overflow:visible}
+    .district-phone::before{inset:8px;border:1px solid rgba(165,255,184,.12);pointer-events:none}
+    .ghost-phone-art{position:relative;width:56px;height:72px;display:flex;align-items:center;justify-content:center;margin:8px auto 0;filter:drop-shadow(0 0 8px rgba(53,255,121,.2))}
+    .ghost-phone-booth{width:40px;height:62px;border:2px solid #355c40;background:linear-gradient(90deg,#111b14,#243a29,#111b14);position:relative;box-shadow:inset 0 0 12px #030503}
+    .ghost-phone-booth::before{content:"";position:absolute;top:7px;left:5px;right:5px;height:36px;border:1px solid #52795b;background:#030805}
+    .ghost-phone-booth::after{content:"56K";position:absolute;top:12px;left:0;right:0;text-align:center;color:#a5ffb8;font-size:8px;text-shadow:0 0 6px #35ff79;letter-spacing:1px}
+    .ghost-receiver{position:absolute;top:15px;left:4px;width:48px;height:9px;border-radius:7px;background:#58745c;border:1px solid #a5ffb8;transform:rotate(-18deg);box-shadow:0 0 8px rgba(165,255,184,.3)}
+    .ghost-receiver::before,.ghost-receiver::after{content:"";position:absolute;top:-2px;width:10px;height:13px;border-radius:5px;background:#1a291d;border:1px solid #91c99a}
+    .ghost-receiver::before{left:-2px}.ghost-receiver::after{right:-2px}
+    .ghost-phone-details{position:relative;z-index:4;width:100%;margin-top:2px}
+    .ghost-phone-details summary{list-style:none;cursor:pointer;color:#a5ffb8;background:#050a06;border:1px solid #426a48;padding:5px 6px;font-size:.52rem;letter-spacing:.08em;text-shadow:0 0 6px #35ff79}
+    .ghost-phone-details summary::-webkit-details-marker{display:none}
+    .ghost-phone-panel{position:absolute;top:100%;left:0;right:0;background:#030704;border:1px solid #426a48;padding:9px;text-align:left;box-shadow:0 0 18px #000;color:#8ab792;font-size:.53rem;line-height:1.7;z-index:8}
+    .ghost-phone-panel button{display:block;width:100%;margin-top:5px;padding:5px;background:#0b140e;border:1px solid #385941;color:#a5ffb8;font:inherit;cursor:pointer;text-align:left}
+    .ghost-phone-panel button:hover{border-color:#a5ffb8;box-shadow:0 0 8px rgba(165,255,184,.2)}
+    .ghost-phone-status{color:#83d8ff;margin:5px 0;min-height:2em}
+    .ghost-phone-details[open] .ghost-phone-panel{animation:ghostAppear .2s ease-out}
+    @keyframes ghostAppear{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+    @media(prefers-reduced-motion:reduce){.ghost-phone-details[open] .ghost-phone-panel{animation:none}}
     @media(max-width:560px) { .district-map { grid-template-rows:100px 140px 100px; gap:6px; padding:7px; min-height:360px; } .district-object { font-size:.5rem; padding:6px; } .district-building::before { inset:8px 9px 30px; } }
     /* Keep landmark elements separated: antenna above crown, sign on facade */
     .building { height:720px; background:repeating-linear-gradient(to bottom,transparent 0 34px,rgba(255,255,255,.035) 35px 36px),linear-gradient(135deg,#171116,#241923); }
@@ -786,7 +806,7 @@
         <a class="district-object district-kiosk" href="https://internet-traveler.neocities.org/kiosko" target="_blank" rel="noopener"><span class="district-small">OPEN 24/7 · CLICK TO VISIT</span><span class="district-glow"></span>KIOSK.exe</a>
         <div class="district-object district-stop" style="flex-direction:column;align-items:center;justify-content:center;gap:8px"><span class="district-small">ROUTE 56K</span><span>BUS STOP</span><details style="position:relative;z-index:3;text-shadow:none"><summary style="cursor:pointer;color:#83d8ff;border:1px solid #43657a;background:#070b13;padding:5px 7px;font-size:.56rem;letter-spacing:.06em;list-style:none">SELECT DESTINATION</summary><div style="position:absolute;top:100%;right:0;width:160px;background:#070b13;border:1px solid #43657a;padding:8px;box-shadow:0 0 15px #000;display:flex;flex-direction:column;gap:8px;text-align:left"><a href="https://internet-traveler.neocities.org/kiosko" target="_blank" rel="noopener" style="color:#a5ffb8;text-decoration:none;font-size:.55rem">01 / INTERNET TRAVELER — KIOSK.exe</a><span style="color:#6d7185;font-size:.52rem">02 / UNKNOWN DESTINATION — NO SIGNAL</span><span style="color:#6d7185;font-size:.52rem">03 / UNKNOWN DESTINATION — NO SIGNAL</span></div></details></div>
         <div class="district-object district-building"><span class="district-small">LANDMARK</span>AFTERWEB BUILDING</div>
-        <div class="district-object district-phone"><span class="district-small">LINE UNKNOWN</span>GHOST PHONE</div>
+        <div class="district-object district-phone"><span class="district-small">LINE UNKNOWN</span><div class="ghost-phone-art" aria-hidden="true"><div class="ghost-phone-booth"></div><div class="ghost-receiver"></div></div><strong>GHOST PHONE</strong><details class="ghost-phone-details"><summary>ANSWER / LISTEN</summary><div class="ghost-phone-panel"><div>INCOMING CALL // UNKNOWN</div><div class="ghost-phone-status" id="ghostPhoneStatus">THE LINE IS QUIET.</div><button type="button" data-ghost="answer">ANSWER</button><button type="button" data-ghost="nosignal">NO SIGNAL</button><button type="button" data-ghost="caller">UNKNOWN CALLER</button><button type="button" data-ghost="memory">MEMORY</button></div></details></div>
         <div class="district-object district-alley"><span class="district-small">NIGHT ACCESS</span>GLITCH ALLEY</div>
         <div class="district-object district-square"><span class="district-small">A PLACE TO WAIT</span>MEMORY SQUARE</div>
       </div>
@@ -877,6 +897,23 @@
       });
     })();
 
+    // GHOST PHONE — hidden messages from the Afterweb
+    (() => {
+      const status=document.getElementById('ghostPhoneStatus');
+      const phone=document.querySelector('.ghost-phone-details');
+      if(!status||!phone)return;
+      const messages={
+        answer:['CALL CONNECTED','...hello?','The building remembers your footsteps.'],
+        nosignal:['NO SIGNAL','KRRR—SHHH—','The line goes quiet.'],
+        caller:['UNKNOWN CALLER','CALLER ID: 000-???','Somewhere, a phone is ringing too.'],
+        memory:['MEMORY RECOVERED','A phone rang once in an empty district.','Nobody remembers who answered.']
+      };
+      phone.querySelectorAll('[data-ghost]').forEach(button=>button.addEventListener('click',()=>{
+        const key=button.dataset.ghost;
+        status.textContent='';
+        messages[key].forEach((line,i)=>{const span=document.createElement('span');span.textContent=line;span.style.display='block';status.appendChild(span);});
+      }));
+    })();
     // AWB-01 floating console interactions
     (() => {
       const panel=document.getElementById('buildingConsole'); const toggle=document.getElementById('consoleToggle');
