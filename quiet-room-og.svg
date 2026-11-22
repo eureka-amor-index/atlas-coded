@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><linearGradient id="night" x2="0" y2="1"><stop stop-color="#09091a"/><stop offset="1" stop-color="#22143b"/></linearGradient><linearGradient id="window" x2="0" y2="1"><stop stop-color="#19162e"/><stop offset="1" stop-color="#493165"/></linearGradient></defs>
+<rect width="1200" height="630" fill="url(#night)"/><rect x="34" y="34" width="1132" height="562" rx="8" fill="none" stroke="#a57be5" stroke-width="2" opacity=".6"/>
+<text x="76" y="85" font-family="monospace" font-size="22" letter-spacing="4" fill="#b99de9">ATLAS-CODED // AFTERWEB BUILDING</text>
+<text x="76" y="200" font-family="monospace" font-size="84" letter-spacing="9" fill="#e2caff">QUIET ROOM</text>
+<text x="80" y="253" font-family="monospace" font-size="23" letter-spacing="3" fill="#ad8bd4">NO TASKS  ·  NO SIGNAL  ·  NO HURRY</text>
+<rect x="70" y="290" width="580" height="220" fill="url(#window)" stroke="#9875c6" stroke-width="4"/><rect x="95" y="315" width="530" height="170" fill="#101525"/>
+<path d="M360 315 V485 M95 400 H625" stroke="#9875c6" stroke-width="8"/><circle cx="460" cy="352" r="40" fill="#c9b2ef"/><circle cx="475" cy="338" r="38" fill="#101525"/>
+<g transform="translate(110 490)"><rect width="220" height="22" fill="#62417c"/><rect x="24" y="-112" width="160" height="110" rx="12" fill="#2c2245" stroke="#b184e1" stroke-width="6"/><rect x="38" y="-98" width="132" height="80" fill="#0a1020"/><text x="56" y="-48" font-family="monospace" font-size="35" fill="#ccafff">&gt;_♡</text></g>
+<g transform="translate(690 440)"><rect x="0" y="50" width="430" height="20" fill="#65417d"/><rect x="35" y="-90" width="260" height="140" rx="10" fill="#33264b" stroke="#a17cce" stroke-width="4"/><rect x="60" y="-65" width="210" height="92" fill="#101626"/><text x="100" y="-20" font-family="monospace" font-size="25" fill="#d5b5ff">rest.exe</text><rect x="310" y="0" width="60" height="50" rx="12" fill="#77538f"/><ellipse cx="340" cy="0" rx="24" ry="10" fill="#c8a8ec"/><path d="M315 -5 Q340 -50 365 -5Z" fill="#b58be5" opacity=".8"/></g>
+<text x="78" y="550" font-family="monospace" font-size="22" letter-spacing="3" fill="#b38edc">&gt;&gt; REST MODE</text>
+<text x="78" y="580" font-family="monospace" font-size="18" fill="#8e6ab9">A PLACE WHERE NOTHING IS REQUIRED OF YOU.</text></svg>
