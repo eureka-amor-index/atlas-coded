@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Café de Medianoche // Atlas-Coded</title>
+<meta name="description" content="A small midnight café at the edge of the Afterweb. Warm cups, quiet signals, and a window looking toward the Afterweb Building.">
+<meta name="theme-color" content="#211613">
+<link rel="canonical" href="https://atlas-coded.net/cafe-de-medianoche.html">
+<style>
+:root{--ink:#211613;--cream:#f0dfc2;--muted:#b49b7c;--copper:#bd7951;--gold:#e8bd78;--night:#100d12;--panel:#2b1d19}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--night);color:var(--cream);font-family:Georgia,'Times New Roman',serif}
+a{color:var(--gold)}button{font:inherit;cursor:pointer}
+.shell{max-width:1180px;margin:auto;padding:30px 22px 70px}
+.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;font:11px/1.4 monospace;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid #49332a;padding-bottom:16px}
+.topline a{text-decoration:none;color:var(--gold)}
+.hero{padding:clamp(42px,8vw,100px) 0 35px;position:relative}
+.kicker{color:var(--copper);font:12px monospace;letter-spacing:.25em;text-transform:uppercase}
+h1{font-weight:normal;font-size:clamp(48px,8.8vw,112px);line-height:.92;letter-spacing:-.055em;margin:18px 0 22px;max-width:820px}
+h1 span{font-style:italic;color:var(--gold)}
+.intro{font-size:19px;line-height:1.7;max-width:530px;color:#d3bda0}
+.hero-stamp{display:inline-block;border:1px solid var(--copper);border-radius:50%;width:88px;height:88px;text-align:center;padding:22px 10px;color:var(--gold);font:11px/1.5 monospace;transform:rotate(9deg);position:absolute;right:8%;top:70px}
+.room{display:grid;grid-template-columns:1.05fr .95fr;gap:20px}
+.panel{background:var(--panel);border:1px solid #54382a;padding:26px}
+.panel h2{font-size:29px;font-weight:normal;margin:0 0 14px}
+.panel p{color:#cbb398;line-height:1.65}
+.counter{background:#181111;border:1px solid #68432e;padding:25px;position:relative;overflow:hidden}
+.counter:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 34px,#ffffff04 35px 36px);pointer-events:none}
+.coffee{font-size:38px;filter:drop-shadow(0 0 9px #c17b43);margin-bottom:15px}
+.menu-list{display:grid;gap:10px;margin-top:20px}
+.menu-item{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px dashed #654635;color:var(--cream)}
+.menu-item span:last-child{color:var(--gold);white-space:nowrap}
+.order{border:1px solid var(--copper);background:transparent;color:var(--gold);padding:10px 15px;margin:8px 7px 0 0;transition:.2s}
+.order:hover,.order:focus{background:var(--copper);color:var(--ink)}
+.note{min-height:45px;margin-top:15px;color:var(--gold);font:12px/1.7 monospace}
+.radio{margin-top:20px;padding-top:15px;border-top:1px solid #60432f}
+.radio label{font:11px monospace;color:var(--muted);letter-spacing:.15em}
+.freq{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.freq button{border:1px solid #674b35;background:#1b1212;color:#cdb394;padding:9px 11px;font:11px monospace}
+.freq button.active{background:var(--gold);color:var(--ink)}
+.radio-output{font:12px/1.7 monospace;color:#d4b78a;min-height:45px}
+.window-section{margin:30px 0;background:#17131a;border:1px solid #48343b;padding:28px}
+.window-title{font:11px monospace;letter-spacing:.16em;text-transform:uppercase;color:#c49a77}
+.window-view{margin:20px 0 14px;min-height:300px;border:7px solid #593d32;background:linear-gradient(180,#111a2b 0%,#2c2936 52%,#31201b 53%,#201611 100%);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stars{position:absolute;inset:0;background-image:radial-gradient(#f2cf8a 1px,transparent 1.5px),radial-gradient(#a6bddc 1px,transparent 1.5px);background-size:73px 61px,111px 93px;background-position:20px 9px,44px 37px;opacity:.6}
+.building{position:relative;width:190px;height:220px;margin-top:80px;background:#302c38;border:1px solid #766174;box-shadow:0 0 30px #a58abd35}
+.building:before{content:"AFTERWEB";display:block;text-align:center;color:#d7b8e8;font:10px monospace;letter-spacing:.2em;padding:10px}
+.building-windows{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:10px 18px}
+.building-windows i{height:19px;background:#e5bd7a;box-shadow:0 0 12px #e5bd7a77;opacity:.7}
+.moon{position:absolute;right:13%;top:25px;width:54px;height:54px;border-radius:50%;background:#e4d5ad;box-shadow:0 0 35px #e4d5ad44}
+.window-link{position:absolute;bottom:18px;z-index:2;background:#241a23d9;border:1px solid #b9a3ca;padding:11px 15px;text-decoration:none;color:#e1c7ee;font:11px monospace;letter-spacing:.08em}
+.window-caption{font:12px/1.6 monospace;color:#ad99b7}
+.footer{margin-top:44px;border-top:1px solid #49332a;padding-top:22px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font:11px monospace;color:#99836d}
+.footer a{color:var(--gold);text-decoration:none}
+@media(max-width:740px){.room{grid-template-columns:1fr}.hero-stamp{position:static;margin-top:10px}.window-view{min-height:260px}h1{font-size:17vw}}
+</style></head>
+<body><main class="shell">
+<div class="topline"><span>Atlas-Coded · Nightlife District</span><a href="afterweb-building.html">↗ Back to the Building</a></div>
+<header class="hero"><div class="kicker">Open when the world gets quiet</div><h1>Café de<br><span>Medianoche</span></h1><p class="intro">A little room for the almost-asleep. Come in from the static, warm your hands around a cup, and stay until your thoughts stop rushing.</p><div class="hero-stamp">OPEN<br>PAST<br>TIME</div></header>
+<section class="room">
+<div class="counter panel"><div class="coffee">☕</div><h2>The counter is warm.</h2><p>There are only a few things on the menu tonight. Nothing complicated. Everything made slowly.</p>
+<div class="menu-list"><div class="menu-item"><span>Velvet Espresso</span><span>01</span></div><div class="menu-item"><span>Moonmilk Latte</span><span>02</span></div><div class="menu-item"><span>Soft Static Cocoa</span><span>03</span></div><div class="menu-item"><span>Midnight Toast</span><span>04</span></div></div>
+<div><button class="order" data-order="A tiny espresso. A little courage. Here you go.">Espresso, please</button><button class="order" data-order="Moonmilk, extra warm. The night can wait.">Something warm</button><button class="order" data-order="Toast on the house. You look like you needed it.">A little snack</button></div><div class="note" id="order-note" aria-live="polite">The night-shift barista nods. “Take your time.”</div>
+</div>
+<div class="panel"><h2>Messages from the night</h2><p>Somewhere between the last train and the first birds, the radio finds a frequency that sounds like a friend.</p><div class="radio"><label>TONIGHT'S FREQUENCIES</label><div class="freq"><button class="active" data-freq="quiet">QUIET</button><button data-freq="dream">DREAM</button><button data-freq="signal">SIGNAL</button><button data-freq="home">HOME</button></div><div class="radio-output" id="radio-output" aria-live="polite">QUIET // You don't have to solve everything tonight.</div></div></div>
+</section>
+<section class="window-section"><div class="window-title">Seat 04 · Window view</div><div class="window-view"><div class="stars"></div><div class="moon"></div><div class="building"><div class="building-windows"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><a class="window-link" href="afterweb-building.html">↗ LOOK OUT TOWARD THE AFTERWEB BUILDING</a></div><div class="window-caption">The windows across the street are still lit. Someone is awake over there, too.</div></section>
+<footer class="footer"><span>CAFÉ DE MEDIANOCHE · NO CLOSING TIME</span><a href="ghosts-pixels.html">Another place down the street ↗</a><span>Made for the ones still awake</span></footer>
+</main>
+<script>
+const orderNote=document.getElementById('order-note');
+document.querySelectorAll('[data-order]').forEach(b=>b.addEventListener('click',()=>{orderNote.textContent=b.dataset.order;}));
+const messages={quiet:'QUIET // You don’t have to solve everything tonight.',dream:'DREAM // Some doors only appear after you rest.',signal:'SIGNAL // A small light is still reaching you.',home:'HOME // You are allowed to arrive without explaining.'};
+document.querySelectorAll('[data-freq]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-freq]').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById('radio-output').textContent=messages[b.dataset.freq];}));
+</script></body></html>
