@@ -83,6 +83,6 @@ else if(c==='clear'){out.innerHTML='';add('Terminal cleared. Root remains.','mut
 else{add('Command not recognized: '+c,'warning');add('Try help. The frog recommends reading the documentation.')}
 };
 document.getElementById('send').addEventListener('click',()=>{let v=input.value;input.value='';run(v)});
-input.addEventListener('keydown',e=>{if(e.key==='Enter'){let v=input.value;input.value='';run(v)});
+input.addEventListener('keydown',e=>{if(e.key==='Enter'){let v=input.value;input.value='';run(v)}});
 })();
 </script></body></html>
