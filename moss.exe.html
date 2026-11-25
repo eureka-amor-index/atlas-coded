@@ -76,7 +76,7 @@ function loop(){update();draw();requestAnimationFrame(loop)}
 function jump(){if(player.ground||player.y>H-40){player.vy=-8.8;player.ground=false}}
 document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp',' '].includes(e.key))e.preventDefault();keys[e.key.toLowerCase()]=true;if((e.key===' '||e.key==='ArrowUp'||e.key.toLowerCase()==='w')&&!e.repeat)jump()});
 document.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
-function bind(id,key){const b=document.getElementById(id);b.addEventListener('pointerdown',e=>{e.preventDefault();keys[key]=true});['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>keys[key]=false))}
+function bind(id,key){const b=document.getElementById(id);b.addEventListener('pointerdown',e=>{e.preventDefault();keys[key]=true;try{b.setPointerCapture(e.pointerId)}catch(_){}});const release=()=>keys[key]=false;b.addEventListener('pointerup',release);b.addEventListener('pointercancel',release);b.addEventListener('lostpointercapture',release);window.addEventListener('pointerup',release);window.addEventListener('blur',release)}
 bind('left','left');bind('right','right');document.getElementById('jump').addEventListener('pointerdown',e=>{e.preventDefault();jump()});document.getElementById('restart').addEventListener('click',reset);
 canvas.addEventListener('pointerdown',e=>{const r=canvas.getBoundingClientRect();let px=(e.clientX-r.left)/r.width*W; if(px>W*.55)player.vx=0; if(player.ground)jump()});
 reset();loop();
