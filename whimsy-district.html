@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Whimsy District // Atlas Coded</title>
+<meta name="description" content="A tiny impossible neighborhood in the Afterweb. Bounce through Mushroom Boulevard, visit Bubble Lake, and leave a wish at the Wishwell.">
+<meta name="theme-color" content="#241b35">
+<link rel="canonical" href="https://atlas-coded.net/whimsy-district.html">
+<link rel="icon" href="favicon.png">
+<meta property="og:type" content="website"><meta property="og:title" content="Whimsy District // Atlas Coded"><meta property="og:description" content="Where the laws of reality are merely suggestions."><meta property="og:url" content="https://atlas-coded.net/whimsy-district.html">
+<style>
+:root{--ink:#302647;--violet:#a88bdb;--pink:#ffb6d6;--mint:#a8e9c4;--cream:#fff4d4;--sky:#b9e8f5}
+*{box-sizing:border-box}body{margin:0;background:#191628;color:var(--cream);font:14px/1.6 "Courier New",monospace}body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:5;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.035) 4px 5px)}
+main{max-width:1040px;margin:auto;padding:24px 14px 50px}.hero{text-align:center;padding:26px 10px 20px}.eyebrow{color:var(--mint);letter-spacing:.25em;font-size:12px}.hero h1{font-size:clamp(2rem,7vw,4rem);line-height:1.1;margin:10px 0;color:var(--pink);text-shadow:3px 3px #664b89,0 0 24px #b78be8}.hero p{color:#d4c9ef;margin:8px auto;max-width:600px}
+.scene{border:3px solid #69558d;background:linear-gradient(#b9e8f5 0 64%,#d6e9ac 64% 78%,#5c8b65 78%);position:relative;min-height:310px;overflow:hidden;box-shadow:0 0 28px #74589a55}
+.sun{position:absolute;top:38px;right:12%;width:48px;height:48px;background:#fff4bc;box-shadow:0 0 0 8px #fff4bc33,0 0 45px #fff4bc;border-radius:50%}
+.cloud{position:absolute;background:#fff8e6;border-radius:16px;height:16px;width:64px;opacity:.8}.cloud:before,.cloud:after{content:"";position:absolute;background:inherit;border-radius:50%;width:24px;height:24px;top:-10px}.cloud:before{left:10px}.cloud:after{right:10px}
+.cloud.one{top:60px;left:12%}.cloud.two{top:110px;left:60%;transform:scale(.7)}
+.hill{position:absolute;bottom:60px;width:120%;height:120px;left:-10%;border-radius:50% 50% 0 0;background:#a9d990}.hill.back{bottom:88px;background:#86c4a1;opacity:.8}
+.path{position:absolute;bottom:-45px;left:40%;width:170px;height:180px;background:#f2d6a5;border-radius:50%;transform:rotate(-15deg);opacity:.8}
+.mushroom{position:absolute;bottom:82px;width:52px;height:62px;filter:drop-shadow(3px 3px #58704e)}.mushroom:before{content:"";position:absolute;top:26px;left:20px;width:13px;height:36px;background:#fff0c8}.mushroom:after{content:"";position:absolute;top:8px;left:3px;width:48px;height:26px;background:#f58cb9;border-radius:26px 26px 6px 6px;border-bottom:5px solid #d56898;box-shadow:inset 0 4px #ffc8e1}.mushroom i{position:absolute;z-index:1;top:15px;left:12px;width:6px;height:6px;background:#fff8df;box-shadow:18px 0 #fff8df,8px -5px #fff8df}
+.m1{left:12%;transform:scale(1.2)}.m2{left:78%;transform:scale(1.5)}.m3{left:28%;bottom:68px;transform:scale(.7)}
+.house{position:absolute;bottom:82px;left:45%;width:90px;height:75px;background:#ffdf9f;border:3px solid #956b87}.house:before{content:"";position:absolute;left:-12px;top:-30px;width:108px;height:38px;background:#d884ad;clip-path:polygon(50% 0,100% 100%,0 100%)}.house:after{content:"";position:absolute;bottom:0;left:35px;width:20px;height:38px;background:#8d7191;border:2px solid #fff0c8}.window{position:absolute;bottom:28px;left:12px;width:16px;height:18px;background:#9de5f1;border:2px solid #956c88;box-shadow:48px 0 #9de5f1}
+.sign{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);background:#28223b;border:2px solid #b79adf;color:#fff2d6;padding:5px 10px;letter-spacing:.1em;font-size:12px;white-space:nowrap;box-shadow:0 0 12px #b79adf55}
+.stars{position:absolute;inset:0;pointer-events:none}.stars b{position:absolute;color:#fff5c7;animation:twinkle 2s infinite alternate}@keyframes twinkle{to{opacity:.3;transform:scale(.7)}}
+.places{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin:18px 0}.place{background:#29233c;border:1px solid #725b92;padding:14px;border-radius:4px;min-height:120px}.place h2{font-size:14px;margin:0 0 6px;color:var(--pink)}.place p{color:#d6cbe8;margin:0;font-size:13px}.place button{font:inherit;margin-top:10px;background:#44375f;color:#fff4d4;border:1px solid #b29bd8;padding:5px 9px;cursor:pointer}.place button:hover{background:#5b497a}
+.panel{border:1px solid #826aa1;background:#211c33;padding:15px;margin:14px 0;color:#e7dbf4}.panel h2{font-size:15px;color:var(--mint);margin:0 0 7px}.wish-form{display:flex;gap:8px;flex-wrap:wrap}.wish-form input{flex:1;min-width:170px;background:#151323;border:1px solid #76628f;color:#fff4d4;padding:10px;font:inherit}.wish-form button{background:#775d98;border:1px solid #b9a1dc;color:#fff;padding:10px 14px;font:inherit;cursor:pointer}.wish{color:#ffd4e9;padding:7px 0;border-bottom:1px dashed #6f5a8d;word-break:break-word}
+#toast{position:fixed;top:14px;left:50%;transform:translateX(-50%);background:#2b2441;border:1px solid #c2a6e7;padding:10px 16px;z-index:9;opacity:0;transition:.2s;pointer-events:none;text-align:center;max-width:90vw}#toast.show{opacity:1}
+footer{text-align:center;color:#b6a6ca;margin:25px 0 0;font-size:12px}footer a{color:#b8e8c5;margin:0 8px}
+@media(max-width:540px){.scene{min-height:255px}.sign{font-size:10px}.house{left:43%;transform:scale(.8);transform-origin:bottom}}
+</style></head>
+<body><div id="toast"></div><main>
+<header class="hero"><div class="eyebrow">AFTERWEB DISTRICT 02 · ROOT CONNECTION ESTABLISHED</div><h1>WHIMSY DISTRICT</h1><p>Where the laws of reality are merely suggestions. Mind the mushrooms. They have opinions.</p></header>
+<section class="scene" aria-label="A pixel-art whimsical neighborhood">
+<div class="sun"></div><div class="cloud one"></div><div class="cloud two"></div><div class="hill back"></div><div class="hill"></div><div class="path"></div>
+<div class="mushroom m1"><i></i></div><div class="mushroom m2"><i></i></div><div class="mushroom m3"><i></i></div>
+<div class="house"><div class="window"></div></div><div class="sign">WELCOME, LITTLE WANDERER ✦</div>
+<div class="stars"><b style="top:17%;left:22%">✦</b><b style="top:29%;left:42%">✧</b><b style="top:15%;left:70%">✦</b><b style="top:38%;left:82%">✧</b><b style="top:21%;left:54%">✦</b></div>
+</section>
+<section class="places">
+<article class="place"><h2>🍄 Mushroom Boulevard</h2><p>Sidewalks bounce. The streetlights are mushrooms. Nobody remembers who installed them.</p><button onclick="visit('The boulevard bounced you three blocks and deposited a tiny mushroom hat in your inventory. (Imaginary inventory, naturally.)')">WANDER</button></article>
+<article class="place"><h2>🫧 Bubble Lake</h2><p>Floaty bubbles drift across the water, each one carrying a very small secret.</p><button onclick="visit('A bubble popped: it contained the sound of a dial-up modem and one extremely polite frog.')">POP A BUBBLE</button></article>
+<article class="place"><h2>🎠 Wonderwheel</h2><p>A ferris wheel floating above the rooftops. Its cabins are little worlds of their own.</p><button onclick="visit('Wonderwheel ride complete! From the top, you spotted a secret door behind the bakery.')">TAKE A RIDE</button></article>
+<article class="place"><h2>🐸 Frog Choir Plaza</h2><p>Local frogs perform nightly. Their genre is experimental pond jazz.</p><button onclick="visit('♪ ribbit · ribbit · brrrrip ♪ The Frog Choir has accepted you as honorary pond audience.')">LISTEN</button></article>
+<article class="place"><h2>🧁 Sugarcloud Bakery</h2><p>Cloud-shaped pastries. A menu that changes when you blink. Fresh whimsy, daily.</p><button onclick="visit('You got a cloud-cupcake. It tastes like a childhood afternoon you almost forgot.')">ORDER A TREAT</button></article>
+<article class="place"><h2>🌀 The Impossible Corner</h2><p>Turn left, arrive yesterday. Turn right, the alley is full of stars. Walk straight—good luck.</p><button onclick="visit('You turned left and arrived yesterday. Yesterday-you left a note: “keep building weird things.”')">TRY THE CORNER</button></article>
+</section>
+<section class="panel"><h2>💌 Wishwell</h2><p>Leave a little wish in the fountain. Wishes are anonymous and only stored in this browser session.</p><form class="wish-form" id="wishForm"><input id="wishInput" maxlength="140" placeholder="A small wish, traveler…" aria-label="Your wish"><button>DROP YOUR WISH</button></form><div id="wishes"></div></section>
+<section class="panel"><h2>🌱 DISTRICT LORE</h2><p>Whimsy District grew from a stray thought lodged in the Root System. It is not fully rendered, not fully dreamed. MOSS.exe found the door; the door decided to become a neighborhood. The locals insist this is perfectly normal.</p></section>
+<footer><a href="moss.exe.html">← RETURN THROUGH MOSS.exe</a><a href="afterweb-building.html">AFTERWEB BUILDING</a><a href="index.html">ATLAS-CODED</a><p>District 02 · A place for the unreasonably curious.</p></footer></main>
+<script>
+(()=>{const toast=document.getElementById('toast');let timer;window.visit=msg=>{toast.textContent=msg;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),3500)};document.getElementById('wishForm').addEventListener('submit',e=>{e.preventDefault();const i=document.getElementById('wishInput');const v=i.value.trim();if(!v)return;const w=document.createElement('div');w.className='wish';w.textContent='✧ '+v;document.getElementById('wishes').prepend(w);i.value='';visit('Your wish has been tucked into the Wishwell. ✨')})})();
+</script></body></html>
