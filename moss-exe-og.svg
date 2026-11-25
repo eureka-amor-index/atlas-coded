@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#6aa5b5"/><stop offset="1" stop-color="#c0dfbf"/></linearGradient></defs>
+<rect width="1200" height="630" fill="#101a14"/><rect x="35" y="35" width="1130" height="560" rx="18" fill="url(#sky)" stroke="#597b5e" stroke-width="6"/>
+<circle cx="1010" cy="125" r="55" fill="#fff1a9"/>
+<g opacity=".75" fill="#7aa88e"><path d="M35 320 Q130 230 235 315 T450 290 T660 310 T850 270 T1165 320 V595 H35Z"/></g>
+<g fill="#34734b"><path d="M90 370 l0-115 26 0 0-80 60 0 0 80 24 0 0 115zM270 390 l0-145 24 0 0-70 75 0 0 70 25 0 0 145zM520 360 l0-130 28 0 0-85 72 0 0 85 26 0 0 130zM800 380 l0-150 25 0 0-80 78 0 0 80 24 0 0 150zM1030 365 l0-145 28 0 0-75 65 0 0 75 25 0 0 145z"/></g>
+<g fill="#4e8f58"><circle cx="165" cy="250" r="55"/><circle cx="335" cy="235" r="68"/><circle cx="590" cy="210" r="72"/><circle cx="860" cy="220" r="70"/><circle cx="1100" cy="230" r="64"/></g>
+<rect x="35" y="460" width="1130" height="135" fill="#14251a" opacity=".95"/>
+<text x="82" y="530" fill="#dff3d8" font-family="Courier New,monospace" font-size="74" font-weight="bold" letter-spacing="12">MOSS.exe</text>
+<text x="88" y="572" fill="#a8c2a2" font-family="Courier New,monospace" font-size="24" letter-spacing="4">A LITTLE FOREST LOST SOMEWHERE ON THE AFTERWEB</text>
+<g fill="#f2dfb0"><rect x="415" y="400" width="20" height="30"/><rect x="400" y="385" width="50" height="17" fill="#d45f76"/><rect x="480" y="390" width="18" height="28"/><rect x="466" y="375" width="48" height="18" fill="#d45f76"/></g>
+<g fill="#ffe47d"><circle cx="700" cy="420" r="9"/><circle cx="745" cy="380" r="9"/><circle cx="780" cy="435" r="9"/></g></svg>
