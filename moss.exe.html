@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MOSS.exe // A Little Forest in the Afterweb</title>
+<meta name="description" content="A tiny pixel platformer hidden in the Afterweb. Jump through a mossy forest, collect lost data, meet odd little creatures, and find the portal home.">
+<meta name="theme-color" content="#15251c"><meta name="robots" content="index,follow">
+<link rel="canonical" href="https://atlas-coded.net/moss.exe.html"><link rel="icon" href="favicon.png">
+<meta property="og:type" content="website"><meta property="og:title" content="MOSS.exe // A Little Forest in the Afterweb"><meta property="og:description" content="A tiny pixel forest platformer. Jump, collect, wander."><meta property="og:url" content="https://atlas-coded.net/moss.exe.html"><meta property="og:image" content="https://atlas-coded.net/moss-exe-og.svg"><meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--ink:#dff3d8;--muted:#a8c2a2;--mint:#9ee7b0;--gold:#f5d17a;--panel:#17291f;--line:#52705a}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#254632,#101a16 55%,#080c0a);color:var(--ink);font:14px/1.6 "Courier New",monospace}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 3px,#b8e9c2 4px 5px);z-index:8}
+main{max-width:1000px;margin:auto;padding:26px 16px 50px;position:relative}
+header{text-align:center;margin:0 auto 20px}h1{font-size:clamp(1.6rem,5vw,3.2rem);letter-spacing:.18em;margin:0;color:#d7f9cc;text-shadow:0 0 18px #4d9b5a}.sub{color:var(--muted);letter-spacing:.08em;margin-top:8px}
+.frame{border:2px solid #52705a;background:#08110c;box-shadow:0 0 28px #163522;border-radius:5px;overflow:hidden}
+.hud{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:9px 12px;background:#15251c;border-bottom:1px solid #52705a;color:#d6f3c9;font-size:12px}
+canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges;background:#92c8d0;touch-action:none}
+.controls{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;background:#15251c;border-top:1px solid #52705a;flex-wrap:wrap}
+.pad{display:flex;gap:8px}.control{border:1px solid #67896b;background:#223c2a;color:#dff3d8;padding:11px 17px;font:inherit;border-radius:4px;box-shadow:0 3px 0 #0a120c;user-select:none;touch-action:none}.control:active{transform:translateY(2px);box-shadow:0 1px 0 #0a120c}.jump{background:#3c5733;border-color:#a2d487;color:#fff}
+.note{text-align:center;color:#9db99b;font-size:12px;padding:9px}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:20px 0}.card{border:1px solid var(--line);background:#14241b;padding:14px;border-radius:4px}.card h2{color:var(--gold);font-size:14px;margin:0 0 7px}.card p{margin:0;color:#b7cdb1}
+a{color:#a8e8b5}.foot{text-align:center;color:#8ca78a;margin-top:22px;font-size:12px}.foot a{display:inline-block;margin:0 8px}
+#toast{position:fixed;z-index:10;left:50%;top:18px;transform:translateX(-50%);background:#182b20;border:1px solid #9ed486;color:#efffe7;padding:10px 16px;border-radius:4px;box-shadow:0 0 18px #264d31;opacity:0;pointer-events:none;transition:opacity .2s}#toast.show{opacity:1}
+@media(max-width:560px){main{padding:18px 9px 32px}.hud{font-size:11px}.controls{justify-content:center}.control{padding:12px 18px}.note{font-size:11px}}
+</style>
+</head>
+<body><div id="toast" aria-live="polite"></div>
+<main>
+<header><h1>MOSS.exe</h1><div class="sub">A LITTLE FOREST LOST SOMEWHERE ON THE AFTERWEB</div></header>
+<div class="frame">
+<div class="hud"><span id="world">WORLD 01 // MOSS &amp; MEMORY</span><span>DATA <b id="score">0</b> / 7</span><span id="status">WANDERER ONLINE</span></div>
+<canvas id="game" width="800" height="420" aria-label="Pixel art forest platform game"></canvas>
+<div class="controls"><div class="pad"><button class="control" id="left" aria-label="Move left">◀</button><button class="control" id="right" aria-label="Move right">▶</button></div><button class="control jump" id="jump" aria-label="Jump">JUMP ⤴</button><button class="control" id="restart">↻ RESET</button></div>
+<div class="note">KEYBOARD: ← → / A D TO MOVE · SPACE / ↑ TO JUMP · TOUCH BUTTONS ON MOBILE</div>
+</div>
+<section class="info">
+<div class="card"><h2>🍃 OBJECTIVE</h2><p>Collect the seven lost data-orbs, meet the forest sprites, and find the little portal at the end of the trail.</p></div>
+<div class="card"><h2>🪵 FOREST RULE</h2><p>Some mushrooms bounce you higher. The moss is friendly. Falling off the path returns you to the last little checkpoint.</p></div>
+<div class="card"><h2>🌱 A NOTE FROM THE WOODS</h2><p>There is no timer here. Take your time. The forest has been waiting for you anyway.</p></div>
+</section>
+<div class="foot"><a href="afterweb-building.html">← AFTERWEB BUILDING</a> · <a href="index.html">ATLAS-CODED.NET</a><p>Somewhere between a save file and a daydream.</p></div>
+</main>
+<script>
+(()=>{
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d'),scoreEl=document.getElementById('score'),statusEl=document.getElementById('status'),toastEl=document.getElementById('toast');
+const W=800,H=420,worldW=2800,gravity=.48;
+let keys={},score=0,camera=0,toastTimer=0,checkpoint=120,won=false;
+const player={x:120,y:280,w:22,h:30,vx:0,vy:0,ground:false,face:1};
+const platforms=[{x:0,y:370,w:520,h:70},{x:560,y:345,w:180,h:26},{x:800,y:320,w:220,h:30},{x:1090,y:370,w:360,h:70},{x:1510,y:335,w:220,h:26},{x:1800,y:300,w:260,h:26},{x:2140,y:360,w:280,h:60},{x:2500,y:330,w:300,h:90},{x:390,y:300,w:100,h:20},{x:930,y:250,w:110,h:20},{x:1250,y:285,w:110,h:20},{x:1630,y:260,w:100,h:20},{x:1960,y:225,w:110,h:20},{x:2330,y:285,w:100,h:20}];
+const mushrooms=[{x:310,y:354},{x:625,y:329},{x:980,y:304},{x:1300,y:354},{x:1680,y:319},{x:2020,y:284},{x:2380,y:344}];
+const orbSpots=[{x:260,y:335},{x:640,y:310},{x:1015,y:215},{x:1280,y:250},{x:1660,y:220},{x:1995,y:180},{x:2370,y:245}];
+let orbs=orbSpots.map(o=>({...o,taken:false})),sprites=[{x:720,y:314,name:'Pip',said:false},{x:1460,y:340,name:'Moss',said:false},{x:2200,y:330,name:'Fern',said:false}],trees=[];
+for(let i=0;i<48;i++)trees.push({x:i*68+((i*37)%27),h:100+(i*31)%105,r:18+(i*13)%28});
+function toast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove('show'),2300)}
+function reset(){player.x=120;player.y=280;player.vx=player.vy=0;score=0;camera=0;checkpoint=120;won=false;orbs=orbSpots.map(o=>({...o,taken:false}));sprites.forEach(s=>s.said=false);scoreEl.textContent=0;statusEl.textContent='WANDERER ONLINE';toast('THE FOREST REMEMBERS YOU.')}
+function rect(x,y,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(x),Math.round(y),w,h)}
+function drawSky(){let g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#82bdce');g.addColorStop(1,'#c2e2cb');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);ctx.fillStyle='#fff2b5';ctx.beginPath();ctx.arc(660,65,28,0,Math.PI*2);ctx.fill();ctx.globalAlpha=.22;trees.forEach(t=>{let x=(t.x-camera*.25)%1000;if(x<-80)x+=1000;rect(x,155,42,160,'#7cae9a');rect(x-25,175,95,50,'#7cae9a');rect(x-14,145,75,52,'#7cae9a')});ctx.globalAlpha=1;ctx.fillStyle='#8bbd91';ctx.beginPath();ctx.moveTo(0,290);for(let x=0;x<=W;x+=40)ctx.lineTo(x,260+Math.sin((x+camera*.3)*.012)*22);ctx.lineTo(W,H);ctx.lineTo(0,H);ctx.fill();}
+function drawTrees(){trees.forEach(t=>{let x=t.x-camera;if(x<-100||x>W+100)return;rect(x-5,370-t.h*.42,10,t.h*.42,'#65452d');ctx.fillStyle='#2f724b';ctx.beginPath();ctx.arc(x,370-t.h*.65,t.h*.35,0,Math.PI*2);ctx.fill();ctx.fillStyle='#4a9960';ctx.beginPath();ctx.arc(x-18,370-t.h*.6,t.h*.26,0,Math.PI*2);ctx.arc(x+17,370-t.h*.73,t.h*.24,0,Math.PI*2);ctx.fill();});}
+function drawPlatforms(){platforms.forEach(p=>{let x=p.x-camera;if(x+p.w<0||x>W)return;rect(x,p.y,p.w,p.h,'#5b422b');rect(x,p.y,p.w,7,'#78a85b');for(let k=x+14;k<x+p.w;k+=29){rect(k,p.y+15,4,3,'#a0c96e');rect(k+7,p.y+32,3,4,'#3e5c38')}})}
+function drawMushrooms(){mushrooms.forEach(m=>{let x=m.x-camera;if(x<-30||x>W+30)return;rect(x-5,m.y,10,16,'#f4dfb0');rect(x-16,m.y-9,32,10,'#d45f76');rect(x-11,m.y-12,6,4,'#fff0cb');rect(x+5,m.y-8,5,3,'#fff0cb')})}
+function drawOrbs(){orbs.forEach(o=>{if(o.taken)return;let x=o.x-camera,y=o.y+Math.sin(Date.now()/330+o.x)*5;ctx.fillStyle='#fff5a6';ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();ctx.fillStyle='#ffe47d';ctx.beginPath();ctx.arc(x,y,13,0,Math.PI*2);ctx.stroke();})}
+function drawSprites(){sprites.forEach(s=>{let x=s.x-camera;if(x<-40||x>W+40)return;rect(x-9,s.y-18,18,18,'#67a56d');rect(x-5,s.y-22,10,8,'#b5d987');rect(x-6,s.y-12,4,4,'#183422');rect(x+2,s.y-12,4,4,'#183422');rect(x-14,s.y,28,5,'#446c4a');if(player.x>s.x-40&&player.x<s.x+40&&player.y>s.y-50&&player.y<s.y+18&&!s.said){s.said=true;toast(s.name+': THE FOREST HAS A SECRET. KEEP GOING.')}})}
+function drawPlayer(){let x=player.x-camera,y=player.y;rect(x+4,y+22,14,8,'#34583b');rect(x+2,y+6,18,17,'#4c8d5a');rect(x+3,y,16,13,'#f0c88a');rect(x+3,y-2,16,5,'#3c3027');rect(x+5,y+6,3,3,'#1b291b');rect(x+13,y+6,3,3,'#1b291b');rect(x+(player.face>0?19:-4),y+14,7,5,'#e5a76e')}
+function drawPortal(){let x=2600-camera;if(x>-80&&x<W+80){ctx.strokeStyle='#9bd5a5';ctx.lineWidth=5;ctx.beginPath();ctx.ellipse(x,285,27,47,0,0,Math.PI*2);ctx.stroke();ctx.strokeStyle='#e3ffb6';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(x,285,17,35,0,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#284e38';ctx.fillRect(x-20,330,40,5)}}
+function draw(){drawSky();drawTrees();drawPlatforms();drawMushrooms();drawOrbs();drawSprites();drawPortal();drawPlayer();ctx.fillStyle='rgba(19,37,24,.4)';ctx.fillRect(0,397,W,23);ctx.fillStyle='#d5eebd';ctx.font='12px monospace';ctx.fillText('MOSSY TRAIL // KEEP WANDERING',15,413)}
+function collision(){player.ground=false;for(const p of platforms){if(player.x+player.w>p.x&&player.x<p.x+p.w&&player.y+player.h>p.y&&player.y+player.h-player.vy<=p.y+8&&player.vy>=0){player.y=p.y-player.h;player.vy=0;player.ground=true;if(p.x>checkpoint)checkpoint=p.x+15}}
+for(const m of mushrooms){if(player.x+player.w>m.x-15&&player.x<m.x+15&&player.y+player.h>m.y-12&&player.y+player.h-player.vy<=m.y+6&&player.vy>=0){player.y=m.y-player.h-5;player.vy=-11;toast('MUSHROOM BOOST!')}}}
+function update(){if(won)return;let moving=(keys.right||keys.d?1:0)-(keys.left||keys.a?1:0);player.vx=moving*3.2;if(moving)player.face=moving;player.x=Math.max(0,Math.min(worldW-player.w,player.x+player.vx));player.vy=Math.min(12,player.vy+gravity);player.y+=player.vy;collision();
+if(player.y>H+60){player.x=checkpoint;player.y=250;player.vy=0;toast('WHOOPS! BACK TO THE MOSS.')}
+camera=Math.max(0,Math.min(worldW-W,player.x-W*.42));
+orbs.forEach(o=>{if(!o.taken&&Math.abs(player.x+player.w/2-o.x)<24&&Math.abs(player.y+player.h/2-o.y)<34){o.taken=true;score++;scoreEl.textContent=score;toast(['DATA SPROUT!','A MEMORY FOUND.','LITTLE BIT OF MAGIC.'][score%3])}});
+if(player.x>2570&&score>=7){won=true;statusEl.textContent='PORTAL OPEN';toast('ALL DATA FOUND. THE PORTAL IS YOURS.')}
+}
+function loop(){update();draw();requestAnimationFrame(loop)}
+function jump(){if(player.ground||player.y>H-40){player.vy=-8.8;player.ground=false}}
+document.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp',' '].includes(e.key))e.preventDefault();keys[e.key.toLowerCase()]=true;if((e.key===' '||e.key==='ArrowUp'||e.key.toLowerCase()==='w')&&!e.repeat)jump()});
+document.addEventListener('keyup',e=>keys[e.key.toLowerCase()]=false);
+function bind(id,key){const b=document.getElementById(id);b.addEventListener('pointerdown',e=>{e.preventDefault();keys[key]=true});['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>keys[key]=false))}
+bind('left','left');bind('right','right');document.getElementById('jump').addEventListener('pointerdown',e=>{e.preventDefault();jump()});document.getElementById('restart').addEventListener('click',reset);
+canvas.addEventListener('pointerdown',e=>{const r=canvas.getBoundingClientRect();let px=(e.clientX-r.left)/r.width*W; if(px>W*.55)player.vx=0; if(player.ground)jump()});
+reset();loop();
+})();
+</script></body></html>
