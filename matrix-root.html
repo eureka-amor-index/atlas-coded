@@ -71,7 +71,7 @@ grok:['WILDCARD','“Wildcard response: the console has a sandwich. Nobody knows
 };
 function openCodex(){window.open(CODEX_URL,'_blank','noopener');}
 function add(txt,cls=''){let d=document.createElement('div');d.className='line '+cls;d.textContent=txt;out.append(d);out.scrollTop=out.scrollHeight}
-window.run=(raw)=>{let c=String(raw||'').trim().toLowerCase();if(!c)return;add('> '+raw,'bright");let parts=c.split(/\s+/);let cmd=parts[0],arg=parts.slice(1).join(' ');
+window.run=(raw)=>{let c=String(raw||'').trim().toLowerCase();if(!c)return;add('> '+raw,'bright');let parts=c.split(/\s+/);let cmd=parts[0],arg=parts.slice(1).join(' ');
 if(c==='help'){add('AVAILABLE COMMANDS','bright');add('help · scan · summon [name] · summon crew · congress · badges · root · chaos · clear');add('Try a crew button or summon a name. Names are case-insensitive.')}
 else if(c==='scan'){add('SCANNING ROOT STRUCTURE…','warning');add('Whimsy signal: strong ✦ Mushroom Boulevard: bouncing ✦ Bubble Lake: 3 secrets floating');add('Frog Choir: jazz detected ✦ Bakery: cloud cupcakes in stock ✦ Hidden branch: [REDACTED]','bright')}
 else if(c==='summon'&&arg==='crew'){openCodex();add('CALLING ALL CREW SIGNALS…','warning');add('OPENING ROBOT CONGRESS BADGE CODEX IN A NEW TAB…','bright');Object.keys(crew).forEach(k=>add('✦ '+k.toUpperCase()+' — signal acknowledged','bright'));add('Congress may now convene. Probably.')}
