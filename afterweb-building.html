@@ -655,6 +655,12 @@
       .door { width: 76px; height: 94px; }
     }
 
+
+/* AFTERWEB INTERNATIONAL — rare passing plane easter egg */
+#afterweb-flight{position:fixed;top:16vh;left:-90px;z-index:99;border:0;background:transparent;padding:0;font-size:clamp(24px,4vw,42px);line-height:1;cursor:pointer;filter:drop-shadow(0 0 9px rgba(131,216,255,.7));opacity:0;pointer-events:none;animation:afterwebFlight 18s linear forwards}
+#afterweb-flight.visible{opacity:1;pointer-events:auto}
+#afterweb-flight:hover{transform:scale(1.25)}
+@keyframes afterwebFlight{from{left:-90px}to{left:calc(100vw + 90px)}}
 </style>
 </head>
 
@@ -965,5 +971,8 @@
     })();
   </script>
 
+
+<button id="afterweb-flight" aria-label="Catch a passing flight to Afterweb International" title="CATCH THE FLIGHT" style="display:none">✈️</button>
+<script>(()=>{const plane=document.getElementById('afterweb-flight');if(!plane)return;const launch=()=>{plane.style.display='block';plane.classList.remove('visible');plane.style.animation='none';void plane.offsetWidth;plane.style.animation='afterwebFlight 18s linear forwards';plane.classList.add('visible');plane.onclick=()=>{plane.classList.remove('visible');window.location.href='afterweb-airport.html';};plane.addEventListener('animationend',()=>{plane.classList.remove('visible');plane.style.display='none';},{once:true});setTimeout(()=>{setTimeout(launch,25000+Math.random()*65000);},18000);};setTimeout(launch,12000+Math.random()*30000);})();</script>
 </body>
 </html>
