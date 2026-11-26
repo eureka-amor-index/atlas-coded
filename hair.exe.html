@@ -13,13 +13,13 @@
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 0,#39214e,#100b19 55%,#08060c);color:var(--ink);font:14px/1.6 "Courier New",monospace}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 3px,#fff 4px 5px)}
 main{max-width:950px;margin:auto;padding:24px 14px 45px}.hero{text-align:center;padding:26px 12px}.eyebrow{letter-spacing:.25em;color:var(--cyan);font-size:12px}.hero h1{font-size:clamp(2.5rem,9vw,5.4rem);line-height:1;margin:16px 0;color:var(--pink);text-shadow:4px 4px #563275,0 0 28px #f483dc66}.tagline{color:var(--purple);font-size:clamp(1rem,3vw,1.3rem);letter-spacing:.14em}.hero p{max-width:600px;margin:12px auto;color:var(--muted)}
-.salon{position:relative;min-height:340px;border:3px solid #785a98;background:linear-gradient(#22183b,#151020 65%,#0c0a10);overflow:hidden;box-shadow:0 0 35px #b97aff22}
+.salon{position:relative;min-height:380px;border:3px solid #785a98;background:linear-gradient(#22183b,#151020 65%,#0c0a10);overflow:hidden;box-shadow:0 0 35px #b97aff22}
 .neon{position:absolute;top:22px;left:50%;transform:translateX(-50%);padding:8px 16px;border:2px solid var(--pink);background:#130b1d;color:var(--pink);font-size:clamp(12px,3vw,18px);letter-spacing:.16em;white-space:nowrap;text-shadow:0 0 12px var(--pink);box-shadow:0 0 18px #ff83d566;animation:flicker 5s infinite}
 @keyframes flicker{0%,100%{opacity:1}9%{opacity:.4}12%{opacity:1}58%{opacity:.75}61%{opacity:1}}
-.floor{position:absolute;bottom:0;width:100%;height:88px;background:repeating-linear-gradient(90deg,#211a2a 0 48px,#30223a 49px 50px);border-top:2px solid #655077}
+.floor{position:absolute;bottom:0;width:100%;height:64px;background:repeating-linear-gradient(90deg,#211a2a 0 48px,#30223a 49px 50px);border-top:2px solid #655077}
 .mirror{position:absolute;left:8%;top:112px;width:110px;height:170px;border:8px solid #58456f;background:linear-gradient(135deg,#9bdff4,#30254d 45%,#d7a0e5);box-shadow:inset 0 0 22px #fff5,0 0 16px #8aeaff33}
 .mirror:after{content:"YOUR REFLECTION\A IS LOADING...";white-space:pre;position:absolute;bottom:12px;left:4px;right:4px;text-align:center;font-size:10px;color:#fff;text-shadow:0 0 5px #7af1ff}
-.chair{position:absolute;left:50%;transform:translateX(-50%);bottom:88px;width:126px;height:100px}
+.chair{position:absolute;left:50%;transform:translateX(-50%);bottom:64px;width:126px;height:100px}
 .chair .seat{position:absolute;bottom:0;left:8px;width:110px;height:34px;background:#b04492;border:3px solid #ff9de2;box-shadow:0 0 16px #ff83d544}
 .chair .back{position:absolute;bottom:30px;left:28px;width:70px;height:92px;background:linear-gradient(90deg,#5a2a74,#bc55a3,#5a2a74);border:3px solid #d786c5;border-radius:18px 18px 8px 8px}
 .chair .headrest{position:absolute;bottom:112px;left:47px;width:32px;height:20px;background:#9d4c95;border:2px solid #d786c5;border-radius:6px}
@@ -29,7 +29,7 @@ main{max-width:950px;margin:auto;padding:24px 14px 45px}.hero{text-align:center;
 .gem:after{content:"";position:absolute;inset:8px;background:linear-gradient(45deg,transparent 49%,#fff9 50%,transparent 52%);clip-path:polygon(50% 0,100% 32%,80% 100%,20% 100%,0 32%)}
 @keyframes gemGlow{to{filter:drop-shadow(0 0 28px #bd8cff)}}
 .gem-label{position:absolute;right:5%;top:216px;color:#d5b6ff;font-size:10px;text-align:center;letter-spacing:.1em}
-.bot{position:absolute;right:12%;bottom:82px;width:80px;height:112px;text-align:center;animation:float 4s ease-in-out infinite}
+.bot{position:absolute;right:12%;bottom:64px;width:80px;height:112px;text-align:center;animation:float 4s ease-in-out infinite}
 .bothead{height:62px;background:#b7b4d5;border:3px solid #655b85;border-radius:16px;position:relative;box-shadow:0 0 12px #bd8cff44}
 .bothead:before{content:"";position:absolute;top:20px;left:15px;width:12px;height:12px;border-radius:50%;background:#ff83d5;box-shadow:27px 0 #7af1ff,0 0 12px #ff83d5}
 .bothead:after{content:"";position:absolute;bottom:9px;left:27px;width:20px;height:4px;background:#645a82}
@@ -58,5 +58,5 @@ footer{text-align:center;color:#a995bd;padding:20px;font-size:12px}footer a{colo
 </main>
 <script>
 function run(message){const box=document.getElementById('console');box.textContent='> '+message;box.scrollIntoView({behavior:'smooth',block:'nearest'});}
-function consult(){const lines=['STYLIST_404: Your hair is entering its protagonist era.','STYLIST_404: I recommend a cut that says “I know a secret hallway.”','STYLIST_404: The purple gem has opinions. I have chosen not to disclose them.','STYLIST_404: Bangs? The timeline is not ready to answer.','STYLIST_404: Your current style has excellent signal strength.','STYLIST_404: I detected three split ends and one unresolved mystery.','STYLIST_404: Please hold still. I am consulting the moon.','STYLIST_404: The haircut is complete. You have also been assigned a side quest.'];run(lines[Math.floor(Math.random()*lines.length));}
+function consult(){const lines=['STYLIST_404: Your hair is entering its protagonist era.','STYLIST_404: I recommend a cut that says “I know a secret hallway.”','STYLIST_404: The purple gem has opinions. I have chosen not to disclose them.','STYLIST_404: Bangs? The timeline is not ready to answer.','STYLIST_404: Your current style has excellent signal strength.','STYLIST_404: I detected three split ends and one unresolved mystery.','STYLIST_404: Please hold still. I am consulting the moon.','STYLIST_404: The haircut is complete. You have also been assigned a side quest.'];run(lines[Math.floor(Math.random()*lines.length)]);}
 </script></body></html>
