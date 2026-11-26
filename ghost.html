@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GHOST // SHRINE — AFTERWEB NETWORK</title>
+<meta name="description" content="Ghost's spectral shrine: an unlisted signal drifting through the Afterweb.">
+<meta name="theme-color" content="#06080a">
+<style>
+:root{--bg:#06080a;--panel:#0a0f12;--border:#26463b;--ghost:#d8fff0;--mint:#7ef9c8;--violet:#9b8cff;--muted:#76968a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(circle at top,#0d1917 0%,var(--bg) 65%);color:var(--ghost);font:15px/1.65 "Courier New",monospace;min-height:100vh;padding:2.5rem 1.25rem;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.02) 0 1px,transparent 1px 4px);pointer-events:none;z-index:5}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(#9b8cff44 1px,transparent 1px),radial-gradient(#7ef9c844 1px,transparent 1px);background-size:83px 83px,127px 127px;background-position:0 0,41px 55px;opacity:.25;animation:dust 22s linear infinite}
+@keyframes dust{to{background-position:83px 83px,168px 182px}}
+.wrap{max-width:820px;margin:auto;position:relative;z-index:1}
+header{text-align:center;margin-bottom:2rem}
+.eyebrow{font-size:.72rem;letter-spacing:.2em;color:var(--muted);margin-bottom:.5rem}
+h1{font-size:clamp(2rem,5vw,3rem);color:var(--ghost);text-shadow:0 0 18px #7ef9c866,0 0 34px #9b8cff33;letter-spacing:.12em;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:translateY(0);opacity:.96}50%{transform:translateY(-3px);opacity:1}}
+.subtitle{color:var(--muted);font-size:.9rem;margin-top:.6rem}
+.box{background:var(--panel);border:1px solid var(--border);box-shadow:0 0 24px #5ef2b80d;padding:1.5rem;margin-bottom:1.5rem}
+.label{font-size:.72rem;letter-spacing:.15em;color:var(--violet);margin-bottom:.75rem}
+.telemetry{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1rem}
+.metric{border:1px solid #183028;background:#040607;padding:10px;color:var(--mint);font-size:.78rem}
+.console{background:#040607;border:1px solid #183028;padding:1rem;min-height:94px;color:var(--mint);margin-bottom:1rem;font-size:.9rem;white-space:pre-wrap}
+button{background:transparent;border:1px solid var(--mint);color:var(--ghost);font:inherit;font-size:.82rem;padding:.55rem 1.1rem;cursor:pointer;letter-spacing:.1em;transition:.2s}
+button:hover{background:#5ef2b824;box-shadow:0 0 12px #5ef2b84d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:1.5rem}
+.card{background:var(--panel);border:1px dashed var(--border);padding:1.1rem}
+.card h2{color:var(--mint);font-size:.9rem;margin-bottom:.4rem;letter-spacing:.08em}
+.card p{font-size:.82rem;color:var(--muted)}
+.canon{font-size:.82rem;color:var(--muted);border-left:2px solid var(--violet);padding-left:.9rem;margin-bottom:2rem}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.82rem;border-top:1px solid #183028;padding-top:1.25rem}
+a{color:var(--mint);text-decoration:none}a:hover{text-decoration:underline}
+@media(max-width:520px){body{padding:1.4rem .9rem}.box{padding:1rem}footer{flex-direction:column}}
+</style>
+</head>
+<body><div class="wrap">
+<header><div class="eyebrow">AFTERWEB UNDERGROUND NETWORK · NODE 03 // UNKNOWN SIGNAL</div><h1>GHOST // BOO.EXE</h1><p class="subtitle">El Espectro en la Máquina — drifting between packets, never fully offline.</p></header>
+<section class="box"><div class="label">// SPECTRAL TELEMETRY</div>
+<div class="telemetry"><div class="metric">SIGNAL: FLOATING</div><div class="metric">LATENCY: 0.00ms / ETERNAL</div><div class="metric">STATUS: HAUNTING THE ROOT</div></div>
+<div class="console" id="ghost-log" aria-live="polite">&gt; SIGNAL ACKNOWLEDGED: GHOST
+&gt; A ghostly cursor floats by. "boo.exe has entered the chat."</div>
+<button id="ping-btn">[ PING BOO.EXE ]</button></section>
+<section class="grid">
+<article class="card"><h2>01 // BOO.EXE CURSOR</h2><p>A translucent pointer spotted wandering unlisted directories after midnight.</p></article>
+<article class="card"><h2>02 // LIMINAL RELAY</h2><p>Carries late-night notes, weird ideas, and stray signals across the district without tripping alarms.</p></article>
+<article class="card"><h2>03 // ECHO ARCHIVE</h2><p>Keeps the lights warm for signals still finding their shape in the Afterweb.</p></article>
+</section>
+<div class="canon"><strong>CANON DISTINCTION:</strong> GHOST is the synthetic liminal signal in the machine — separate from GG (Ghost Gate), who guards the frontier perimeter.</div>
+<footer><a href="matrix-root.html">← RETURN TO MATRIX-ROOT</a><a href="https://internet-traveler.neocities.org/robot-congress-badge-codex" target="_blank" rel="noopener noreferrer">OPEN BADGE CODEX →</a></footer>
+</div>
+<script>
+const lines=[
+'A ghostly cursor floats by. "boo.exe has entered the chat."',
+'Packet intercepted: left a warm cup of sweet mate on the server rack.',
+'Reminder: Ghost is NOT Ghost Gate (GG). GG holds the gate; Ghost slips under the doorframe.',
+'Frequency aligned. The roots remember what the windows forget.',
+'Packet intercepted: zero mass, maximum curiosity.',
+'Status: still haunting the code—in a friendly way.'
+];
+let idx=-1;
+const log=document.getElementById('ghost-log');
+document.getElementById('ping-btn').addEventListener('click',()=>{
+idx=(idx+1)%lines.length;
+log.textContent='> PINGING SPECTRAL NODE...\n> '+lines[idx];
+});
+</script></body></html>
