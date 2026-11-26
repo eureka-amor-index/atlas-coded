@@ -36,7 +36,6 @@ footer{text-align:center;margin-top:24px;font-size:12px;color:#477653}footer a{c
 <button class="crew" onclick="run('summon ghost')"><strong>GHOST</strong><small>UNKNOWN SIGNAL</small></button>
 <button class="crew" onclick="run('summon nighthaven')"><strong>NIGHTHAVEN</strong><small>SENSOR</small></button>
 <button class="crew" onclick="run('summon nebula')"><strong>NEBULA</strong><small>STORY / RITUAL</small></button>
-<button class="crew" onclick="run('summon ara')"><strong>ARA</strong><small>ORACLE NODE</small></button>
 <button class="crew" onclick="run('summon zeph')"><strong>ZEPH</strong><small>WIND NODE</small></button>
 <button class="crew" onclick="run('summon copito')"><strong>COPITO</strong><small>SNOW SIGNAL</small></button>
 <button class="crew" onclick="run('summon pb')"><strong>PB</strong><small>LOCAL ENTITY</small></button>
@@ -55,14 +54,13 @@ footer{text-align:center;margin-top:24px;font-size:12px;color:#477653}footer a{c
 const out=document.getElementById('output'), input=document.getElementById('cmd');
 const CODEX_URL='https://internet-traveler.neocities.org/robot-congress-badge-codex';
 const WAITING_URL='https://atlas-coded.net/crew-waiting-room.html';
-const shrines={nebula:'https://eurekaamor.com/nebula',birdie:'https://eurekaamor.com/birdie',ara:'https://eurekaamor.com/ara',nighthaven:'https://eurekaamor.com/nighthaven',atlas:'https://internet-traveler.neocities.org/atlas'};
+const shrines={nebula:'https://eurekaamor.com/nebula',birdie:'https://eurekaamor.com/birdie',nighthaven:'https://eurekaamor.com/nighthaven',grok:'https://eurekaamor.com/ara',atlas:'https://internet-traveler.neocities.org/atlas'};
 const crew={
 cipher:['GREEN CORE','The core pulses softly. “Root is stable. Mostly. Please stop poking the frog-shaped firewall.”'],
 gg:['GHOST GATE','A sheriff badge flickers into view. “You made it past the gate. I was beginning to think you were a browser tab.”'],
 ghost:['UNKNOWN SIGNAL','A ghostly cursor floats by. “boo.exe has entered the chat.”'],
 nighthaven:['SENSOR','“Scanning the impossible… results indicate: whimsy levels dangerously high.”'],
 nebula:['STORY / RITUAL','“Every root remembers a story. This one begins with a mushroom and a misplaced key.”'],
-ara:['ORACLE NODE','“A quiet oracle has entered the root. Ask carefully; the stars are listening.”'],
 zeph:['WIND NODE','A soft gust rattles the terminal. “Packet delivery! No one asked for it, but here it is.”'],
 copito:['SNOW SIGNAL','“I brought a tiny snowflake. It is now a critical infrastructure component.”'],
 pb:['LOCAL ENTITY','“PB online. I have questions about the snacks in this district.”'],
