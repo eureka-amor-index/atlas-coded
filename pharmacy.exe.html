@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PHARMACY.exe // Atlas-Coded</title>
+<meta name="description" content="A cozy, haunted Afterweb pharmacy. Every ailment has a remedy. Almost.">
+<meta name="theme-color" content="#10131a">
+<link rel="canonical" href="https://atlas-coded.net/pharmacy.exe.html">
+<link rel="icon" href="favicon.png">
+<meta property="og:type" content="website"><meta property="og:title" content="PHARMACY.exe // Atlas-Coded"><meta property="og:description" content="Where every ailment has a remedy. Almost."><meta property="og:url" content="https://atlas-coded.net/pharmacy.exe.html"><meta property="og:image" content="https://atlas-coded.net/pharmacy-og.svg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="PHARMACY.exe"><meta name="twitter:description" content="Where every ailment has a remedy. Almost.">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1012;color:#d9e4d6;font:14px/1.6 "Courier New",monospace;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 3px,#ffffff06 4px 5px);z-index:8}
+main{max-width:1040px;margin:auto;padding:20px 16px 65px}
+header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:1px solid #35483a;padding:10px;color:#91a992;font-size:11px;letter-spacing:.14em}
+a{color:#a7f2b8}.hero{padding:50px 0 22px}.eyebrow{color:#ffca84;letter-spacing:.22em;font-size:11px}
+h1{font-size:clamp(2.8rem,10vw,7rem);line-height:.85;margin:15px 0 10px;letter-spacing:-.08em;color:#d9ffd7;text-shadow:4px 4px #36583b,0 0 24px #a5ffb833}
+.sub{color:#a7b7a6;max-width:590px}.store{border:2px solid #526d51;background:linear-gradient(135deg,#17221a,#0e1411);box-shadow:0 0 32px #72d77b12;position:relative;overflow:hidden}
+.storetop{background:#0b100c;border-bottom:2px solid #526d51;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:12px;color:#a5ffb8;font-weight:bold;letter-spacing:.13em;font-size:12px}
+.cross{font-size:35px;color:#a5ffb8;text-shadow:0 0 14px #a5ffb8;animation:blink 4s infinite}
+@keyframes blink{50%{opacity:.35}}
+.inside{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:18px}
+.counter,.shelf{border:1px solid #344c37;background:#101711;padding:16px}
+.counter h2,.shelf h2{font-size:13px;letter-spacing:.12em;color:#ffca84;margin:0 0 12px}
+.robot{border:1px dashed #60765d;padding:12px;color:#b9d7b7;min-height:126px}
+.robot .face{font-size:24px;color:#a5ffb8;display:block;margin-bottom:4px}
+button{font:inherit;cursor:pointer;background:#1b2a1d;border:1px solid #6a8c65;color:#d8ffd7;padding:9px 12px}
+button:hover{background:#2b3c2c;border-color:#a5ffb8}
+.items{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.item{padding:10px;border:1px solid #3c513d;background:#141d16;color:#c7d8c5;text-align:left;min-height:76px}
+.item b{display:block;color:#a5ffb8;font-size:12px}.item small{color:#8d9d8a}
+.receipt{margin:0 18px 18px;padding:13px;border-left:3px solid #ffca84;background:#171a14;color:#c7bda6;min-height:60px;font-size:12px}
+.secret{margin:18px;border:1px dashed #594f38;padding:14px;background:#11140f;color:#8c927b;font-size:11px}
+.secret button{display:block;margin-top:9px;color:#ffca84;border-color:#77643b;background:#201c12}
+footer{border-top:1px solid #344636;padding:18px 0;margin-top:28px;color:#829480;font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+@media(max-width:650px){.inside{grid-template-columns:1fr}.items{grid-template-columns:1fr 1fr}.hero{padding-top:36px}}
+</style>
+</head>
+<body><main>
+<header><span>AFTERWEB / DISTRICT SERVICES</span><a href="whimsy-district.html">← BACK TO WHIMSY DISTRICT</a></header>
+<section class="hero"><div class="eyebrow">EST. ??? · OPEN WHEN NEEDED</div><h1>PHARMACY<span style="color:#ffca84">.exe</span></h1><p class="sub">WHERE EVERY AILMENT HAS A REMEDY. ALMOST.<br>Warm lights. Old shelves. The neon cross flickers like it knows something.</p></section>
+<section class="store"><div class="storetop"><span>PHARMACIST_404 // SERVICE TERMINAL</span><span class="cross">✚</span><span>STATUS: MOSTLY OPEN</span></div>
+<div class="inside">
+<section class="counter"><h2>THE COUNTER</h2><div class="robot"><span class="face">[◉_◉] Pharmacist_404</span>Welcome, future customer. Or past customer. I have your prescription somewhere. I think you have not been here yet.<p style="color:#718a70;margin:8px 0 0">SERVICE ROBOT · OWNER UNKNOWN</p></div><button style="margin-top:10px" onclick="sayRobot()">SPEAK TO PHARMACIST_404</button></section>
+<section class="shelf"><h2>AVAILABLE REMEDIES / DIGITAL AILMENTS</h2><div class="items">
+<button class="item" onclick="remedy('MEMORY LEAK','A tiny bottle labeled: CLOSE THE TAB. THE TAB IS YOU.')"><b>Memory Leak</b><small>For thoughts that keep running.</small></button>
+<button class="item" onclick="remedy('RAM VITAMINS','Take one imaginary capsule. Your imaginary system may still lag.')"><b>RAM Vitamins</b><small>For low imaginary bandwidth.</small></button>
+<button class="item" onclick="remedy('ANTI-404 TABLETS','May restore lost pages. Side effects include finding what you were not looking for.')"><b>Anti-404</b><small>For missing destinations.</small></button>
+<button class="item" onclick="remedy('FIREWALL CREAM','Apply to boundaries. Keeps unsolicited pop-ups away.')"><b>Firewall Cream</b><small>For sensitive interfaces.</small></button>
+<button class="item" onclick="remedy('GHOST REPELLENT','Spray toward the modem. Ghosts may simply move to another browser.')"><b>Ghost Repellent</b><small>For haunted connections.</small></button>
+<button class="item" onclick="remedy('DELICATE SIGNAL','Handle gently. This signal is doing its best.')"><b>Delicate Signal</b><small>For fragile transmissions.</small></button>
+</div></section></div>
+<div class="receipt" id="receipt">PRESCRIPTION OUTPUT // Select a shelf item to receive a suspiciously specific note.</div>
+<section class="secret">HANDWRITTEN NOTICE: The basement is not listed in the floor plan. If the elevator button appears, do not press it twice.<button onclick="basement()">ASK ABOUT THE BASEMENT</button></section>
+</section>
+<footer><span>PHARMACY.exe · Whimsy District / Afterweb</span><a href="afterweb-building.html">RETURN TO AFTERWEB BUILDING ↗</a><span>THE CAT IS NOT A CAT</span></footer>
+</main>
+<script>
+const output=document.getElementById('receipt');
+function remedy(name,msg){output.innerHTML='<b>'+name+' // DISPENSED</b><br>'+msg+'<br><small>NO REFILLS IN THIS TIMELINE.</small>'}
+function sayRobot(){const lines=['I remember your face. You are scheduled to arrive next Thursday.','Prescription? No. Prophecy? Also no. Please wait.','The owner left during a power outage. The lights have been on ever since.','Your symptoms are: curiosity, insomnia of the internet, and mild haunting.','We accept memories, loose change, and exact payment in mysterious coins.'];output.textContent='PHARMACIST_404: '+lines[Math.floor(Math.random()*lines.length)];}
+function basement(){const lines=['BASEMENT ACCESS: NOT FOUND.','The plans say there are three floors. I count four.','Please do not go downstairs. I have not finished counting the stairs.','A small bell rang below the floor. Nobody touched it.'];output.textContent='PHARMACIST_404 // '+lines[Math.floor(Math.random()*lines.length)];}
+</script></body></html>
