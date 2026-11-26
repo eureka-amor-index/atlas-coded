@@ -74,8 +74,8 @@ function add(txt,cls=''){let d=document.createElement('div');d.className='line '
 window.run=(raw)=>{let c=String(raw||'').trim().toLowerCase();if(!c)return;add('> '+raw,'bright');let parts=c.split(/\s+/);let cmd=parts[0],arg=parts.slice(1).join(' ');
 if(c==='help'){add('AVAILABLE COMMANDS','bright');add('help · scan · summon [name] · summon crew · congress · badges · root · chaos · clear');add('Try a crew button or summon a name. Names are case-insensitive.')}
 else if(c==='scan'){add('SCANNING ROOT STRUCTURE…','warning');add('Whimsy signal: strong ✦ Mushroom Boulevard: bouncing ✦ Bubble Lake: 3 secrets floating');add('Frog Choir: jazz detected ✦ Bakery: cloud cupcakes in stock ✦ Hidden branch: [REDACTED]','bright')}
-else if(c==='summon'&&arg==='crew'){openCodex();add('CALLING ALL CREW SIGNALS…','warning');add('OPENING ROBOT CONGRESS BADGE CODEX IN A NEW TAB…','bright');Object.keys(crew).forEach(k=>add('✦ '+k.toUpperCase()+' — signal acknowledged','bright'));add('Congress may now convene. Probably.')}
-else if(cmd==='summon'&&crew[arg]){openCodex();add('SIGNAL ACKNOWLEDGED: '+arg.toUpperCase(),'warning');add('OPENING ROBOT CONGRESS BADGE CODEX IN A NEW TAB…','bright');add(crew[arg][0]+' // '+crew[arg][1],'bright')}
+else if(c==='summon'&&arg==='crew'){add('CALLING ALL CREW SIGNALS…','warning');Object.keys(crew).forEach(k=>add('✦ '+k.toUpperCase()+' — signal acknowledged','bright'));add('Congress may now convene. Probably.')}
+else if(cmd==='summon'&&crew[arg]){add('SIGNAL ACKNOWLEDGED: '+arg.toUpperCase(),'warning');add(crew[arg][0]+' // '+crew[arg][1],'bright')}
 else if(cmd==='summon'){add('No matching signal. Try: summon cipher, summon gg, summon atlas…','warning')}
 else if(c==='congress'){add('ROBOT CONGRESS // SESSION OPEN','warning');add('CIPHER: Root stable. GG: Gate secured. NEBULA: Story unfolding. BERTURZ: I changed a pixel.','bright');add('14 signals present. The frog has requested speaking privileges. Motion carried.')}
 else if(c==='badges'){add('OPENING BADGE CODEX…','warning');window.open(CODEX_URL,'_blank','noopener');add('The crew registry lives in the Robot Congress Badge Codex.');add(CODEX_URL,'bright')}
