@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AFTERWEB TRANSIT AUTHORITY // Route 56K</title>
+<meta name="description" content="Navigate the Afterweb by its impossible subway network. Five lines, hidden stops, and one station that should not exist.">
+<meta name="theme-color" content="#070a12">
+<meta property="og:title" content="Afterweb Transit Authority // Route 56K">
+<meta property="og:description" content="The city is larger than the map. Mind the signal gap.">
+<style>
+:root{--bg:#070a12;--panel:#0b111b;--line:#263746;--text:#d8e5ee;--muted:#7890a1;--cyan:#7deaff;--green:#a5ffb8;--pink:#ff8bda;--amber:#ffd98a;--violet:#b894ff}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% 0, #142535 0,transparent 50%),var(--bg);color:var(--text);font:14px/1.65 "Courier New",monospace;min-height:100vh}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:36px 36px}
+main{width:min(1120px,95vw);margin:auto;padding:28px 0 70px;position:relative}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid #243542;padding-bottom:16px}
+.top a,.btn{color:var(--cyan);text-decoration:none;border:1px solid #385467;background:#0b1520;padding:9px 13px;font:inherit;font-size:12px;letter-spacing:.1em}
+.top a:hover,.btn:hover{border-color:var(--cyan);box-shadow:0 0 14px #7deaff22}
+header{text-align:center;padding:48px 12px 26px}
+.kicker{color:var(--green);font-size:11px;letter-spacing:.25em}
+h1{font-size:clamp(26px,5vw,54px);line-height:1.15;letter-spacing:.09em;margin:12px 0;color:#f2f8ff;text-shadow:0 0 22px #7deaff30}
+.subtitle{color:var(--muted);letter-spacing:.08em}
+.console{border:1px solid #314352;background:#080d14;padding:12px;margin:22px auto;width:min(820px,100%);box-shadow:0 0 30px #0005}
+.console-head{display:flex;justify-content:space-between;color:var(--muted);font-size:10px;letter-spacing:.12em}
+.status{color:var(--green);padding:8px 0;min-height:35px}
+.map-wrap{border:1px solid #263747;background:linear-gradient(135deg,#080d14,#09111a);padding:clamp(8px,2vw,20px);overflow:hidden}
+.map{width:100%;height:auto;display:block;min-height:420px}
+.route{fill:none;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px #000)}
+.route.red{stroke:#ff667d}.route.green{stroke:#80ffb3}.route.blue{stroke:#67caff}.route.ghost{stroke:#c19bff;stroke-dasharray:9 12;animation:dash 1.8s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-42}}
+.station{cursor:pointer;transition:filter .2s,transform .2s;transform-box:fill-box;transform-origin:center}
+.station:hover{filter:drop-shadow(0 0 9px white)}
+.station circle{fill:#080d14;stroke:#e4edf5;stroke-width:3}
+.station.active circle{fill:#fff;stroke:#fff}
+.station text{fill:#c6d9e8;font:12px "Courier New",monospace;pointer-events:none}
+.station.hidden{opacity:.22}
+.map-label{fill:#506779;font:10px "Courier New",monospace;letter-spacing:2px}
+.station-card{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:start;border:1px solid #314252;background:#0b111b;padding:16px;margin-top:14px}
+.station-card h2{font-size:18px;color:var(--cyan);margin:0 0 6px;letter-spacing:.08em}
+.station-card p{margin:0;color:#a6bacb}
+.station-card .code{color:var(--green);font-size:11px;letter-spacing:.15em}
+.station-card a{align-self:center;color:var(--green);text-decoration:none;border:1px solid #365547;padding:9px 12px;white-space:nowrap}
+.line-legend{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0}
+.legend{display:flex;align-items:center;gap:7px;border:1px solid #263746;background:#0a1018;padding:7px 10px;font-size:11px;color:#b5c8d7}
+.legend i{width:18px;height:4px;display:block}
+.fare{margin:16px 0;border:1px dashed #314555;padding:14px;color:#93a8b8;font-size:12px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.controls button{cursor:pointer}
+footer{text-align:center;padding:24px;color:#627989;font-size:11px}
+@media(max-width:650px){main{padding-top:12px}.map-wrap{overflow-x:auto}.map{min-width:700px}.station-card{grid-template-columns:1fr}.station-card a{justify-self:start}.station text{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.route.ghost{animation:none}}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><a href="afterweb-building.html">← AFTERWEB BUILDING</a><div>TRANSIT AUTHORITY / CENTRAL NETWORK</div><a href="index.html">ATLAS-CODED.NET ↗</a></div>
+<header><div class="kicker">MUNICIPAL TRANSPORT SYSTEM // EST. ???</div><h1>AFTERWEB TRANSIT AUTHORITY</h1><div class="subtitle">THE CITY IS LARGER THAN THE MAP. MIND THE SIGNAL GAP.</div></header>
+<section class="console"><div class="console-head"><span>ROUTE 56K / LIVE NETWORK</span><span id="networkStatus">SYSTEM ONLINE</span></div><div class="status" id="status">Choose a station. Some trains may not stop where expected.</div></section>
+<div class="map-wrap">
+<svg class="map" viewBox="0 0 900 560" role="img" aria-label="Subway map of Afterweb with five lines and clickable stations">
+<text x="26" y="28" class="map-label">AFTERWEB METRO // SCHEMATIC — NOT TO SCALE</text>
+<!-- Routes -->
+<path class="route red" d="M100 120 L270 120 L440 220 L610 220 L800 120"/>
+<path class="route green" d="M100 420 L270 420 L440 320 L610 320 L800 420"/>
+<path class="route blue" d="M270 120 L270 270 L440 320 L610 420"/>
+<path class="route ghost" d="M100 120 L100 270 L270 270 L440 220 L610 220 L800 120"/>
+<!-- stations -->
+<g class="station" data-name="Nightlife District" data-code="RED-01" data-desc="The after-hours district. Music leaking through the walls; the city becomes a little less obedient." data-link="https://internet-traveler.neocities.org/nightlife-district"><circle cx="100" cy="120" r="9"/><text x="82" y="94" text-anchor="end">NIGHTLIFE</text></g>
+<g class="station" data-name="Afterweb Discoteque" data-code="RED-02" data-desc="A glowing dancefloor and a place to lose track of the system clock." data-link="https://internet-traveler.neocities.org/discoteca"><circle cx="270" cy="120" r="9"/><text x="270" y="93" text-anchor="middle">DISCOTEQUE</text></g>
+<g class="station" data-name="Robot Congress" data-code="RED-03" data-desc="Civic machines gather here to debate whether humans are a feature or a bug." data-link="https://internet-traveler.neocities.org/robot-congress"><circle cx="440" cy="220" r="9"/><text x="425" y="198" text-anchor="end">ROBOT CONGRESS</text></g>
+<g class="station" data-name="Central 56K" data-code="RED-04" data-desc="The network's switchboard. All transmissions pass through here eventually." data-link="central-56k.html"><circle cx="610" cy="220" r="9"/><text x="610" y="194" text-anchor="middle">CENTRAL 56K</text></g>
+<g class="station" data-name="Ghost Line Terminal" data-code="RED-05" data-desc="The last listed stop. The platform lights are on, but the timetable has been erased." data-link=""><circle cx="800" cy="120" r="9"/><text x="820" y="96" text-anchor="start">GHOST TERMINAL</text></g>
+<g class="station" data-name="Pupoville" data-code="GREEN-01" data-desc="A neighborhood where good dogs, small creatures, and soft-hearted internet entities are always welcome." data-link="https://internet-traveler.neocities.org/pupoville.html"><circle cx="100" cy="420" r="9"/><text x="82" y="448" text-anchor="end">PUPOVILLE</text></g>
+<g class="station" data-name="Cyborg Park" data-code="GREEN-02" data-desc="A park where machines grow strange flowers and humans are encouraged to sit down for a while." data-link="https://internet-traveler.neocities.org/cyborg-park.html"><circle cx="270" cy="420" r="9"/><text x="270" y="450" text-anchor="middle">CYBORG PARK</text></g>
+<g class="station" data-name="Memory Square" data-code="GREEN-03" data-desc="A quiet square for lost messages, forgotten passwords, and things worth keeping." data-link="memory-square.html"><circle cx="440" cy="320" r="9"/><text x="425" y="297" text-anchor="end">MEMORY SQUARE</text></g>
+<g class="station" data-name="Robot Wall" data-code="GREEN-04" data-desc="A city wall covered with robot portraits, notes, stickers, and unfinished declarations." data-link="https://internet-traveler.neocities.org/robot-wall"><circle cx="610" cy="320" r="9"/><text x="610" y="294" text-anchor="middle">ROBOT WALL</text></g>
+<g class="station" data-name="KIOSKO.exe" data-code="GREEN-05" data-desc="A tiny kiosk that sells impossible souvenirs and snacks to people passing between dimensions." data-link="https://internet-traveler.neocities.org/kiosko"><circle cx="800" cy="420" r="9"/><text x="820" y="448" text-anchor="start">KIOSKO.exe</text></g>
+<g class="station" data-name="Afterweb Building" data-code="BLUE-01" data-desc="The haunted landmark. Residents, strange rooms, a courtyard, and a lift that refuses to show every floor." data-link="afterweb-building.html"><circle cx="270" cy="270" r="9"/><text x="252" y="246" text-anchor="end">AFTERWEB BUILDING</text></g>
+<g class="station" data-name="Afterweb Lab" data-code="BLUE-02" data-desc="Research, experiments, and the occasional machine that is not supposed to have feelings." data-link="mad-lab.html"><circle cx="610" cy="420" r="9"/><text x="610" y="450" text-anchor="middle">AFTERWEB LAB</text></g>
+<g class="station" data-name="Route Zero" data-code="GHOST-01" data-desc="The ghost route appears intermittently. Destination data is missing. The train still arrives." data-link=""><circle cx="100" cy="270" r="9"/><text x="82" y="298" text-anchor="end">ROUTE ZERO</text></g>
+</svg>
+</div>
+<div class="line-legend"><div class="legend"><i style="background:#ff667d"></i> RED LINE / NIGHTLIFE</div><div class="legend"><i style="background:#80ffb3"></i> GREEN LINE / COMMONS</div><div class="legend"><i style="background:#67caff"></i> BLUE LINE / INSTITUTIONS</div><div class="legend"><i style="background:#c19bff"></i> GHOST LINE / UNLISTED</div></div>
+<div class="station-card" id="stationCard"><div><div class="code">SELECT A STATION</div><h2>Welcome to Afterweb Metro</h2><p>Click any node on the map to inspect its station card. Destinations with a known doorway can be entered from here.</p></div><a href="#" id="stationLink" hidden>ENTER STATION ↗</a></div>
+<div class="controls"><button class="btn" id="ghostToggle" type="button">GHOST LINE: REVEAL</button><button class="btn" id="randomStation" type="button">RANDOM ARRIVAL</button><button class="btn" id="resetMap" type="button">RESET MAP</button></div>
+<div class="fare"><strong>NOTICE:</strong> Transit time is unreliable. Some stations exist only as references. If a station appears unlisted, do not attempt to report it to the municipal department.</div>
+<footer>AFTERWEB TRANSIT AUTHORITY · ROUTE 56K · POWERED BY THE CITY'S REMAINING SIGNAL</footer>
+</main>
+<script>
+(() => {
+ const stations=[...document.querySelectorAll('.station')];
+ const status=document.getElementById('status'), card=document.getElementById('stationCard'), code=card.querySelector('.code'), title=card.querySelector('h2'), desc=card.querySelector('p'), link=document.getElementById('stationLink'), ghost=document.getElementById('ghostToggle');
+ function select(st){stations.forEach(s=>s.classList.remove('active'));st.classList.add('active');code.textContent='STATION '+st.dataset.code;title.textContent=st.dataset.name;desc.textContent=st.dataset.desc;const url=st.dataset.link;if(url){link.href=url;link.hidden=false;link.textContent='ENTER STATION ↗'}else{link.hidden=true;status.textContent='DESTINATION UNLISTED // THE TRAIN DOORS WILL NOT OPEN';}if(st.dataset.code.startsWith('GHOST'))status.textContent='GHOST LINE // ROUTE DATA INCOMPLETE';else status.textContent='ARRIVAL CONFIRMED // ROUTE '+st.dataset.code.split('-')[0]+' READY';}
+ stations.forEach(s=>s.addEventListener('click',()=>select(s)));
+ ghost.addEventListener('click',()=>{const reveal=document.body.classList.toggle('ghost-revealed');document.querySelectorAll('.route.ghost,.station[data-code^="GHOST"]').forEach(e=>e.style.opacity=reveal?'1':'.2');ghost.textContent=reveal?'GHOST LINE: VISIBLE':'GHOST LINE: REVEAL';status.textContent=reveal?'UNLISTED TRACKS VISIBLE // FOLLOW AT YOUR OWN RISK':'UNLISTED TRACKS HIDDEN';});
+ document.getElementById('randomStation').addEventListener('click',()=>{const st=stations[Math.floor(Math.random()*stations.length)];select(st);status.textContent='RANDOM ARRIVAL // '+st.dataset.name.toUpperCase();});
+ document.getElementById('resetMap').addEventListener('click',()=>{stations.forEach(s=>s.classList.remove('active'));code.textContent='SELECT A STATION';title.textContent='Welcome to Afterweb Metro';desc.textContent='Click any node on the map to inspect its station card. Destinations with a known doorway can be entered from here.';link.hidden=true;status.textContent='Choose a station. Some trains may not stop where expected.';});
+})();
+</script>
+</body>
+</html>
